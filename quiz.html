@@ -12,7 +12,7 @@
 <!-- Open Graph (카톡·페북·인스타 미리보기) -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="댕냥 성격 분석">
-<meta property="og:title" content="우리 아이 성격 테스트해봐!">
+<meta property="og:title" content="반려견/반려묘/반려동물 기질 테스트">
 <meta property="og:description" content="12가지 질문으로 기질 분석 + 케어 팁">
 <meta property="og:image" content="https://frabjous-dusk-9711f2.netlify.app/og-image.png?v=3">
 <meta property="og:image:secure_url" content="https://frabjous-dusk-9711f2.netlify.app/og-image.png?v=3">
@@ -23,7 +23,7 @@
 <meta property="og:url" content="https://frabjous-dusk-9711f2.netlify.app/quiz.html?v=3">
 <meta property="og:locale" content="ko_KR">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="우리 아이 성격 테스트해봐!">
+<meta name="twitter:title" content="반려견/반려묘/반려동물 기질 테스트">
 <meta name="twitter:description" content="12가지 질문으로 기질 분석 + 케어 팁">
 <meta name="twitter:image" content="https://frabjous-dusk-9711f2.netlify.app/og-image.png?v=3">
 <link rel="canonical" href="https://frabjous-dusk-9711f2.netlify.app/quiz.html">
@@ -504,9 +504,26 @@ body.nav-switching .nav,.sec-banner.show + .tablet-layout .nav{opacity:0;pointer
       <div class="chip-row" id="genderChips">
         <div class="chip" onclick="selChip(this,'gender','남아')">🐾 남아</div>
         <div class="chip" onclick="selChip(this,'gender','여아')">🌸 여아</div>
-        <div class="chip" onclick="selChip(this,'gender','중성화')">✂️ 중성화</div>
       </div>
       <input type="hidden" id="q_gender">
+    </div>
+
+    <!-- 간식 취향 -->
+    <div style="margin-top:14px;margin-bottom:14px;">
+      <div class="s-label" style="margin-bottom:6px;">좋아하는 간식</div>
+      <div class="chip-row" id="treatChips">
+        <div class="chip" onclick="selChip(this,'treatPref','고구마')">🍠 고구마</div>
+        <div class="chip" onclick="selChip(this,'treatPref','사과')">🍎 사과</div>
+        <div class="chip" onclick="selChip(this,'treatPref','닭가슴살')">🍗 닭가슴살</div>
+        <div class="chip" onclick="selChip(this,'treatPref','고기 말린거')">🥩 고기 말린거</div>
+      </div>
+      <input type="hidden" id="q_treat_pref">
+    </div>
+
+    <!-- 알러지 -->
+    <div>
+      <div class="s-label" style="margin-bottom:6px;">피해야 할 재료·알러지</div>
+      <input type="text" id="q_allergy" placeholder="예: 닭, 닭가슴살, 곡물 (없으면 비워두기)" maxlength="30">
     </div>
   </div>
 
@@ -662,7 +679,7 @@ body.nav-switching .nav,.sec-banner.show + .tablet-layout .nav{opacity:0;pointer
 
 <!-- 통합 nav (모든 스크린이 공유) -->
 <div class="nav" id="mainNav">
-  <div class="err" id="err0">⚠️ 모든 정보를 입력해 주세요</div>
+  <div class="err" id="err0">⚠️ 필수 정보와 간식 취향을 입력해 주세요</div>
   <div class="nav-btns" id="navBtns">
     <button class="btn-next" onclick="startSection(1)" style="flex:1">다음 →</button>
   </div>
@@ -753,6 +770,7 @@ body.nav-switching .nav,.sec-banner.show + .tablet-layout .nav{opacity:0;pointer
 const petIcons={dog:'🐶',cat:'🐱',rabbit:'🐰',other:'🐹'};
 let step=0,petType='',petName='',petAge='',petGender='';
 let dogSize='',catType='',otherAnimal='';
+let favoriteTreat='',allergyInfo='';
 let answers={};
 let bannerCallback=null;
 let isSubmitting=false;
@@ -863,6 +881,62 @@ function jsStringAttr(value){
   return escapeHTML(JSON.stringify(String(value??'')));
 }
 
+function plainTextFromHTML(html){
+  const div=document.createElement('div');
+  div.innerHTML=String(html||'');
+  return (div.textContent||div.innerText||'').replace(/\s+/g,' ').trim();
+}
+
+function normalizeFoodText(value){
+  return String(value||'').toLowerCase().replace(/\s+/g,'');
+}
+
+function hasAllergyTo(value){
+  const allergy=normalizeFoodText(allergyInfo);
+  if(!allergy) return false;
+  const aliases={
+    '닭가슴살':['닭가슴살','닭','닭고기','치킨','chicken'],
+    '고기 말린거':['고기말린거','말린고기','육포','고기','소고기','돼지고기','beef','pork'],
+    '고구마':['고구마','sweetpotato'],
+    '사과':['사과','애플','apple']
+  };
+  return (aliases[value]||[value]).some(v=>allergy.includes(normalizeFoodText(v)));
+}
+
+function treatKeywordForPet(){
+  const alternatives=['고구마','사과','고기 말린거','닭가슴살'];
+  const preferred=favoriteTreat||'간식';
+  const chosen=hasAllergyTo(preferred)
+    ? alternatives.find(v=>v!==preferred&&!hasAllergyTo(v))||'저알러지'
+    : preferred;
+  const prefix=petType==='cat'?'고양이':petType==='dog'?'강아지':petType==='rabbit'?'토끼':'반려동물';
+  const suffix=chosen==='고기 말린거'?'말린 고기 간식':`${chosen} 간식`;
+  return `${prefix} ${suffix}`;
+}
+
+function treatRecommendation(){
+  const keyword=treatKeywordForPet();
+  if(favoriteTreat&&hasAllergyTo(favoriteTreat)){
+    return {
+      name:`${favoriteTreat} 대신 ${keyword}`,
+      why:'알러지 입력을 반영한 대체 간식',
+      tag:`피해야 할 재료: ${allergyInfo}`,
+      keyword
+    };
+  }
+  return {
+    name:keyword,
+    why:`좋아하는 ${favoriteTreat||'간식'} 취향 반영`,
+    tag:allergyInfo?`피해야 할 재료: ${allergyInfo}`:'취향 기반 간식 추천',
+    keyword
+  };
+}
+
+function resultScoreLine(r){
+  if(!r||!Array.isArray(r.traits)) return '';
+  return r.traits.slice(0,4).map(t=>`${cleanType(t.label)} ${t.val}점`).join(' · ');
+}
+
 // ── 사이드바 업데이트 ──
 function updateSidebar(n){
   const secIdx=n===0?0:n<=3?1:n<=6?2:n<=9?3:4;
@@ -903,7 +977,8 @@ function startSection(n){
   if(n===1){
     petName=document.getElementById('q_pet_name').value.trim();
     otherAnimal=document.getElementById('q_other_animal')?.value.trim()||'';
-    if(!petType||!petName||!petAge||!petGender){
+    allergyInfo=document.getElementById('q_allergy')?.value.trim()||'';
+    if(!petType||!petName||!petAge||!petGender||!favoriteTreat){
       document.getElementById('err0').classList.add('show');return;
     }
     if(petType==='dog'&&!dogSize){
@@ -917,7 +992,7 @@ function startSection(n){
     }
     document.getElementById('err0').classList.remove('show');
     updateQTitles();
-    trackEvent('start',{petType});
+    trackEvent('start',{petType,treat:favoriteTreat,hasAllergy:!!allergyInfo});
   } else {
     const lastQ={2:'q3',3:'q6',4:'q9'}[n];
     if(lastQ&&!answers[lastQ]) return;
@@ -986,6 +1061,7 @@ function selChip(el,group,val){
   else if(group==='gender'){petGender=val;document.getElementById('q_gender').value=val;}
   else if(group==='dogSize'){dogSize=val;document.getElementById('q_dog_size').value=val;}
   else if(group==='catType'){catType=val;document.getElementById('q_cat_type').value=val;}
+  else if(group==='treatPref'){favoriteTreat=val;document.getElementById('q_treat_pref').value=val;}
 }
 
 function selOpt(el,qid,val){
@@ -1105,6 +1181,9 @@ function calcPersonality(){
   const safeCatType=escapeHTML(catType);
   const safeOtherAnimal=escapeHTML(otherAnimal);
   const pt=petType;
+  const treatRec=treatRecommendation();
+  const safeTreat=escapeHTML(favoriteTreat);
+  const safeAllergy=escapeHTML(allergyInfo);
 
   // 문단 1: 기질 설명
   summary+=`<p style="margin-bottom:14px;">`;
@@ -1165,6 +1244,12 @@ function calcPersonality(){
   else if(food.includes('식욕이')) summary+=`식욕이 별로 없는 ${nm(p)}는 기호성 좋은 음식으로 식욕을 자극해보세요. `;
   else summary+=`식습관이 나쁘지 않은 ${nm(p)}예요. `;
 
+  if(favoriteTreat&&hasAllergyTo(favoriteTreat)){
+    summary+=`입력해주신 알러지(${safeAllergy})를 고려하면 ${safeTreat} 대신 <a href="${coupangSearchUrl(treatRec.keyword)}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">${escapeHTML(treatRec.name)}</a> 쪽으로 대체 추천해요. `;
+  } else if(favoriteTreat){
+    summary+=`${nm(p)}가 좋아하는 ${safeTreat} 계열 간식은 <a href="${coupangSearchUrl(treatRec.keyword)}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">${escapeHTML(treatRec.name)}</a>으로 골라보면 좋아요. `;
+  }
+
   if(pt==='dog') summary+=`마지막으로 <a href="${fallbackProductUrl('vitamin_dog')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">강아지 전용 영양제</a>로 기본 건강을 꼼꼼히 챙겨주세요. 관절·피부·면역을 함께 케어하는 종합 영양제가 특히 좋아요. 💊`;
   else if(pt==='cat') summary+=`<a href="${fallbackProductUrl('vitamin_cat')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">고양이 전용 영양제</a>도 빠뜨리지 마세요. 특히 비뇨기 건강과 헤어볼 케어가 중요해요. 💊`;
   else if(pt==='rabbit') summary+=`토끼는 <a href="${fallbackProductUrl('rabbit_hay')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">건초(티모시)</a>가 식단의 70% 이상이어야 해요. 건강의 기본이에요. 🌾`;
@@ -1191,6 +1276,7 @@ function calcPersonality(){
   if(pt==='dog'){
     const isSmall=dogSize==='소형견';
     const isLarge=dogSize==='대형견';
+    allProds.push({icon:'🍪',name:treatRec.name,why:treatRec.why,tag:treatRec.tag,url:coupangSearchUrl(treatRec.keyword),show:true,highlight:true});
     allProds.push({icon:'🧩',name:'노즈워크 매트',why:'두뇌 자극·에너지 발산',tag:'스트레스 해소 · 집중력 향상',url:'',show:eScore>=65||pScore>=65,highlight:false});
     allProds.push({icon:'🟠',name:'콩 장난감 (KONG Classic)',why:'분리불안 해소의 필수품',tag:'간식 넣으면 혼자 30분+ 집중',url:'',show:iScore<=35||prob.includes('분리'),highlight:true});
     if(isSmall){
@@ -1205,7 +1291,7 @@ function calcPersonality(){
       allProds.push({icon:'🦮',name:'하네스 & 리드줄 세트',why:'목 보호 · 안전한 산책',tag:'소·중·대형견 선택 가능',url:'',show:eScore>=55,highlight:false});
     }
     allProds.push({icon:'🌿',name:'강아지 진정 스프레이',why:'불안·흥분 완화',tag:'아답틸 페로몬 성분',url:'',show:seScore>=70||iScore<=35,highlight:true});
-    allProds.push({icon:'🍖',name:'훈련용 소프트 간식',why:'긍정 강화 훈련 필수',tag:'저칼로리 · 닭고기·치즈맛',url:'',show:tScore<=50,highlight:false});
+    allProds.push({icon:'🍖',name:'훈련용 소프트 간식',why:'긍정 강화 훈련 필수',tag:'저칼로리 · 기호성 중심',url:'',show:tScore<=50&&!hasAllergyTo('닭가슴살'),highlight:false});
     allProds.push({icon:'🥣',name:'자동 급식기',why:'과식 방지 · 규칙적 식사',tag:'타이머·용량 설정 가능',url:'',show:food.includes('과식'),highlight:false});
     allProds.push({icon:'🪮',name:'슬리커 브러시',why:'그루밍으로 스킨십 시간',tag:'엉킴 제거 · 마사지 효과',url:'',show:true,highlight:false});
     allProds.push({icon:'💊',name:`${dogSize||'강아지'} 종합 영양제`,why:'관절·피부·면역 케어',tag:`${isLarge?'대형견 관절 집중':'연령별 맞춤'} · 소화 용이`,url:'',show:true,highlight:false});
@@ -1213,6 +1299,7 @@ function calcPersonality(){
   } else if(pt==='cat'){
     const isMulti=catType==='다묘가정';
     const isOutdoor=catType==='실내외겸용';
+    allProds.push({icon:'🍪',name:treatRec.name,why:treatRec.why,tag:treatRec.tag,url:coupangSearchUrl(treatRec.keyword),show:true,highlight:true});
     allProds.push({icon:'🏰',name:'캣타워·숨숨집',why:'나만의 안전한 공간 필수',tag:'스크래처 포함 · 조립식',url:'',show:iScore>=55||seScore>=55,highlight:true});
     allProds.push({icon:'🎣',name:'낚싯대 장난감',why:'사냥 본능 자극',tag:'깃털·쥐·반짝이 교체형',url:'',show:pScore>=55||eScore>=55,highlight:false});
     if(isMulti){
@@ -1231,6 +1318,7 @@ function calcPersonality(){
     allProds.push({icon:'💊',name:'고양이 종합 영양제',why:'비뇨기·헤어볼 케어',tag:'츄르 타입 · 급여 편리',url:'',show:true,highlight:false});
 
   } else if(pt==='rabbit'){
+    allProds.push({icon:'🍎',name:treatRec.name,why:treatRec.why,tag:treatRec.tag,url:coupangSearchUrl(treatRec.keyword),show:true,highlight:true});
     allProds.push({icon:'🌾',name:'티모시 건초 (1단)',why:'소화 건강의 핵심',tag:'무제한 급여 권장',url:'',show:true,highlight:true});
     allProds.push({icon:'🏠',name:'토끼 인클로저·울타리',why:'안전한 활동 공간',tag:'조립식 · 크기 조절 가능',url:'',show:true,highlight:false});
     allProds.push({icon:'🎠',name:'토끼 터널·장난감',why:'호기심·운동 욕구 해소',tag:'천연 나뭇가지 포함',url:'',show:pScore>=50,highlight:false});
@@ -1245,23 +1333,28 @@ function calcPersonality(){
     const isHedgehog=oa.includes('고슴도치');
 
     if(isHamster){
+      allProds.push({icon:'🍪',name:treatRec.name,why:treatRec.why,tag:treatRec.tag,url:coupangSearchUrl(treatRec.keyword),show:true,highlight:true});
       allProds.push({icon:'🏠',name:'햄스터 케이지 (넓은형)',why:'충분한 활동 공간 필수',tag:'환기 좋음 · 청소 편리',url:'',show:true,highlight:true});
       allProds.push({icon:'🎡',name:'햄스터 쳇바퀴 (사일런트)',why:'야간 소음 없이 운동',tag:'소음 차단 · 안전한 재질',url:'',show:true,highlight:false});
       allProds.push({icon:'🌾',name:'햄스터 전용 사료·간식',why:'균형 잡힌 영양',tag:'씨앗·곡물 혼합',url:'',show:true,highlight:false});
     } else if(isBird){
+      allProds.push({icon:'🍪',name:treatRec.name,why:treatRec.why,tag:treatRec.tag,url:coupangSearchUrl(treatRec.keyword),show:true,highlight:true});
       allProds.push({icon:'🏠',name:'앵무새 케이지 (대형)',why:'날개짓 할 공간 필수',tag:'스테인리스 · 청소 편리',url:'',show:true,highlight:true});
       allProds.push({icon:'🎵',name:'앵무새 장난감·횃대 세트',why:'지루함 방지·발 건강',tag:'천연 나무 · 다양한 질감',url:'',show:true,highlight:false});
       allProds.push({icon:'🌿',name:'앵무새 전용 사료',why:'조류 전용 영양',tag:'씨앗+펠렛 혼합 추천',url:'',show:true,highlight:false});
     } else if(isFerret){
+      allProds.push({icon:'🍪',name:treatRec.name,why:treatRec.why,tag:treatRec.tag,url:coupangSearchUrl(treatRec.keyword),show:true,highlight:true});
       allProds.push({icon:'🏠',name:'페럿 케이지 (3층형)',why:'활동적인 페럿에게 충분한 공간',tag:'해먹 포함 · 조립식',url:'',show:true,highlight:true});
       allProds.push({icon:'🎮',name:'페럿 터널·장난감',why:'호기심 많은 페럿 필수템',tag:'다양한 텍스처',url:'',show:true,highlight:false});
       allProds.push({icon:'🍖',name:'페럿 전용 사료',why:'고단백 육식성 페럿에 맞춤',tag:'고단백·저탄수화물',url:'',show:true,highlight:false});
     } else if(isHedgehog){
+      allProds.push({icon:'🍪',name:treatRec.name,why:treatRec.why,tag:treatRec.tag,url:coupangSearchUrl(treatRec.keyword),show:true,highlight:true});
       allProds.push({icon:'🏠',name:'고슴도치 케이지',why:'충분한 활동 공간',tag:'바닥재 포함 · 환기 좋음',url:'',show:true,highlight:true});
       allProds.push({icon:'🎡',name:'고슴도치 쳇바퀴',why:'야간 운동 필수',tag:'발 안전 설계',url:'',show:true,highlight:false});
       allProds.push({icon:'🍗',name:'고슴도치 전용 사료',why:'균형 영양 섭취',tag:'곤충 단백질 포함',url:'',show:true,highlight:false});
     } else {
       // 기타 일반
+      allProds.push({icon:'🍪',name:treatRec.name,why:treatRec.why,tag:treatRec.tag,url:coupangSearchUrl(treatRec.keyword),show:true,highlight:true});
       allProds.push({icon:'🏠',name:'소동물 케이지',why:'안전하고 쾌적한 공간',tag:'청소 편리 · 환기 좋음',url:'',show:true,highlight:false});
       allProds.push({icon:'🎮',name:'소동물 장난감 세트',why:'지루함 방지',tag:'나무 소재 · 안전한 재질',url:'',show:pScore>=50,highlight:false});
       allProds.push({icon:'🌾',name:'전용 사료·간식',why:'종별 맞춤 영양',tag:'소동물 전용',url:'',show:true,highlight:true});
@@ -1277,7 +1370,8 @@ function calcPersonality(){
   // 쿠팡 검색용 키워드 (성격·동물별 상위 3개)
   const coupangKeywords=buildCoupangKeywords({
     pt,dogSize,catType,otherAnimal,
-    iScore,eScore,pScore,seScore,prob
+    iScore,eScore,pScore,seScore,prob,
+    treatKeyword:treatRec.keyword
   });
 
   return{type,desc,summary,
@@ -1298,8 +1392,9 @@ function calcPersonality(){
 
 // ── 쿠팡 파트너스 검색 키워드 생성 ──
 function buildCoupangKeywords(o){
-  const {pt,dogSize,catType,otherAnimal,iScore,eScore,pScore,seScore,prob}=o;
+  const {pt,dogSize,catType,otherAnimal,iScore,eScore,pScore,seScore,prob,treatKeyword}=o;
   const kw=[];
+  if(treatKeyword) kw.push(treatKeyword);
   if(pt==='dog'){
     const size=dogSize==='소형견'?'소형견':dogSize==='대형견'?'대형견':'강아지';
     if(iScore<=35||(prob||'').includes('분리')) kw.push('강아지 콩 장난감');
@@ -1501,6 +1596,8 @@ function trackClick(productName){
 const SITE_URL='https://frabjous-dusk-9711f2.netlify.app';
 const OG_IMAGE_URL=SITE_URL+'/og-image.png?v=3';
 const TEST_URL=SITE_URL+'/quiz.html?v=3';
+const TEST_SHARE_TITLE='반려견/반려묘/반려동물 기질 테스트';
+const TEST_SHARE_DESC='12가지 질문으로 기질 분석 + 케어 팁 🐾';
 
 function showToast(msg){
   const t=document.getElementById('shareToast');
@@ -1554,11 +1651,34 @@ async function nativeShare(title,text,url,kind){
 
 function shareTestKakao(){
   nativeShare(
-    '우리 아이 성격 테스트해봐!',
-    '12가지 질문으로 기질 분석 + 케어 팁 🐾',
+    TEST_SHARE_TITLE,
+    TEST_SHARE_DESC,
     TEST_URL,
     'test'
   );
+}
+
+function encodeSharePayload(payload){
+  try{
+    return btoa(unescape(encodeURIComponent(JSON.stringify(payload))))
+      .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  }catch(e){return '';}
+}
+
+function decodeSharePayload(token){
+  try{
+    const base64=String(token||'').replace(/-/g,'+').replace(/_/g,'/');
+    const padded=base64+'='.repeat((4-base64.length%4)%4);
+    return JSON.parse(decodeURIComponent(escape(atob(padded))));
+  }catch(e){return null;}
+}
+
+function createResultShareUrl(){
+  const payload=encodeSharePayload({
+    petType,petName,petAge,petGender,dogSize,catType,otherAnimal,
+    favoriteTreat,allergyInfo,answers
+  });
+  return payload?`${SITE_URL}/quiz.html?result=${payload}&v=3`:TEST_URL;
 }
 
 function shareResultKakao(){
@@ -1566,10 +1686,13 @@ function shareResultKakao(){
   const name=window.__currentPetName||'우리 아이';
   const animal=nm(name);
   const typeText=cleanType(r&&r.type)||'특별한 성격';
+  const scoreLine=resultScoreLine(r);
+  const analysis=r?`${r.desc}\n기질 점수: ${scoreLine}`:'결과 페이지에서 기질 분석을 확인해봐';
+  const resultUrl=createResultShareUrl();
   nativeShare(
     `${animal}는 ${typeText}이래!`,
-    `우리 아이 성격도 테스트해봐 🐾`,
-    TEST_URL,
+    `${analysis}\n결과 페이지에서 분석 보기 🐾`,
+    resultUrl,
     'result'
   );
 }
@@ -1580,9 +1703,10 @@ async function copyShareLink(kind){
   const name=window.__currentPetName||'우리 아이';
   let text;
   if(r){
-    text=`🐾 ${nm(name)}는 ${cleanType(r.type)}이래!\n우리 아이 성격도 테스트해봐\n${TEST_URL}`;
+    const resultUrl=createResultShareUrl();
+    text=`🐾 ${nm(name)}는 ${cleanType(r.type)}이래!\n${r.desc}\n기질 점수: ${resultScoreLine(r)}\n결과 페이지에서 분석 보기\n${resultUrl}`;
   } else {
-    text=`🐾 우리 아이 성격 테스트해봐!\n12가지 질문으로 기질 분석 + 케어 팁\n${TEST_URL}`;
+    text=`🐾 ${TEST_SHARE_TITLE}\n${TEST_SHARE_DESC}\n${TEST_URL}`;
   }
   const ok=await clipboardWrite(text);
   if(ok) showToast('링크가 복사됐어요 😊');
@@ -1599,18 +1723,23 @@ async function saveResultImage(){
   const name=window.__currentPetName||'우리 아이';
   // 정사각형 캔버스 컨테이너 생성 (인스타그램 1080x1080)
   const card=document.createElement('div');
-  card.style.cssText='position:fixed;left:-99999px;top:0;width:1080px;height:1080px;background:linear-gradient(160deg,#1c2128 0%,#0d1117 50%,#1c2128 100%);color:#f0ede8;font-family:"DM Sans","Noto Sans KR",sans-serif;padding:80px 70px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;';
-  const traitsHtml=r&&r.traits?r.traits.slice(0,5).map(t=>`<div style="display:flex;align-items:center;gap:14px;width:100%;margin-bottom:14px;"><div style="width:130px;font-size:22px;color:#9a9080;text-align:left;">${escapeHTML(t.label)}</div><div style="flex:1;height:10px;background:rgba(255,255,255,0.08);border-radius:50px;overflow:hidden;"><div style="height:100%;width:${t.val}%;background:linear-gradient(90deg,#f4845f,#f7a88a);border-radius:50px;"></div></div><div style="width:50px;font-size:20px;color:#52504a;text-align:right;">${t.val}</div></div>`).join(''):'';
+  card.style.cssText='position:fixed;left:-99999px;top:0;width:1080px;height:1080px;background:linear-gradient(160deg,#1c2128 0%,#0d1117 50%,#1c2128 100%);color:#f0ede8;font-family:"DM Sans","Noto Sans KR",sans-serif;padding:54px 68px 74px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;';
+  const traitsHtml=r&&r.traits?r.traits.slice(0,4).map(t=>`<div style="display:flex;align-items:center;gap:14px;width:100%;margin-bottom:12px;"><div style="width:130px;font-size:21px;color:#9a9080;text-align:left;">${escapeHTML(t.label)}</div><div style="flex:1;height:10px;background:rgba(255,255,255,0.08);border-radius:50px;overflow:hidden;"><div style="height:100%;width:${t.val}%;background:linear-gradient(90deg,#f4845f,#f7a88a);border-radius:50px;"></div></div><div style="width:54px;font-size:20px;color:#f0ede8;text-align:right;">${t.val}</div></div>`).join(''):'';
+  const analysisText=(plainTextFromHTML(r&&r.summary)||r&&r.desc||'').slice(0,230);
   card.innerHTML=`
-    <div style="font-size:140px;line-height:1;margin-bottom:30px;">${petIcons[petType]||'🐾'}</div>
-    <div style="display:inline-block;border:2px solid rgba(244,132,95,0.4);border-radius:50px;padding:10px 28px;font-size:24px;color:#f4845f;background:rgba(244,132,95,0.08);margin-bottom:24px;font-weight:500;">${escapeHTML(r&&r.type||'성격 분석')}</div>
-    <div style="font-size:50px;font-weight:600;color:#f0ede8;margin-bottom:20px;letter-spacing:-0.02em;">${escapeHTML(nm(name))}의<br>성격 분석 결과</div>
-    <div style="font-size:26px;color:#9a9080;line-height:1.6;margin-bottom:50px;font-weight:300;max-width:880px;">${escapeHTML(r&&r.desc||'')}</div>
-    <div style="width:100%;max-width:840px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:24px;padding:36px 40px;margin-bottom:40px;">
-      <div style="font-size:18px;letter-spacing:0.12em;text-transform:uppercase;color:#f4845f;margin-bottom:22px;font-weight:600;">✦ 성격 특성</div>
+    <div style="font-size:112px;line-height:1;margin-bottom:22px;">${petIcons[petType]||'🐾'}</div>
+    <div style="display:inline-block;border:2px solid rgba(244,132,95,0.4);border-radius:50px;padding:9px 26px;font-size:23px;color:#f4845f;background:rgba(244,132,95,0.08);margin-bottom:18px;font-weight:500;">${escapeHTML(r&&r.type||'성격 분석')}</div>
+    <div style="font-size:46px;font-weight:600;color:#f0ede8;margin-bottom:16px;letter-spacing:-0.02em;">${escapeHTML(nm(name))}의<br>기질 테스트 결과</div>
+    <div style="font-size:25px;color:#9a9080;line-height:1.55;margin-bottom:28px;font-weight:300;max-width:880px;">${escapeHTML(r&&r.desc||'')}</div>
+    <div style="width:100%;max-width:850px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:24px;padding:30px 38px;margin-bottom:22px;">
+      <div style="font-size:18px;letter-spacing:0.12em;text-transform:uppercase;color:#f4845f;margin-bottom:20px;font-weight:600;">✦ 기질 점수</div>
       ${traitsHtml}
     </div>
-    <div class="share-watermark" style="position:absolute;bottom:36px;left:0;right:0;font-size:22px;color:rgba(255,255,255,0.5);text-align:center;letter-spacing:0.05em;">🐾 frabjous-dusk-9711f2.netlify.app</div>
+    <div style="width:100%;max-width:850px;background:rgba(78,201,176,0.08);border:1px solid rgba(78,201,176,0.22);border-radius:22px;padding:26px 34px;margin-bottom:24px;text-align:left;">
+      <div style="font-size:18px;letter-spacing:0.12em;text-transform:uppercase;color:#4ec9b0;margin-bottom:13px;font-weight:600;text-align:center;">✦ 결과 분석</div>
+      <div style="font-size:22px;color:#d7d1c8;line-height:1.72;font-weight:300;">${escapeHTML(analysisText)}${analysisText.length>=230?'...':''}</div>
+    </div>
+    <div class="share-watermark" style="position:absolute;bottom:34px;left:0;right:0;font-size:21px;color:rgba(255,255,255,0.5);text-align:center;letter-spacing:0.05em;">🐾 frabjous-dusk-9711f2.netlify.app</div>
   `;
   document.body.appendChild(card);
   try{
@@ -1643,6 +1772,31 @@ async function saveResultImage(){
 }
 
 function restart(){location.reload();}
+
+function loadSharedResultIfPresent(){
+  const params=new URLSearchParams(location.search);
+  const payload=decodeSharePayload(params.get('result'));
+  if(!payload||!payload.answers) return false;
+  petType=payload.petType||'';
+  petName=payload.petName||'';
+  petAge=payload.petAge||'';
+  petGender=payload.petGender||'';
+  dogSize=payload.dogSize||'';
+  catType=payload.catType||'';
+  otherAnimal=payload.otherAnimal||'';
+  favoriteTreat=payload.favoriteTreat||'';
+  allergyInfo=payload.allergyInfo||'';
+  answers=payload.answers||{};
+  document.getElementById('formWrap').style.display='none';
+  document.querySelector('.tablet-layout').style.display='none';
+  document.getElementById('progBar').style.display='none';
+  document.getElementById('loadingWrap').classList.remove('show');
+  showResult();
+  trackEvent('shared_result_view',{petType,resultType:window.__currentResult&&window.__currentResult.type});
+  return true;
+}
+
+loadSharedResultIfPresent();
 
 // ── 카카오톡 인앱브라우저 안내 배너 ──
 (function(){
