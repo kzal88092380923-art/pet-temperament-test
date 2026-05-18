@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(netlify *)",
+      "Bash(curl -sI \"https://frabjous-dusk-9711f2.netlify.app/\")",
+      "Bash(curl -sI \"https://frabjous-dusk-9711f2.netlify.app/반려동물_성격테스트.html\")",
+      "Bash(curl -sI \"https://frabjous-dusk-9711f2.netlify.app/반려동물_analytics.html\")",
+      "Bash(curl -sI \"https://frabjous-dusk-9711f2.netlify.app/quiz.html\")",
+      "Bash(curl -sI \"https://frabjous-dusk-9711f2.netlify.app/dashboard.html\")",
+      "Bash(grep -n '${petName}이\\\\|${p}이\\\\|petName+.이' /Users/jh/Desktop/main/quiz.html)",
+      "Bash(grep -E '\\\\$\\\\{\\(petName|p\\)\\\\}이|petName.*\\\\+.*이|이의|이는|이에게|이가|이를|이!')",
+      "Bash(grep -nE '\\\\$\\\\{\\(petName|p\\)\\\\}이|petName.*\\\\+.*\\\\x27이\\\\x27' /Users/jh/Desktop/main/quiz.html)",
+      "Bash(curl -s \"https://frabjous-dusk-9711f2.netlify.app/quiz.html\")",
+      "Bash(curl -s https://frabjous-dusk-9711f2.netlify.app/__TRACKED_VAR__)",
+      "Bash(curl *)",
+      "Bash(npm --version)",
+      "Bash(npm root *)",
+      "Bash(npm list *)",
+      "Bash(npm install *)",
+      "Bash(node /tmp/og_capture.js)",
+      "Bash(node og_capture.js)",
+      "Bash(node -c /Users/jh/Desktop/main/netlify/functions/ga4-dashboard.js)",
+      "Bash(node *)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
+    ]
+  }
+}

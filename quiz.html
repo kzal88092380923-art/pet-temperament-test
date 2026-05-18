@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d1117">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<title>🐶🐱 우리 댕댕이·냥이 성격 분석</title>
+<meta name="description" content="우리 강아지·고양이·반려동물 성격을 12가지 질문으로 분석하고 맞춤 케어 팁과 추천 용품을 알려드려요 🐶🐱🐰">
+<!-- Open Graph (카톡·페북·인스타 미리보기) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="댕냥 성격 분석">
+<meta property="og:title" content="우리 아이 성격 테스트해봐!">
+<meta property="og:description" content="12가지 질문으로 기질 분석 + 케어 팁">
+<meta property="og:image" content="https://frabjous-dusk-9711f2.netlify.app/og-image.png?v=3">
+<meta property="og:image:secure_url" content="https://frabjous-dusk-9711f2.netlify.app/og-image.png?v=3">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="우리 댕댕이·냥이 성격 분석">
+<meta property="og:url" content="https://frabjous-dusk-9711f2.netlify.app/quiz.html?v=3">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="우리 아이 성격 테스트해봐!">
+<meta name="twitter:description" content="12가지 질문으로 기질 분석 + 케어 팁">
+<meta name="twitter:image" content="https://frabjous-dusk-9711f2.netlify.app/og-image.png?v=3">
+<link rel="canonical" href="https://frabjous-dusk-9711f2.netlify.app/quiz.html">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HFQCEBY2PW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HFQCEBY2PW');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- html2canvas (결과 이미지 저장용) -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<style>
+:root{
+  --bg:#0d1117;--surface:#161b22;--card:#1c2128;
+  --border:rgba(255,255,255,0.07);
+  --orange:#f4845f;--orange-lt:#f7a88a;--orange-dim:rgba(244,132,95,0.13);
+  --teal:#4ec9b0;--teal-dim:rgba(78,201,176,0.12);
+  --purple:#c084fc;--purple-dim:rgba(192,132,252,0.1);
+  --text:#f0ede8;--text2:#9a9080;--text3:#52504a;
+  --success:#5aaa78;--danger:#e05a5a;
+  --r:12px;--touch:48px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans','Noto Sans KR',sans-serif;font-size:14px;min-height:100vh;}
+
+/* ── 진행바 ── */
+.prog-bar{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:40;padding:10px 18px;display:flex;align-items:center;gap:10px;}
+.prog-track{flex:1;height:3px;background:rgba(255,255,255,0.07);border-radius:50px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--orange),var(--orange-lt));border-radius:50px;transition:width 0.4s ease;}
+.prog-label{font-size:0.68rem;color:var(--text3);letter-spacing:0.04em;white-space:nowrap;}
+
+/* ── 섹션 전환 배너 ── */
+.sec-banner{display:none;position:fixed;inset:0;background:var(--bg);z-index:80;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center;}
+.sec-banner.show{display:flex;animation:fadeUp 0.3s ease;}
+.sec-banner-icon{font-size:3rem;margin-bottom:14px;}
+.sec-banner-tag{display:inline-block;padding:4px 14px;border-radius:50px;font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px;border:1px solid;}
+.sec-banner-title{font-size:1.4rem;font-weight:500;color:var(--text);margin-bottom:8px;letter-spacing:-0.02em;}
+.sec-banner-desc{font-size:0.84rem;color:var(--text2);line-height:1.85;font-weight:300;max-width:280px;margin-bottom:28px;}
+.sec-banner-qcount{font-size:0.72rem;color:var(--text3);margin-bottom:20px;}
+.sec-banner-btn{padding:14px 36px;border:none;border-radius:12px;background:var(--orange);color:#fff;font-family:inherit;font-size:0.92rem;font-weight:600;cursor:pointer;}
+.sec-banner-btn:active{opacity:0.85;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.tablet-layout{display:block;max-width:100%;margin:0 auto;}
+.sidebar,.right-panel{display:none;}
+.main-content{padding:0;}
+.wrap{padding:14px 16px 120px;}
+.screen{display:none;}
+.screen.active{display:block;animation:slideUp 0.22s cubic-bezier(0.4,0,0.2,1);}
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.s-label{font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--orange);margin-bottom:4px;font-weight:500;}
+.s-title{font-size:1.15rem;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.35;letter-spacing:-0.02em;}
+.s-title .sub{display:block;font-size:0.74rem;color:var(--text2);font-weight:300;margin-top:3px;}
+
+/* ── 선택지 ── */
+.opts{display:grid;grid-template-columns:1fr;gap:6px;}
+.opts.col1{grid-template-columns:1fr;}
+.opt{padding:11px 10px;min-height:var(--touch);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:inherit;font-size:0.82rem;color:var(--text2);background:var(--card);transition:border-color 0.15s cubic-bezier(0.4,0,0.2,1),background 0.15s cubic-bezier(0.4,0,0.2,1),color 0.15s cubic-bezier(0.4,0,0.2,1),transform 0.12s cubic-bezier(0.4,0,0.2,1);text-align:center;display:flex;align-items:center;justify-content:center;line-height:1.3;-webkit-user-select:none;user-select:none;}
+.opt:active{transform:scale(0.96);transition:transform 0.08s cubic-bezier(0.4,0,0.2,1);}
+.opt.sel{border-color:var(--orange);background:var(--orange-dim);color:var(--orange-lt);font-weight:500;}
+.opt.full{grid-column:1/-1;}
+
+/* ── 펫 선택 ── */
+.pet-types{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.pet-btn{padding:18px 10px;border:1px solid var(--border);border-radius:14px;cursor:pointer;font-family:inherit;text-align:center;background:var(--card);transition:border-color 0.15s cubic-bezier(0.4,0,0.2,1),background 0.15s cubic-bezier(0.4,0,0.2,1),transform 0.12s cubic-bezier(0.4,0,0.2,1);-webkit-user-select:none;user-select:none;}
+.pet-btn:active{transform:scale(0.95);transition:transform 0.08s cubic-bezier(0.4,0,0.2,1);}
+.pet-btn.sel{border-color:var(--orange);background:var(--orange-dim);}
+.pet-icon{font-size:2.2rem;display:block;margin-bottom:6px;}
+.pet-name{font-size:0.92rem;font-weight:500;color:var(--text);}
+.pet-btn.sel .pet-name{color:var(--orange-lt);}
+.pet-desc{font-size:0.7rem;color:var(--text3);margin-top:2px;}
+
+/* ── 나이·성별 칩 ── */
+.chip-row{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;}
+.chip{padding:8px 14px;border:1px solid var(--border);border-radius:50px;cursor:pointer;font-family:inherit;font-size:0.83rem;color:var(--text2);background:var(--card);transition:border-color 0.15s cubic-bezier(0.4,0,0.2,1),background 0.15s cubic-bezier(0.4,0,0.2,1),transform 0.12s cubic-bezier(0.4,0,0.2,1);-webkit-user-select:none;user-select:none;}
+.chip:active{transform:scale(0.92);transition:transform 0.08s cubic-bezier(0.4,0,0.2,1);}
+.chip.sel{border-color:var(--orange);background:var(--orange-dim);color:var(--orange-lt);font-weight:500;}
+
+/* 이름 입력 */
+input[type=text]{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:11px;font-family:inherit;font-size:0.95rem;color:var(--text);background:rgba(255,255,255,0.03);outline:none;transition:border-color 0.2s;}
+input:focus{border-color:rgba(244,132,95,0.4);}
+input::placeholder{color:var(--text3);}
+
+/* ── nav ── */
+.nav{position:fixed;bottom:0;left:0;right:0;display:flex;flex-direction:column;gap:6px;padding:10px 16px;padding-bottom:calc(10px + env(safe-area-inset-bottom));background:rgba(13,17,23,0.96);backdrop-filter:blur(14px);border-top:1px solid var(--border);z-index:50;transition:opacity 0.12s ease,transform 0.12s ease;}
+body.nav-switching .nav,.sec-banner.show + .tablet-layout .nav{opacity:0;pointer-events:none;transform:translateY(8px);}
+.err{display:none;color:var(--danger);font-size:0.78rem;padding:7px 12px;background:rgba(224,90,90,0.08);border:1px solid rgba(224,90,90,0.15);border-radius:8px;}
+.err.show{display:block;}
+.nav-btns{display:flex;gap:8px;}
+.btn-back{flex:1;padding:13px;border:1px solid var(--border);border-radius:11px;background:transparent;font-family:inherit;font-size:0.88rem;color:var(--text3);cursor:pointer;}
+.btn-next{flex:2;padding:13px;border:none;border-radius:11px;background:var(--orange);color:#fff;font-family:inherit;font-size:0.92rem;font-weight:600;cursor:pointer;}
+.btn-next:active{opacity:0.85;}
+
+/* ── 로딩 ── */
+.loading-wrap{display:none;position:fixed;inset:0;background:var(--bg);z-index:100;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;}
+.loading-wrap.show{display:flex;}
+.l-icon{font-size:3rem;margin-bottom:16px;animation:bounce 0.9s ease-in-out infinite;}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.l-title{font-size:1.1rem;font-weight:500;text-align:center;margin-bottom:6px;}
+.l-sub{font-size:0.82rem;color:var(--text2);text-align:center;margin-bottom:28px;}
+.l-steps{width:100%;max-width:300px;display:flex;flex-direction:column;gap:9px;}
+.lstep{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;opacity:0.3;transition:all 0.3s;}
+.lstep.active{opacity:1;border-color:rgba(244,132,95,0.35);background:rgba(244,132,95,0.07);}
+.lstep.done{opacity:0.6;border-color:rgba(90,170,120,0.25);}
+.ldot{width:7px;height:7px;border-radius:50%;background:var(--text3);flex-shrink:0;transition:all 0.3s;}
+.lstep.active .ldot{background:var(--orange);box-shadow:0 0 6px rgba(244,132,95,0.5);animation:dp 0.8s ease-in-out infinite;}
+.lstep.done .ldot{background:var(--success);}
+@keyframes dp{0%,100%{transform:scale(1)}50%{transform:scale(1.4)}}
+.ltext{font-size:0.84rem;color:var(--text2);}
+.lstep.active .ltext{color:var(--orange-lt);}
+.lprog-bg{margin-top:22px;width:100%;max-width:300px;height:2px;background:rgba(255,255,255,0.07);border-radius:50px;overflow:hidden;}
+.lprog-fill{height:100%;background:linear-gradient(90deg,var(--orange),var(--orange-lt));border-radius:50px;transition:width 0.4s ease;width:0%;}
+
+/* ── 결과 ── */
+.result-wrap{display:none;}
+.result-wrap.show{display:block;}
+
+.r-hero{padding:28px 20px 22px;text-align:center;background:var(--surface);border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.r-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(244,132,95,0.1) 0%,transparent 70%);}
+.r-pet-icon{font-size:3.2rem;display:block;margin-bottom:10px;position:relative;}
+.r-type-badge{display:inline-block;border:1px solid rgba(244,132,95,0.3);border-radius:50px;padding:4px 14px;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--orange);margin-bottom:10px;background:rgba(244,132,95,0.07);position:relative;font-weight:500;}
+.r-name{position:relative;font-size:1.35rem;font-weight:500;color:var(--text);margin-bottom:6px;}
+.r-desc{position:relative;font-size:0.84rem;color:var(--text2);line-height:1.85;font-weight:300;}
+
+.r-body{padding:14px 16px 80px;}
+.r-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:10px;}
+.r-card-title{font-size:0.65rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--orange);margin-bottom:12px;}
+.r-card-title.t-teal{color:var(--teal);}
+.r-card-title.t-purple{color:var(--purple);}
+
+/* 특성 점수 */
+.trait-list{display:flex;flex-direction:column;gap:10px;}
+.trait-item{display:flex;align-items:center;gap:10px;}
+.trait-label{font-size:0.76rem;color:var(--text2);width:68px;flex-shrink:0;}
+.trait-bar-bg{flex:1;height:6px;background:rgba(255,255,255,0.07);border-radius:50px;overflow:hidden;}
+.trait-bar-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,var(--orange),var(--orange-lt));transition:width 1s ease;}
+.trait-num{font-size:0.72rem;color:var(--text3);width:32px;text-align:right;flex-shrink:0;}
+
+/* 케어 팁 */
+.tip-list{display:flex;flex-direction:column;gap:8px;}
+.tip-item{display:flex;gap:10px;padding:11px 13px;background:rgba(255,255,255,0.02);border-radius:9px;border:1px solid var(--border);}
+.tip-icon{font-size:1rem;flex-shrink:0;margin-top:1px;}
+.tip-text{font-size:0.84rem;color:var(--text2);line-height:1.7;font-weight:300;}
+.tip-text strong{color:var(--text);font-weight:500;}
+
+/* 추천 용품 - 쿠팡 파트너스 */
+.prod-section-title{font-size:0.72rem;color:var(--text3);margin-bottom:10px;line-height:1.6;}
+.prod-list{display:flex;flex-direction:column;gap:10px;}
+.prod-item{display:flex;align-items:center;gap:12px;padding:14px 13px;background:rgba(255,255,255,0.02);border-radius:11px;border:1px solid var(--border);cursor:pointer;text-decoration:none;transition:border-color 0.08s,background 0.08s;}
+.prod-item:active{background:rgba(255,255,255,0.05);transform:scale(0.99);}
+.prod-item.highlight{border-color:rgba(244,132,95,0.3);background:rgba(244,132,95,0.05);}
+.prod-img{width:52px;height:52px;border-radius:10px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0;}
+.prod-info{flex:1;min-width:0;}
+.prod-name{font-size:0.88rem;font-weight:500;color:var(--text);margin-bottom:3px;line-height:1.3;}
+.prod-why{font-size:0.72rem;color:var(--teal);margin-bottom:4px;}
+.prod-tag{font-size:0.7rem;color:var(--text3);}
+.prod-cta{display:flex;align-items:center;gap:4px;background:var(--orange);color:#fff;border-radius:8px;padding:6px 10px;font-size:0.72rem;font-weight:600;flex-shrink:0;white-space:nowrap;}
+.coupang-notice{font-size:0.65rem;color:var(--text3);text-align:center;margin-top:8px;padding:6px;line-height:1.6;}
+.coupang-notice a{color:var(--orange);text-decoration:none;}
+
+.share-area{padding:0 16px 30px;display:flex;flex-direction:column;gap:8px;}
+.share-btn{width:100%;padding:14px;background:var(--orange);color:#fff;border:none;border-radius:11px;font-family:inherit;font-size:0.92rem;font-weight:600;cursor:pointer;display:block;text-align:center;min-height:48px;}
+.share-btn:active{opacity:0.85;-webkit-transform:scale(0.99);transform:scale(0.99);}
+.share-btn.kakao{background:#fee500;color:#3c1e1e;}
+.share-btn.kakao-result{background:#3c1e1e;color:#fee500;}
+.share-btn.copy{background:transparent;color:var(--text);border:1px solid var(--border);}
+.share-btn.save-img{background:transparent;color:var(--text);border:1px solid var(--border);}
+.share-btn.icon{display:inline-flex;align-items:center;justify-content:center;gap:8px;}
+.share-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.share-grid .share-btn{margin:0;}
+.restart-btn{width:100%;padding:13px;background:transparent;border:1px solid var(--border);border-radius:11px;font-family:inherit;font-size:0.85rem;color:var(--text3);cursor:pointer;display:block;text-align:center;min-height:46px;margin-top:6px;}
+.toast{position:fixed;left:50%;bottom:90px;-webkit-transform:translateX(-50%);transform:translateX(-50%);background:rgba(13,17,23,0.95);color:#fff;padding:11px 18px;border-radius:30px;font-size:0.8rem;z-index:200;border:1px solid var(--border);box-shadow:0 8px 24px rgba(0,0,0,0.3);opacity:0;transition:opacity 0.2s;pointer-events:none;}
+.toast.show{opacity:1;}
+.share-watermark{position:absolute;bottom:14px;right:14px;font-size:11px;color:rgba(255,255,255,0.7);font-weight:500;letter-spacing:0.04em;text-shadow:0 1px 3px rgba(0,0,0,0.4);pointer-events:none;}
+.disclaimer{margin:0 16px 16px;padding:12px 14px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;font-size:0.7rem;color:var(--text3);line-height:1.7;text-align:center;}
+
+/* ════════════════════════════
+   태블릿 (768px ~)
+════════════════════════════ */
+@media(min-width:768px){
+  body{font-size:15px;}
+
+  /* 진행바 */
+  .prog-bar{padding:12px 32px;}
+
+  /* 전체 레이아웃 — 2열 */
+  .tablet-layout{
+    display:grid;
+    grid-template-columns:280px 1fr;
+    min-height:100vh;
+    max-width:900px;
+    margin:0 auto;
+  }
+  .sidebar{display:flex;}
+  .wrap{padding:0;}
+
+  /* 왼쪽 사이드바 */
+  .sidebar{
+    background:var(--surface);
+    border-right:1px solid var(--border);
+    padding:28px 20px;
+    position:sticky;
+    top:56px;
+    height:calc(100vh - 56px);
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+  }
+  .sidebar-title{font-size:1rem;font-weight:500;color:var(--text);margin-bottom:4px;}
+  .sidebar-sub{font-size:0.78rem;color:var(--text2);line-height:1.6;}
+  .sidebar-steps{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+  .sidebar-step{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;border:1px solid transparent;transition:all 0.15s;}
+  .sidebar-step.active{background:var(--orange-dim);border-color:rgba(244,132,95,0.25);}
+  .sidebar-step.done{opacity:0.5;}
+  .sidebar-step-dot{width:8px;height:8px;border-radius:50%;background:var(--text3);flex-shrink:0;}
+  .sidebar-step.active .sidebar-step-dot{background:var(--orange);box-shadow:0 0 5px rgba(244,132,95,0.5);}
+  .sidebar-step.done .sidebar-step-dot{background:var(--success);}
+  .sidebar-step-label{font-size:0.82rem;color:var(--text2);}
+  .sidebar-step.active .sidebar-step-label{color:var(--orange-lt);font-weight:500;}
+  .sidebar-pet-info{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:auto;}
+  .sidebar-pet-icon{font-size:2rem;display:block;text-align:center;margin-bottom:8px;}
+  .sidebar-pet-name{font-size:0.88rem;font-weight:500;color:var(--text);text-align:center;}
+  .sidebar-pet-meta{font-size:0.72rem;color:var(--text3);text-align:center;margin-top:2px;}
+
+  /* 메인 콘텐츠 */
+  .main-content{padding:28px 32px 100px;}
+
+  /* 선택지 — 태블릿에서 넓게 */
+  .opts{grid-template-columns:1fr 1fr;gap:8px;}
+  .opts.col1{grid-template-columns:1fr;}
+  .opt{padding:13px 14px;font-size:0.88rem;min-height:50px;}
+
+  /* 나이 칩 */
+  .age-chip{padding:10px 16px;font-size:0.9rem;}
+
+  /* 섹션 제목 */
+  .s-label{font-size:0.68rem;}
+  .s-title{font-size:1.3rem;margin-bottom:16px;}
+
+  /* 펫 타입 */
+  .pet-types{grid-template-columns:1fr 1fr;gap:12px;}
+  .pet-btn{padding:22px 14px;}
+  .pet-icon{font-size:2.6rem;}
+  .pet-name{font-size:1rem;}
+
+  /* nav — 사이드바 옆에 있으므로 위치 조정 */
+  .nav{
+    left:280px;
+    padding:12px 32px;
+    padding-bottom:calc(12px + env(safe-area-inset-bottom));
+  }
+
+  /* 결과 화면 */
+  .r-hero{padding:36px 40px 28px;}
+  .r-pet-icon{font-size:4rem;}
+  .r-name{font-size:1.6rem;}
+  .r-body{padding:20px 32px 80px;}
+  .r-card{padding:20px;}
+
+  /* 특성 점수 2열 */
+  .trait-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+  /* 공유 */
+  .share-area{padding:0 32px 30px;display:flex;gap:10px;}
+  .share-btn,.restart-btn{flex:1;margin-bottom:0;}
+}
+
+/* ════════════════════════════
+   PC (1024px ~)
+════════════════════════════ */
+@media(min-width:1024px){
+  body{font-size:15px;}
+  .prog-bar{padding:14px 40px;}
+
+  /* 3단 레이아웃 */
+  .tablet-layout{
+    grid-template-columns:300px 1fr 280px;
+    max-width:1280px;
+  }
+
+  /* 왼쪽 사이드바 넓어짐 */
+  .sidebar{padding:32px 24px;}
+  .sidebar-title{font-size:1.1rem;}
+
+  /* 오른쪽 패널 */
+  .right-panel{
+    background:var(--surface);
+    border-left:1px solid var(--border);
+    padding:28px 20px;
+    position:sticky;
+    top:56px;
+    height:calc(100vh - 56px);
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .right-panel-title{font-size:0.65rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:4px;}
+  .right-tip{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;}
+  .right-tip-icon{font-size:1.4rem;margin-bottom:6px;display:block;}
+  .right-tip-text{font-size:0.78rem;color:var(--text2);line-height:1.7;}
+  .right-tip-text strong{color:var(--text);font-weight:500;}
+  .right-notice{font-size:0.7rem;color:var(--text3);line-height:1.7;padding:10px 12px;background:rgba(255,255,255,0.02);border-radius:8px;border:1px solid var(--border);}
+
+  /* 메인 콘텐츠 */
+  .main-content{padding:32px 40px 100px;max-width:600px;}
+
+  /* nav */
+  .nav{left:300px;right:280px;padding:14px 40px;}
+
+  /* 선택지 더 크게 */
+  .opt{padding:14px 16px;font-size:0.9rem;border-radius:12px;}
+
+  /* 결과 */
+  .r-hero{padding:48px 60px 36px;}
+  .r-pet-icon{font-size:5rem;}
+  .r-name{font-size:1.8rem;}
+  .r-body{padding:24px 40px 80px;}
+  .share-area{padding:0 40px 40px;}
+
+  /* 섹션 배너 — PC에서 중앙 팝업 */
+  .sec-banner{background:rgba(13,17,23,0.85);backdrop-filter:blur(12px);}
+  .sec-banner > *{position:relative;z-index:1;}
+}
+</style>
+
+</head>
+<body>
+
+<!-- 진행바 -->
+<div class="prog-bar" id="progBar">
+  <div class="prog-track"><div class="prog-fill" id="progFill" style="width:5%"></div></div>
+  <div class="prog-label" id="progLabel">기본 정보</div>
+</div>
+
+<!-- 섹션 전환 배너 -->
+<div class="sec-banner" id="secBanner">
+  <div class="sec-banner-icon" id="bannerIcon">🐾</div>
+  <div class="sec-banner-tag" id="bannerTag"></div>
+  <div class="sec-banner-title" id="bannerTitle"></div>
+  <div class="sec-banner-desc" id="bannerDesc"></div>
+  <div class="sec-banner-qcount" id="bannerCount"></div>
+  <button class="sec-banner-btn" onclick="closeBanner()">시작할게요 →</button>
+</div>
+
+<!-- 태블릿·PC용 레이아웃 wrapper -->
+<div class="tablet-layout">
+
+<!-- ── 왼쪽 사이드바 (태블릿·PC에서만 표시) ── -->
+<div class="sidebar" id="sidebar">
+  <div>
+    <div class="sidebar-title">🐾 우리 아이 성격 분석</div>
+    <div class="sidebar-sub">12가지 질문으로<br>반려동물의 기질을 분석해요</div>
+  </div>
+  <div>
+    <div class="sidebar-step-label" style="font-size:0.65rem;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;">진행 섹션</div>
+    <div class="sidebar-steps">
+      <div class="sidebar-step active" id="ss_0">
+        <div class="sidebar-step-dot"></div>
+        <span class="sidebar-step-label">기본 정보</span>
+      </div>
+      <div class="sidebar-step" id="ss_1">
+        <div class="sidebar-step-dot"></div>
+        <span class="sidebar-step-label">⚡ 성격·에너지</span>
+      </div>
+      <div class="sidebar-step" id="ss_2">
+        <div class="sidebar-step-dot"></div>
+        <span class="sidebar-step-label">🤝 사회성·관계</span>
+      </div>
+      <div class="sidebar-step" id="ss_3">
+        <div class="sidebar-step-dot"></div>
+        <span class="sidebar-step-label">🏠 생활·습관</span>
+      </div>
+      <div class="sidebar-step" id="ss_4">
+        <div class="sidebar-step-dot"></div>
+        <span class="sidebar-step-label">🔬 건강·특성</span>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar-pet-info" id="sidebarPetInfo" style="display:none;">
+    <span class="sidebar-pet-icon" id="sidebarIcon">🐾</span>
+    <div class="sidebar-pet-name" id="sidebarName">—</div>
+    <div class="sidebar-pet-meta" id="sidebarMeta">—</div>
+  </div>
+</div>
+
+<!-- ── 메인 콘텐츠 ── -->
+<div class="main-content">
+<div class="wrap" id="formWrap">
+
+  <!-- ── Step 0: 기본 정보 ── -->
+  <div class="screen active" id="s0">
+    <div class="s-label">시작</div>
+    <div class="s-title">우리 아이를 소개해 주세요</div>
+
+    <!-- 동물 유형 -->
+    <div class="pet-types" id="petTypeOpts">
+      <div class="pet-btn" onclick="selPetType(this,'dog')">
+        <span class="pet-icon">🐶</span>
+        <div class="pet-name">강아지</div>
+        <div class="pet-desc">댕댕이</div>
+      </div>
+      <div class="pet-btn" onclick="selPetType(this,'cat')">
+        <span class="pet-icon">🐱</span>
+        <div class="pet-name">고양이</div>
+        <div class="pet-desc">냥냥이</div>
+      </div>
+      <div class="pet-btn" onclick="selPetType(this,'rabbit')">
+        <span class="pet-icon">🐰</span>
+        <div class="pet-name">토끼</div>
+        <div class="pet-desc">폴짝폴짝</div>
+      </div>
+      <div class="pet-btn" onclick="selPetType(this,'other')">
+        <span class="pet-icon">🐹</span>
+        <div class="pet-name">기타</div>
+        <div class="pet-desc">직접 입력</div>
+      </div>
+    </div>
+    <input type="hidden" id="q_pet_type">
+
+    <!-- 강아지 세분화 -->
+    <div id="dogSizeWrap" style="display:none;margin-bottom:14px;">
+      <div class="s-label" style="margin-bottom:6px;">크기</div>
+      <div class="chip-row" id="dogSizeChips">
+        <div class="chip" onclick="selChip(this,'dogSize','소형견')">🐩 소형견 (7kg 미만)</div>
+        <div class="chip" onclick="selChip(this,'dogSize','중형견')">🐕 중형견 (7~25kg)</div>
+        <div class="chip" onclick="selChip(this,'dogSize','대형견')">🦮 대형견 (25kg 이상)</div>
+      </div>
+      <input type="hidden" id="q_dog_size">
+    </div>
+
+    <!-- 고양이 세분화 -->
+    <div id="catTypeWrap" style="display:none;margin-bottom:14px;">
+      <div class="s-label" style="margin-bottom:6px;">생활 환경</div>
+      <div class="chip-row" id="catTypeChips">
+        <div class="chip" onclick="selChip(this,'catType','완전실내')">🏠 완전 실내</div>
+        <div class="chip" onclick="selChip(this,'catType','실내외겸용')">🌿 실내외 겸용</div>
+        <div class="chip" onclick="selChip(this,'catType','다묘가정')">🐱🐱 다묘 가정</div>
+      </div>
+      <input type="hidden" id="q_cat_type">
+    </div>
+
+    <!-- 기타 동물 주관식 -->
+    <div id="otherAnimalWrap" style="display:none;margin-bottom:14px;">
+      <div class="s-label" style="margin-bottom:6px;">어떤 동물인가요?</div>
+      <input type="text" id="q_other_animal" placeholder="예: 햄스터, 앵무새, 고슴도치, 페럿" maxlength="20">
+    </div>
+
+    <!-- 이름 -->
+    <div style="margin-bottom:14px;">
+      <div class="s-label" style="margin-bottom:6px;">이름</div>
+      <input type="text" id="q_pet_name" placeholder="예: 콩이, 모카, 나비" maxlength="10">
+    </div>
+
+    <!-- 나이 -->
+    <div style="margin-bottom:14px;">
+      <div class="s-label" style="margin-bottom:6px;">나이</div>
+      <div class="chip-row" id="ageChips">
+        <div class="chip" onclick="selChip(this,'age','1세 미만')">1세 미만</div>
+        <div class="chip" onclick="selChip(this,'age','1~3세')">1~3세</div>
+        <div class="chip" onclick="selChip(this,'age','4~7세')">4~7세</div>
+        <div class="chip" onclick="selChip(this,'age','8세 이상')">8세 이상</div>
+      </div>
+      <input type="hidden" id="q_age">
+    </div>
+
+    <!-- 성별 -->
+    <div>
+      <div class="s-label" style="margin-bottom:6px;">성별</div>
+      <div class="chip-row" id="genderChips">
+        <div class="chip" onclick="selChip(this,'gender','남아')">🐾 남아</div>
+        <div class="chip" onclick="selChip(this,'gender','여아')">🌸 여아</div>
+        <div class="chip" onclick="selChip(this,'gender','중성화')">✂️ 중성화</div>
+      </div>
+      <input type="hidden" id="q_gender">
+    </div>
+  </div>
+
+  <!-- ══ 섹션 1: 성격·에너지 ══ -->
+  <div class="screen" id="s1">
+    <div class="s-label">성격·에너지 · 1 / 3</div>
+    <div class="s-title" id="q1t">평소 에너지 레벨이 어때요?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q1','넘쳐흘러요')">⚡ 넘쳐흘러요</div>
+      <div class="opt" onclick="selOpt(this,'q1','활발한 편')">🏃 활발해요</div>
+      <div class="opt" onclick="selOpt(this,'q1','보통이에요')">😊 보통이에요</div>
+      <div class="opt" onclick="selOpt(this,'q1','조용해요')">😴 조용해요</div>
+    </div>
+    <input type="hidden" id="q1">
+  </div>
+
+  <div class="screen" id="s2">
+    <div class="s-label">성격·에너지 · 2 / 3</div>
+    <div class="s-title" id="q2t">고집이 있는 편인가요?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q2','매우 고집 있어요')">👑 내 마음대로</div>
+      <div class="opt" onclick="selOpt(this,'q2','조금 고집 있어요')">😏 가끔 고집</div>
+      <div class="opt" onclick="selOpt(this,'q2','순한 편이에요')">😇 순해요</div>
+      <div class="opt" onclick="selOpt(this,'q2','매우 순해요')">🕊️ 매우 순해요</div>
+    </div>
+    <input type="hidden" id="q2">
+  </div>
+
+  <div class="screen" id="s3">
+    <div class="s-label">성격·에너지 · 3 / 3</div>
+    <div class="s-title" id="q3t">호기심이 많은 편인가요?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q3','탐험가 타입')">🔍 탐험가예요</div>
+      <div class="opt" onclick="selOpt(this,'q3','관심 있는 것만')">👀 선택적으로</div>
+      <div class="opt" onclick="selOpt(this,'q3','별로 없어요')">😑 별로 없어요</div>
+      <div class="opt" onclick="selOpt(this,'q3','겁이 많아요')">😨 겁쟁이예요</div>
+    </div>
+    <input type="hidden" id="q3">
+  </div>
+
+  <!-- ══ 섹션 2: 사회성·관계 ══ -->
+  <div class="screen" id="s4">
+    <div class="s-label">사회성·관계 · 1 / 3</div>
+    <div class="s-title" id="q4t">낯선 사람을 만나면?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q4','먼저 다가가요')">🤝 먼저 가요</div>
+      <div class="opt" onclick="selOpt(this,'q4','살펴보다 친해져요')">👀 살펴봐요</div>
+      <div class="opt" onclick="selOpt(this,'q4','뒤에 숨어요')">🙈 숨어요</div>
+      <div class="opt" onclick="selOpt(this,'q4','짖거나 경계해요')">⚠️ 경계해요</div>
+    </div>
+    <input type="hidden" id="q4">
+  </div>
+
+  <div class="screen" id="s5">
+    <div class="s-label">사회성·관계 · 2 / 3</div>
+    <div class="s-title" id="q5t">보호자와 떨어지면?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q5','심하게 불안해해요')">😰 많이 불안</div>
+      <div class="opt" onclick="selOpt(this,'q5','조금 기다려요')">🕐 조금 기다려</div>
+      <div class="opt" onclick="selOpt(this,'q5','혼자 잘 놀아요')">🎮 혼자 잘 놀아</div>
+      <div class="opt" onclick="selOpt(this,'q5','더 자유로워해요')">🦅 자유로워요</div>
+    </div>
+    <input type="hidden" id="q5">
+  </div>
+
+  <div class="screen" id="s6">
+    <div class="s-label">사회성·관계 · 3 / 3</div>
+    <div class="s-title" id="q6t">스킨십을 얼마나 좋아하나요?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q6','껌딱지예요')">🫂 껌딱지</div>
+      <div class="opt" onclick="selOpt(this,'q6','좋아해요')">💛 좋아해요</div>
+      <div class="opt" onclick="selOpt(this,'q6','가끔 허락해요')">🤏 가끔만</div>
+      <div class="opt" onclick="selOpt(this,'q6','건드리지 마세요')">✋ 싫어요</div>
+    </div>
+    <input type="hidden" id="q6">
+  </div>
+
+  <!-- ══ 섹션 3: 생활·습관 ══ -->
+  <div class="screen" id="s7">
+    <div class="s-label">생활·습관 · 1 / 3</div>
+    <div class="s-title" id="q7t">밥은 잘 먹나요?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q7','뭐든 잘 먹어요')">😋 뭐든 잘 먹어요</div>
+      <div class="opt" onclick="selOpt(this,'q7','편식이 있어요')">🙅 편식해요</div>
+      <div class="opt" onclick="selOpt(this,'q7','식욕이 없어요')">😐 별로 안 먹어요</div>
+      <div class="opt" onclick="selOpt(this,'q7','과식하는 편')">🐷 너무 많이 먹어요</div>
+    </div>
+    <input type="hidden" id="q7">
+  </div>
+
+  <div class="screen" id="s8">
+    <div class="s-label">생활·습관 · 2 / 3</div>
+    <div class="s-title" id="q8t">잠은 어떻게 자나요?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q8','어디서든 잘 자요')">😴 어디든 잘 자요</div>
+      <div class="opt" onclick="selOpt(this,'q8','보호자 곁에서만')">🛌 곁에서만 자요</div>
+      <div class="opt" onclick="selOpt(this,'q8','잘 못 자요')">😟 잘 못 자요</div>
+      <div class="opt" onclick="selOpt(this,'q8','하루종일 자요')">💤 너무 많이 자요</div>
+    </div>
+    <input type="hidden" id="q8">
+  </div>
+
+  <div class="screen" id="s9">
+    <div class="s-label">생활·습관 · 3 / 3</div>
+    <div class="s-title" id="q9t">훈련·규칙을 잘 따르나요?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q9','천재예요')">🧠 금방 배워요</div>
+      <div class="opt" onclick="selOpt(this,'q9','노력하면 돼요')">👍 노력하면</div>
+      <div class="opt" onclick="selOpt(this,'q9','기분에 따라')">😏 기분 따라요</div>
+      <div class="opt" onclick="selOpt(this,'q9','내 마음대로')">👑 내 맘대로</div>
+    </div>
+    <input type="hidden" id="q9">
+  </div>
+
+  <!-- ══ 섹션 4: 건강·특성 ══ -->
+  <div class="screen" id="s10">
+    <div class="s-label">건강·특성 · 1 / 3</div>
+    <div class="s-title" id="q10t">소리·환경 변화에 예민한가요?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q10','매우 예민해요')">😱 매우 예민</div>
+      <div class="opt" onclick="selOpt(this,'q10','조금 예민해요')">😟 조금 예민</div>
+      <div class="opt" onclick="selOpt(this,'q10','보통이에요')">😌 보통이에요</div>
+      <div class="opt" onclick="selOpt(this,'q10','둔감해요')">🪨 둔감해요</div>
+    </div>
+    <input type="hidden" id="q10">
+  </div>
+
+  <div class="screen" id="s11">
+    <div class="s-label">건강·특성 · 2 / 3</div>
+    <div class="s-title" id="q11t">장난감·놀이를 좋아하나요?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q11','장난감 없으면 못 살아요')">🎯 장난감 덕후</div>
+      <div class="opt" onclick="selOpt(this,'q11','좋아하는 편')">😄 좋아해요</div>
+      <div class="opt" onclick="selOpt(this,'q11','가끔 관심')">🤔 가끔 해요</div>
+      <div class="opt" onclick="selOpt(this,'q11','별로 안 좋아해요')">😑 관심 없어요</div>
+    </div>
+    <input type="hidden" id="q11">
+  </div>
+
+  <div class="screen" id="s12">
+    <div class="s-label">건강·특성 · 3 / 3</div>
+    <div class="s-title" id="q12t">문제 행동이 있나요?</div>
+    <div class="opts col1">
+      <div class="opt" onclick="selOpt(this,'q12','없어요 — 모범생')">😇 없어요 — 모범생이에요</div>
+      <div class="opt" onclick="selOpt(this,'q12','짖음이 심해요')">📢 짖음이 심해요</div>
+      <div class="opt" onclick="selOpt(this,'q12','물건을 부숴요')">💥 물건을 부숴요</div>
+      <div class="opt" onclick="selOpt(this,'q12','분리불안이 있어요')">😰 분리불안이 있어요</div>
+    </div>
+    <input type="hidden" id="q12">
+  </div>
+
+</div><!-- /wrap formWrap -->
+
+<!-- 통합 nav (모든 스크린이 공유) -->
+<div class="nav" id="mainNav">
+  <div class="err" id="err0">⚠️ 모든 정보를 입력해 주세요</div>
+  <div class="nav-btns" id="navBtns">
+    <button class="btn-next" onclick="startSection(1)" style="flex:1">다음 →</button>
+  </div>
+</div>
+</div><!-- /main-content -->
+
+<!-- ── 오른쪽 패널 (PC에서만 표시) ── -->
+<div class="right-panel" id="rightPanel">
+  <div class="right-panel-title">💡 알아두면 좋아요</div>
+  <div class="right-tip" id="rightTip">
+    <span class="right-tip-icon">🐾</span>
+    <div class="right-tip-text">반려동물의 성격은 <strong>유전·환경·경험</strong>이 함께 만들어가요. 타고난 기질을 이해하면 더 행복한 관계가 시작돼요.</div>
+  </div>
+  <div class="right-tip">
+    <span class="right-tip-icon">⚡</span>
+    <div class="right-tip-text"><strong>에너지가 높은 아이</strong>일수록 충분한 운동과 두뇌 자극이 필요해요. 하루 2회 이상 산책을 권장해요.</div>
+  </div>
+  <div class="right-tip">
+    <span class="right-tip-icon">🌿</span>
+    <div class="right-tip-text"><strong>불안이 많은 아이</strong>는 일관된 루틴이 가장 중요해요. 같은 시간에 밥·산책·취침을 반복해주세요.</div>
+  </div>
+  <div class="right-notice">
+    이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
+  </div>
+</div>
+
+</div><!-- /tablet-layout -->
+
+<!-- 로딩 -->
+<div class="loading-wrap" id="loadingWrap">
+  <div class="l-icon" id="lIcon">🐾</div>
+  <div class="l-title" id="lTitle">성격 분석 중...</div>
+  <div class="l-sub">12가지 항목을 종합 분석하고 있어요</div>
+  <div class="l-steps">
+    <div class="lstep" id="ls0"><div class="ldot"></div><span class="ltext">응답 데이터 수집 중</span></div>
+    <div class="lstep" id="ls1"><div class="ldot"></div><span class="ltext">성격 유형 분석 중</span></div>
+    <div class="lstep" id="ls2"><div class="ldot"></div><span class="ltext">맞춤 케어 팁 생성 중</span></div>
+    <div class="lstep" id="ls3"><div class="ldot"></div><span class="ltext">추천 용품 매칭 중</span></div>
+  </div>
+  <div class="lprog-bg"><div class="lprog-fill" id="lprogFill"></div></div>
+</div>
+
+<!-- 결과 -->
+<div class="result-wrap" id="resultWrap">
+  <div class="r-hero">
+    <span class="r-pet-icon" id="rIcon"></span>
+    <div class="r-type-badge" id="rBadge"></div>
+    <div class="r-name" id="rName"></div>
+    <div class="r-desc" id="rDesc"></div>
+  </div>
+  <div class="r-body">
+    <div class="r-card">
+      <div class="r-card-title">✦ 성격 특성 분석</div>
+      <div class="trait-list" id="traitList"></div>
+    </div>
+    <div class="r-card" style="border-color:rgba(244,132,95,0.2);background:#1e1a17;">
+      <div class="r-card-title">✦ 종합 분석</div>
+      <div id="summaryText" style="font-size:0.86rem;color:var(--text2);line-height:2;font-weight:300;"></div>
+    </div>
+    <div class="r-card">
+      <div class="r-card-title t-teal">✦ 맞춤 케어 팁</div>
+      <div class="tip-list" id="tipList"></div>
+    </div>
+    <div class="r-card">
+      <div class="r-card-title t-purple">✦ 맞춤 추천 용품</div>
+      <div class="prod-section-title" id="prodSubtitle"></div>
+      <div class="prod-list" id="prodList"></div>
+      <div class="coupang-notice">
+        이 포스팅은 쿠팡 파트너스 활동의 일환으로<br>
+        일정액의 수수료를 제공받을 수 있습니다.
+      </div>
+    </div>
+  </div>
+  <div class="disclaimer">이 결과는 재미로 보는 성격 참고 분석이에요 😊</div>
+  <div class="share-area">
+    <button class="share-btn kakao icon" type="button" onclick="shareTestKakao()">💬 카톡 — 테스트 공유</button>
+    <button class="share-btn kakao-result icon" type="button" onclick="shareResultKakao()">🎉 카톡 — 결과 공유</button>
+    <div class="share-grid">
+      <button class="share-btn copy icon" type="button" onclick="copyShareLink()">🔗 링크 복사</button>
+      <button class="share-btn save-img icon" type="button" onclick="saveResultImage()">📸 이미지 저장</button>
+    </div>
+    <button class="restart-btn" type="button" onclick="restart()">다시 테스트하기</button>
+  </div>
+</div>
+<div class="toast" id="shareToast"></div>
+
+<script>
+const petIcons={dog:'🐶',cat:'🐱',rabbit:'🐰',other:'🐹'};
+let step=0,petType='',petName='',petAge='',petGender='';
+let dogSize='',catType='',otherAnimal='';
+let answers={};
+let bannerCallback=null;
+let isSubmitting=false;
+let navSwitchTimer=null;
+
+// ── 한글 받침 검사 + 이름 보정 ──
+// 받침 있음: 이름+'이' (예: 콩→콩이)
+// 받침 없음·한글 아님: 이름 그대로 (예: 모찌→모찌)
+function hasJong(s){
+  if(!s) return false;
+  const c=s.charCodeAt(s.length-1);
+  if(c<0xAC00||c>0xD7A3) return false;
+  return (c-0xAC00)%28!==0;
+}
+function nm(name){return hasJong(name)?name+'이':name;}
+
+// ── 애널리틱스 트래킹 (localStorage 기반) ──
+const ANALYTICS_KEY='petTestAnalytics_v1';
+function loadAnalytics(){
+  try{return JSON.parse(localStorage.getItem(ANALYTICS_KEY))||{events:[]};}
+  catch(e){return{events:[]};}
+}
+function trackEvent(type,data){
+  // localStorage (커스텀 대시보드용)
+  try{
+    const d=loadAnalytics();
+    d.events.push(Object.assign({type,t:Date.now()},data||{}));
+    if(d.events.length>10000) d.events=d.events.slice(-10000);
+    localStorage.setItem(ANALYTICS_KEY,JSON.stringify(d));
+  }catch(e){}
+  // GA4 이벤트 동시 전송
+  if(typeof gtag==='function'){
+    try{gtag('event',type,data||{});}catch(e){}
+  }
+}
+// 페이지 진입 = visit
+trackEvent('visit');
+
+function escapeHTML(value){
+  return String(value??'').replace(/[&<>"']/g,ch=>({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[ch]));
+}
+
+function coupangSearchUrl(keyword){
+  return 'https://www.coupang.com/np/search?q='+encodeURIComponent(keyword);
+}
+
+const FALLBACK_PRODUCT_KEYWORDS={
+  treat:'반려동물 간식',
+  kong:'강아지 콩 장난감',
+  cat_house:'캣타워 숨숨집',
+  nosework:'강아지 노즈워크 매트',
+  cat_wand:'고양이 낚싯대 장난감',
+  cat_bed:'고양이 침대',
+  cat_calming:'고양이 페로몬 디퓨저',
+  calming:'반려동물 진정 스프레이',
+  feeder:'반려동물 자동 급식기',
+  vitamin_dog:'강아지 영양제',
+  vitamin_cat:'고양이 영양제',
+  rabbit_hay:'토끼 티모시 건초',
+  harness_small:'소형견 하네스',
+  carrier_small:'소형견 이동장',
+  clothes_small:'소형견 의류',
+  harness_large:'대형견 하네스 리드줄',
+  bath_large:'대형견 목욕 용품',
+  dental_large:'대형견 덴탈 껌',
+  harness:'강아지 하네스 리드줄',
+  dog_calming:'강아지 진정 스프레이',
+  dog_treat:'강아지 훈련 간식',
+  dog_feeder:'강아지 자동 급식기',
+  dog_brush:'강아지 슬리커 브러시',
+  dog_vitamin:'강아지 종합 영양제',
+  cat_tower:'캣타워 숨숨집',
+  cat_calming_multi:'고양이 페로몬 디퓨저 다묘',
+  cat_feeder_multi:'고양이 분리 급식기',
+  cat_bag:'고양이 이동 배낭',
+  cat_parasite:'고양이 외부 기생충 예방',
+  cat_toy:'고양이 자동 장난감',
+  cat_brush:'고양이 그루밍 브러시',
+  cat_vitamin:'고양이 종합 영양제',
+  rabbit_pen:'토끼 울타리',
+  rabbit_toy:'토끼 터널 장난감',
+  rabbit_vitamin:'토끼 영양제',
+  hamster_cage:'햄스터 케이지',
+  hamster_wheel:'햄스터 쳇바퀴',
+  hamster_food:'햄스터 사료',
+  bird_cage:'앵무새 케이지',
+  bird_toy:'앵무새 장난감 횃대',
+  bird_food:'앵무새 사료',
+  ferret_cage:'페럿 케이지',
+  ferret_toy:'페럿 터널 장난감',
+  ferret_food:'페럿 사료',
+  hedgehog_cage:'고슴도치 케이지',
+  hedgehog_wheel:'고슴도치 쳇바퀴',
+  hedgehog_food:'고슴도치 사료',
+  small_cage:'소동물 케이지',
+  small_toy:'소동물 장난감',
+  small_food:'소동물 사료 간식',
+  small_vitamin:'소동물 영양제'
+};
+
+function fallbackProductUrl(key){
+  return coupangSearchUrl(FALLBACK_PRODUCT_KEYWORDS[key]||key||'반려동물 용품');
+}
+
+function jsStringAttr(value){
+  return escapeHTML(JSON.stringify(String(value??'')));
+}
+
+// ── 사이드바 업데이트 ──
+function updateSidebar(n){
+  const secIdx=n===0?0:n<=3?1:n<=6?2:n<=9?3:4;
+  for(let i=0;i<=4;i++){
+    const el=document.getElementById(`ss_${i}`);
+    if(!el) continue;
+    el.classList.remove('active','done');
+    if(i===secIdx) el.classList.add('active');
+    else if(i<secIdx) el.classList.add('done');
+  }
+  if(petName&&petType){
+    document.getElementById('sidebarPetInfo').style.display='block';
+    document.getElementById('sidebarIcon').textContent=petIcons[petType]||'🐾';
+    document.getElementById('sidebarName').textContent=nm(petName);
+    document.getElementById('sidebarMeta').textContent=`${petAge||'?'} · ${petGender||'?'}`;
+  }
+  const tips=[
+    {icon:'🐾',text:'반려동물의 성격은 <strong>유전·환경·경험</strong>이 함께 만들어가요.'},
+    {icon:'⚡',text:'<strong>에너지가 높은 아이</strong>일수록 운동과 두뇌 자극이 필요해요.'},
+    {icon:'🤝',text:'<strong>사회화</strong>는 어릴수록 효과적이에요. 천천히 진행해요.'},
+    {icon:'🏠',text:'<strong>규칙적인 루틴</strong>이 정서 안정에 가장 중요해요.'},
+    {icon:'🔬',text:'<strong>정기 건강검진</strong>으로 건강 상태를 미리 파악하세요.'},
+  ];
+  const t=tips[secIdx]||tips[0];
+  const el=document.getElementById('rightTip');
+  if(el) el.innerHTML=`<span class="right-tip-icon">${t.icon}</span><div class="right-tip-text">${t.text}</div>`;
+}
+
+// 섹션 정의
+const SECTIONS={
+  1:{icon:'⚡',tag:'섹션 1 / 4',title:'성격 · 에너지',desc:'평소 기질과 에너지 패턴을 살펴볼게요',count:'3개 질문',color:'rgba(244,132,95,0.3)',tc:'var(--orange)'},
+  2:{icon:'🤝',tag:'섹션 2 / 4',title:'사회성 · 관계',desc:'사람과 환경에 어떻게 반응하는지 알아볼게요',count:'3개 질문',color:'rgba(78,201,176,0.3)',tc:'var(--teal)'},
+  3:{icon:'🏠',tag:'섹션 3 / 4',title:'생활 · 습관',desc:'식습관, 수면, 훈련 패턴을 확인할게요',count:'3개 질문',color:'rgba(192,132,252,0.3)',tc:'var(--purple)'},
+  4:{icon:'🔬',tag:'섹션 4 / 4',title:'건강 · 특성',desc:'예민도, 놀이, 문제 행동을 분석할게요',count:'3개 질문 · 마지막이에요!',color:'rgba(244,132,95,0.3)',tc:'var(--orange)'},
+};
+
+function startSection(n){
+  if(n===1){
+    petName=document.getElementById('q_pet_name').value.trim();
+    otherAnimal=document.getElementById('q_other_animal')?.value.trim()||'';
+    if(!petType||!petName||!petAge||!petGender){
+      document.getElementById('err0').classList.add('show');return;
+    }
+    if(petType==='dog'&&!dogSize){
+      document.getElementById('err0').classList.add('show');return;
+    }
+    if(petType==='cat'&&!catType){
+      document.getElementById('err0').classList.add('show');return;
+    }
+    if(petType==='other'&&!otherAnimal){
+      document.getElementById('err0').classList.add('show');return;
+    }
+    document.getElementById('err0').classList.remove('show');
+    updateQTitles();
+    trackEvent('start',{petType});
+  } else {
+    const lastQ={2:'q3',3:'q6',4:'q9'}[n];
+    if(lastQ&&!answers[lastQ]) return;
+  }
+  // 배너 표시
+  const s=SECTIONS[n];
+  document.getElementById('bannerIcon').textContent=s.icon;
+  document.getElementById('bannerTag').textContent=s.tag;
+  document.getElementById('bannerTag').style.borderColor=s.color;
+  document.getElementById('bannerTag').style.color=s.tc;
+  document.getElementById('bannerTitle').textContent=s.title;
+  document.getElementById('bannerDesc').textContent=s.desc;
+  document.getElementById('bannerCount').textContent=s.count;
+  document.getElementById('secBanner').classList.add('show');
+  bannerCallback=()=>{
+    const firstStep={1:1,2:4,3:7,4:10}[n];
+    goStep(firstStep);
+  };
+}
+
+function closeBanner(){
+  document.getElementById('secBanner').classList.remove('show');
+  if(bannerCallback){bannerCallback();bannerCallback=null;}
+}
+
+function updateQTitles(){
+  const p=petName;
+  document.getElementById('q1t').textContent=`${nm(p)}의 평소 에너지 레벨은?`;
+  document.getElementById('q2t').textContent=`${nm(p)}는 고집이 있는 편인가요?`;
+  document.getElementById('q3t').textContent=`${nm(p)}는 호기심이 많나요?`;
+  document.getElementById('q4t').textContent=`낯선 사람을 만나면 ${nm(p)}는?`;
+  document.getElementById('q5t').textContent=`보호자와 떨어지면 ${nm(p)}는?`;
+  document.getElementById('q6t').textContent=`${nm(p)}는 스킨십을 얼마나 좋아하나요?`;
+  document.getElementById('q7t').textContent=`${nm(p)}는 밥을 잘 먹나요?`;
+  document.getElementById('q8t').textContent=`${nm(p)}는 잠을 어떻게 자나요?`;
+  document.getElementById('q9t').textContent=`${nm(p)}는 훈련을 잘 따르나요?`;
+  document.getElementById('q10t').textContent=`${nm(p)}는 소리·환경 변화에 예민한가요?`;
+  document.getElementById('q11t').textContent=`${nm(p)}는 장난감을 좋아하나요?`;
+  document.getElementById('q12t').textContent=`${nm(p)}에게 문제 행동이 있나요?`;
+}
+
+function selPetType(el,val){
+  document.querySelectorAll('.pet-btn').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');petType=val;
+  document.getElementById('q_pet_type').value=val;
+  const ph={dog:'예: 콩이, 모카, 보리',cat:'예: 나비, 구름, 초코',rabbit:'예: 토순이, 당근이',other:'예: 햄찌, 삐약이'};
+  document.getElementById('q_pet_name').placeholder=ph[val]||'이름을 입력해 주세요';
+  // 세분화 옵션 표시/숨김
+  document.getElementById('dogSizeWrap').style.display=val==='dog'?'block':'none';
+  document.getElementById('catTypeWrap').style.display=val==='cat'?'block':'none';
+  document.getElementById('otherAnimalWrap').style.display=val==='other'?'block':'none';
+  // 초기화
+  dogSize='';catType='';otherAnimal='';
+  document.querySelectorAll('#dogSizeChips .chip,#catTypeChips .chip').forEach(c=>c.classList.remove('sel'));
+  document.getElementById('q_dog_size').value='';
+  document.getElementById('q_cat_type').value='';
+  document.getElementById('q_other_animal').value='';
+  document.getElementById('err0').classList.remove('show');
+}
+
+function selChip(el,group,val){
+  const chips=el.closest('.chip-row');
+  chips.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  if(group==='age'){petAge=val;document.getElementById('q_age').value=val;}
+  else if(group==='gender'){petGender=val;document.getElementById('q_gender').value=val;}
+  else if(group==='dogSize'){dogSize=val;document.getElementById('q_dog_size').value=val;}
+  else if(group==='catType'){catType=val;document.getElementById('q_cat_type').value=val;}
+}
+
+function selOpt(el,qid,val){
+  el.closest('.opts').querySelectorAll('.opt').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');
+  answers[qid]=val;
+  document.getElementById(qid).value=val;
+  if(navigator.vibrate) navigator.vibrate(6);
+
+  // 선택 후 0.25초 뒤 자동으로 다음 화면
+  const qNum=parseInt(qid.replace('q',''));
+  setTimeout(()=>{
+    if(qNum===3) startSection(2);
+    else if(qNum===6) startSection(3);
+    else if(qNum===9) startSection(4);
+    else if(qNum===12) submitTest();
+    else goStep(qNum+1);
+  },250);
+}
+
+function goStep(n){
+  document.body.classList.add('nav-switching');
+  clearTimeout(navSwitchTimer);
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(`s${n}`)?.classList.add('active');
+  step=n;
+  const pct=n===0?5:Math.round((n/12)*95);
+  document.getElementById('progFill').style.width=pct+'%';
+  const secName=n<=3?'성격·에너지':n<=6?'사회성·관계':n<=9?'생활·습관':'건강·특성';
+  const qInSec=n<=3?n:n<=6?n-3:n<=9?n-6:n-9;
+  document.getElementById('progLabel').textContent=n===0?'기본 정보':`${secName} ${qInSec}/3`;
+  window.scrollTo(0,0);
+  updateSidebar(n);
+  updateNav(n);
+  navSwitchTimer=setTimeout(()=>document.body.classList.remove('nav-switching'),180);
+}
+
+function updateNav(n){
+  const btns=document.getElementById('navBtns');
+  if(!btns) return;
+  if(n===0){
+    btns.innerHTML='<button class="btn-next" onclick="startSection(1)" style="flex:1">다음 →</button>';
+  } else if(n===12){
+    btns.innerHTML='<button class="btn-back" onclick="goStep(11)">← 이전</button>'
+      +'<button class="btn-next" onclick="submitTest()" style="background:var(--teal)">결과 보기 →</button>';
+  } else {
+    btns.innerHTML=`<button class="btn-back" onclick="goStep(${n-1})">← 이전</button>`;
+  }
+  if(n!==0) document.getElementById('err0')?.classList.remove('show');
+}
+
+function submitTest(){
+  if(isSubmitting) return;
+  if(!answers['q12']) return;
+  isSubmitting=true;
+  document.getElementById('formWrap').style.display='none';
+  document.querySelector('.tablet-layout').style.display='none';
+  document.getElementById('progBar').style.display='none';
+  const lw=document.getElementById('loadingWrap');
+  lw.classList.add('show');
+  document.getElementById('lIcon').textContent=petIcons[petType]||'🐾';
+  document.getElementById('lTitle').textContent=`${nm(petName)} 성격 분석 중...`;
+
+  const t=[0,800,1700,2600],p=[15,40,70,90];
+  t.forEach((ms,i)=>{
+    setTimeout(()=>{
+      if(i>0) document.getElementById(`ls${i-1}`)?.classList.replace('active','done');
+      document.getElementById(`ls${i}`)?.classList.add('active');
+      document.getElementById('lprogFill').style.width=p[i]+'%';
+    },ms);
+  });
+  setTimeout(()=>{
+    document.getElementById('ls3')?.classList.replace('active','done');
+    document.getElementById('lprogFill').style.width='100%';
+    setTimeout(()=>{lw.classList.remove('show');showResult();},300);
+  },3500);
+}
+
+function calcPersonality(){
+  const e=answers['q1']||'';
+  const s=answers['q2']||'';
+  const c=answers['q3']||'';
+  const social=answers['q4']||'';
+  const att=answers['q5']||'';
+  const touch=answers['q6']||'';
+  const food=answers['q7']||'';
+  const sleep=answers['q8']||'';
+  const train=answers['q9']||'';
+  const sense=answers['q10']||'';
+  const play=answers['q11']||'';
+  const prob=answers['q12']||'';
+
+  const eScore=e.includes('넘쳐')?95:e.includes('활발')?75:e.includes('보통')?50:30;
+  const sScore=social.includes('먼저')?90:social.includes('살펴')?65:social.includes('숨어')?35:20;
+  const iScore=att.includes('자유')?90:att.includes('혼자')?75:att.includes('기다')?50:15;
+  const tScore=train.includes('천재')?95:train.includes('노력')?70:train.includes('기분')?45:20;
+  const seScore=sense.includes('매우')?90:sense.includes('조금')?65:sense.includes('보통')?45:20;
+  const aScore=touch.includes('껌딱지')?95:touch.includes('좋아')?75:touch.includes('가끔')?45:15;
+  const pScore=play.includes('덕후')?95:play.includes('좋아')?70:play.includes('가끔')?45:20;
+  const goScore=s.includes('매우 고집')?90:s.includes('조금')?65:s.includes('순한')?35:20;
+
+  // ── 성격 유형 ──
+  let type='',desc='';
+  if(eScore>=75&&sScore>=65&&aScore>=65){type='🌟 활발한 사랑꾼';desc='에너지가 넘치고 모든 사람을 좋아하는 타입이에요!';}
+  else if(eScore<=40&&aScore>=70){type='🛋️ 집사 바라기';desc='느긋하지만 사람을 정말 좋아하는 타입이에요.';}
+  else if(iScore>=75&&sScore<=40){type='🦅 자유로운 영혼';desc='독립적이고 자기 페이스가 뚜렷한 타입이에요.';}
+  else if(seScore>=75&&eScore<=50){type='🌸 섬세한 감수성파';desc='예민하고 감수성이 풍부한 타입이에요.';}
+  else if(pScore>=80&&eScore>=65){type='🎮 장난꾸러기 탐험가';desc='호기심이 많고 놀기를 정말 좋아하는 타입이에요!';}
+  else if(tScore>=80){type='🏆 모범생 우등생';desc='훈련을 잘 따르고 규칙을 잘 지키는 타입이에요.';}
+  else if(goScore>=75){type='👑 나만의 법칙 보스';desc='자기 규칙이 있고 고집이 있는 타입이에요.';}
+  else{type='😎 유니크한 개성파';desc='예측 불가능하지만 그래서 더 매력적인 타입이에요!';}
+
+  // ── 종합 분석 (서술형 + 상품 자연스럽게 임베드) ──
+  let summary='';
+  const p=escapeHTML(petName);
+  const safeDogSize=escapeHTML(dogSize);
+  const safeCatType=escapeHTML(catType);
+  const safeOtherAnimal=escapeHTML(otherAnimal);
+  const pt=petType;
+
+  // 문단 1: 기질 설명
+  summary+=`<p style="margin-bottom:14px;">`;
+  // 세분화 소개
+  if(pt==='dog'&&dogSize) summary+=`<strong>${safeDogSize} ${nm(p)}</strong>는 `;
+  else if(pt==='cat'&&catType) summary+=`<strong>${safeCatType} 고양이 ${nm(p)}</strong>는 `;
+  else if(pt==='other'&&otherAnimal) summary+=`<strong>${safeOtherAnimal} ${nm(p)}</strong>는 `;
+  else summary+=`<strong>${nm(p)}</strong>는 `;
+  if(eScore>=75) summary+=`<strong>${nm(p)}는 에너지가 넘치는 활발한 아이예요.</strong> 가만히 있는 걸 정말 못 하는 타입으로, 항상 뭔가를 하고 싶어해요. `;
+  else if(eScore<=40) summary+=`<strong>${nm(p)}는 조용하고 느긋한 성격이에요.</strong> 바쁘게 움직이기보다 편안한 일상을 즐기는 타입이에요. `;
+  else summary+=`<strong>${nm(p)}는 균형 잡힌 에너지를 가진 아이예요.</strong> 활발하게 놀다가도 쉬고 싶을 때는 확실히 쉬는 타입이에요. `;
+
+  if(goScore>=70) summary+=`고집도 있어서 한번 마음먹으면 끝까지 밀고 나가는 편이에요. 강압적인 훈련보다는 <a href="${fallbackProductUrl('treat')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">맛있는 간식</a>으로 달래는 게 훨씬 효과적이에요. `;
+  else if(tScore>=75) summary+=`훈련도 잘 따르는 편이라 칭찬과 <a href="${fallbackProductUrl('treat')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">간식</a>을 활용한 훈련이 잘 맞아요. `;
+  summary+=`</p>`;
+
+  // 문단 2: 사회성 + 동물별 특성
+  summary+=`<p style="margin-bottom:14px;">`;
+  if(sScore>=70) summary+=`낯선 사람에게도 먼저 다가가는 사교적인 성격 덕분에 어디서든 사랑받는 아이예요. `;
+  else if(sScore<=35) summary+=`낯선 환경이나 사람에게는 시간이 필요해요. 천천히 적응할 수 있도록 여유를 줘야 해요. `;
+  else summary+=`낯선 상황에서는 살짝 관망하다가 안전하다 싶으면 친해지는 스타일이에요. `;
+
+  if(pt==='dog'){
+    if(iScore<=30) summary+=`특히 보호자와 떨어지는 걸 많이 힘들어해요. 외출 전에 <a href="${fallbackProductUrl('kong')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">콩 장난감에 간식을 넣어두면</a> 혼자 있는 시간이 훨씬 편해져요. `;
+    else if(iScore>=75) summary+=`혼자 있는 것도 잘 견디는 독립적인 아이예요. `;
+  } else if(pt==='cat'){
+    if(iScore>=70) summary+=`고양이답게 자기만의 공간과 시간을 중요하게 여겨요. <a href="${fallbackProductUrl('cat_house')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">캣타워나 숨숨집</a>이 있으면 스트레스가 훨씬 줄어들어요. `;
+    else summary+=`고양이치고는 사람을 좋아하는 편이에요. `;
+  } else if(pt==='rabbit'){
+    summary+=`토끼는 생각보다 사회적인 동물이에요. 안전한 공간에서 조금씩 교류를 늘려나가는 것이 좋아요. `;
+  }
+  summary+=`</p>`;
+
+  // 문단 3: 자극·놀이 + 상품 임베드
+  summary+=`<p style="margin-bottom:14px;">`;
+  if(pScore>=75){
+    summary+=`놀이와 자극에 대한 욕구가 아주 강한 ${nm(p)}예요. 단순한 장난감보다는 `;
+    if(pt==='dog') summary+=`<a href="${fallbackProductUrl('nosework')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">노즈워크 매트</a>처럼 두뇌를 쓰는 장난감이 에너지를 훨씬 효율적으로 발산시켜줘요. `;
+    else if(pt==='cat') summary+=`<a href="${fallbackProductUrl('cat_wand')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">낚싯대 장난감</a>처럼 사냥 본능을 자극하는 놀이가 딱이에요. `;
+    else summary+=`다양한 자극을 줄 수 있는 장난감이 필요해요. `;
+  } else if(pScore<=30){
+    summary+=`장난감보다는 조용한 환경에서 보호자 옆에 있는 걸 더 좋아하는 ${nm(p)}예요. `;
+    if(pt==='cat') summary+=`<a href="${fallbackProductUrl('cat_bed')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">폭신한 고양이 침대</a>하나만 있어도 행복해할 거예요. `;
+  } else {
+    summary+=`적당히 놀고 적당히 쉬는 균형 잡힌 ${nm(p)}예요. `;
+  }
+
+  if(seScore>=75){
+    summary+=`감각이 예민한 편이라 큰 소리나 갑작스러운 변화에 스트레스를 받을 수 있어요. `;
+    if(pt==='cat') summary+=`<a href="${fallbackProductUrl('cat_calming')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">페로몬 디퓨저</a>를 활용하면 일상적인 불안을 줄이는 데 도움이 돼요. `;
+    else summary+=`<a href="${fallbackProductUrl('calming')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">진정 스프레이</a>를 활용해보세요. `;
+  }
+  summary+=`</p>`;
+
+  // 문단 4: 건강·생활 습관 + 상품
+  summary+=`<p style="margin-bottom:0;">`;
+  if(food.includes('과식')) summary+=`식욕이 왕성한 ${nm(p)}! 귀엽지만 비만은 건강의 적이에요. <a href="${fallbackProductUrl('feeder')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">자동 급식기</a>로 규칙적인 식사 습관을 만들어주세요. `;
+  else if(food.includes('식욕이')) summary+=`식욕이 별로 없는 ${nm(p)}는 기호성 좋은 음식으로 식욕을 자극해보세요. `;
+  else summary+=`식습관이 나쁘지 않은 ${nm(p)}예요. `;
+
+  if(pt==='dog') summary+=`마지막으로 <a href="${fallbackProductUrl('vitamin_dog')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">강아지 전용 영양제</a>로 기본 건강을 꼼꼼히 챙겨주세요. 관절·피부·면역을 함께 케어하는 종합 영양제가 특히 좋아요. 💊`;
+  else if(pt==='cat') summary+=`<a href="${fallbackProductUrl('vitamin_cat')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">고양이 전용 영양제</a>도 빠뜨리지 마세요. 특히 비뇨기 건강과 헤어볼 케어가 중요해요. 💊`;
+  else if(pt==='rabbit') summary+=`토끼는 <a href="${fallbackProductUrl('rabbit_hay')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">건초(티모시)</a>가 식단의 70% 이상이어야 해요. 건강의 기본이에요. 🌾`;
+  else summary+=`기본 건강 관리를 위한 영양제 챙겨주세요. 💊`;
+  summary+=`</p>`;
+
+  // ── 케어 팁 ──
+  const tips=[];
+  if(eScore>=75){
+    if(pt==='dog') tips.push({i:'🏃',t:`<strong>하루 2회 이상 산책이 필수예요!</strong> 에너지를 충분히 써야 집에서 얌전해져요.`});
+    else if(pt==='cat') tips.push({i:'🎾',t:`<strong>하루 최소 15분 이상 함께 놀아주세요!</strong> 사냥 본능을 자극해야 스트레스가 줄어요.`});
+  }
+  if(eScore<=40) tips.push({i:'😴',t:`<strong>무리한 활동은 오히려 스트레스예요.</strong> 짧고 여유있는 시간을 즐겨요.`});
+  if(iScore<=30&&pt==='dog') tips.push({i:'💛',t:`<strong>분리불안 훈련을 시작해보세요.</strong> 5분씩 혼자 있는 연습을 천천히 늘려가세요.`});
+  if(sScore<=40) tips.push({i:'🤝',t:`<strong>사회화는 천천히 강요 없이 진행해주세요.</strong> 무서운 경험은 트라우마가 될 수 있어요.`});
+  if(seScore>=75) tips.push({i:'🔇',t:`<strong>조용하고 예측 가능한 환경이 중요해요.</strong> 갑작스러운 소리나 변화를 최소화해주세요.`});
+  if(tScore<=35) tips.push({i:'🎓',t:`<strong>강압적 훈련은 역효과!</strong> 간식과 칭찬으로 하는 긍정 강화 훈련이 훨씬 효과적이에요.`});
+  if(pt==='cat') tips.push({i:'🪟',t:`<strong>창가 자리를 만들어주세요.</strong> 고양이는 바깥 구경하는 걸 정말 좋아해요.`});
+  if(pt==='rabbit') tips.push({i:'🥬',t:`<strong>건초는 무제한으로 줘야 해요!</strong> 티모시 건초가 소화 건강의 핵심이에요.`});
+  if(tips.length===0) tips.push({i:'🌟',t:`<strong>균형 잡힌 성격이에요!</strong> 지금처럼 규칙적인 생활을 유지해주면 최고예요.`});
+
+  // ── 동물별·세분화 쿠팡 상품 ──
+  const allProds=[];
+  if(pt==='dog'){
+    const isSmall=dogSize==='소형견';
+    const isLarge=dogSize==='대형견';
+    allProds.push({icon:'🧩',name:'노즈워크 매트',why:'두뇌 자극·에너지 발산',tag:'스트레스 해소 · 집중력 향상',url:'',show:eScore>=65||pScore>=65,highlight:false});
+    allProds.push({icon:'🟠',name:'콩 장난감 (KONG Classic)',why:'분리불안 해소의 필수품',tag:'간식 넣으면 혼자 30분+ 집중',url:'',show:iScore<=35||prob.includes('분리'),highlight:true});
+    if(isSmall){
+      allProds.push({icon:'🐩',name:'소형견 하네스 세트',why:'목 보호 · 소형견 전용 핏',tag:'치와와·포메·말티즈 추천',url:'',show:eScore>=55,highlight:false});
+      allProds.push({icon:'🛏️',name:'소형견 캐리어·이동장',why:'소형견 외출 필수템',tag:'기내 반입 가능 사이즈',url:'',show:true,highlight:false});
+      allProds.push({icon:'👗',name:'소형견 의류·패딩',why:'체온 유지 · 추위 약한 소형견',tag:'사계절 · 사이즈 다양',url:'',show:petAge==='8세 이상'||petAge==='1세 미만',highlight:false});
+    } else if(isLarge){
+      allProds.push({icon:'🦮',name:'대형견 하네스 & 리드줄',why:'강한 힘 컨트롤 필수',tag:'골든·래브라·말라뮤트 추천',url:'',show:eScore>=55,highlight:true});
+      allProds.push({icon:'🛁',name:'대형견 목욕 용품 세트',why:'대형견 그루밍 필수',tag:'욕조 매트·드라이기 세트',url:'',show:true,highlight:false});
+      allProds.push({icon:'🦴',name:'대형견 껌·덴탈 트릿',why:'치아 건강 · 스트레스 해소',tag:'오래 씹는 타입 · 대형견용',url:'',show:eScore>=65,highlight:false});
+    } else {
+      allProds.push({icon:'🦮',name:'하네스 & 리드줄 세트',why:'목 보호 · 안전한 산책',tag:'소·중·대형견 선택 가능',url:'',show:eScore>=55,highlight:false});
+    }
+    allProds.push({icon:'🌿',name:'강아지 진정 스프레이',why:'불안·흥분 완화',tag:'아답틸 페로몬 성분',url:'',show:seScore>=70||iScore<=35,highlight:true});
+    allProds.push({icon:'🍖',name:'훈련용 소프트 간식',why:'긍정 강화 훈련 필수',tag:'저칼로리 · 닭고기·치즈맛',url:'',show:tScore<=50,highlight:false});
+    allProds.push({icon:'🥣',name:'자동 급식기',why:'과식 방지 · 규칙적 식사',tag:'타이머·용량 설정 가능',url:'',show:food.includes('과식'),highlight:false});
+    allProds.push({icon:'🪮',name:'슬리커 브러시',why:'그루밍으로 스킨십 시간',tag:'엉킴 제거 · 마사지 효과',url:'',show:true,highlight:false});
+    allProds.push({icon:'💊',name:`${dogSize||'강아지'} 종합 영양제`,why:'관절·피부·면역 케어',tag:`${isLarge?'대형견 관절 집중':'연령별 맞춤'} · 소화 용이`,url:'',show:true,highlight:false});
+
+  } else if(pt==='cat'){
+    const isMulti=catType==='다묘가정';
+    const isOutdoor=catType==='실내외겸용';
+    allProds.push({icon:'🏰',name:'캣타워·숨숨집',why:'나만의 안전한 공간 필수',tag:'스크래처 포함 · 조립식',url:'',show:iScore>=55||seScore>=55,highlight:true});
+    allProds.push({icon:'🎣',name:'낚싯대 장난감',why:'사냥 본능 자극',tag:'깃털·쥐·반짝이 교체형',url:'',show:pScore>=55||eScore>=55,highlight:false});
+    if(isMulti){
+      allProds.push({icon:'🌿',name:'고양이 페로몬 디퓨저 (다묘용)',why:'영역 갈등·스트레스 완화',tag:'FELIWAY Multi · 30일 지속',url:'',show:true,highlight:true});
+      allProds.push({icon:'🍽️',name:'분리 급식기 (다묘용)',why:'밥그릇 싸움 방지',tag:'개별 급식 · 청소 편리',url:'',show:true,highlight:false});
+    } else {
+      allProds.push({icon:'🌿',name:'고양이 페로몬 디퓨저',why:'불안·스트레스 완화',tag:'FELIWAY Classic · 30일 지속',url:'',show:seScore>=65||prob.includes('분리'),highlight:true});
+    }
+    if(isOutdoor){
+      allProds.push({icon:'🎒',name:'고양이 이동 배낭',why:'외출 시 안전한 이동',tag:'투명창 · 환기 설계',url:'',show:true,highlight:false});
+      allProds.push({icon:'💉',name:'고양이 외부 기생충 예방',why:'실외 활동 시 필수',tag:'벼룩·진드기 예방',url:'',show:true,highlight:true});
+    }
+    allProds.push({icon:'🛏️',name:'고양이 동굴 침대',why:'숨고 싶을 때 안식처',tag:'세탁 가능 · 사계절용',url:'',show:iScore>=55||seScore>=55,highlight:false});
+    allProds.push({icon:'🧶',name:'혼자노는 장난감 세트',why:'혼자도 신나게',tag:'자동 회전 · 터널 포함',url:'',show:pScore>=55,highlight:false});
+    allProds.push({icon:'🪮',name:'고양이 그루밍 브러시',why:'털 관리·마사지',tag:'정전기 방지 · 핀 타입',url:'',show:true,highlight:false});
+    allProds.push({icon:'💊',name:'고양이 종합 영양제',why:'비뇨기·헤어볼 케어',tag:'츄르 타입 · 급여 편리',url:'',show:true,highlight:false});
+
+  } else if(pt==='rabbit'){
+    allProds.push({icon:'🌾',name:'티모시 건초 (1단)',why:'소화 건강의 핵심',tag:'무제한 급여 권장',url:'',show:true,highlight:true});
+    allProds.push({icon:'🏠',name:'토끼 인클로저·울타리',why:'안전한 활동 공간',tag:'조립식 · 크기 조절 가능',url:'',show:true,highlight:false});
+    allProds.push({icon:'🎠',name:'토끼 터널·장난감',why:'호기심·운동 욕구 해소',tag:'천연 나뭇가지 포함',url:'',show:pScore>=50,highlight:false});
+    allProds.push({icon:'💊',name:'토끼 전용 영양제',why:'소화·면역 케어',tag:'프로바이오틱스 포함',url:'',show:true,highlight:false});
+
+  } else if(pt==='other'){
+    // 기타 동물 주관식 기반 분기
+    const oa=(otherAnimal||'').toLowerCase();
+    const isHamster=oa.includes('햄스터')||oa.includes('햄찌');
+    const isBird=oa.includes('새')||oa.includes('앵무')||oa.includes('잉꼬');
+    const isFerret=oa.includes('페럿');
+    const isHedgehog=oa.includes('고슴도치');
+
+    if(isHamster){
+      allProds.push({icon:'🏠',name:'햄스터 케이지 (넓은형)',why:'충분한 활동 공간 필수',tag:'환기 좋음 · 청소 편리',url:'',show:true,highlight:true});
+      allProds.push({icon:'🎡',name:'햄스터 쳇바퀴 (사일런트)',why:'야간 소음 없이 운동',tag:'소음 차단 · 안전한 재질',url:'',show:true,highlight:false});
+      allProds.push({icon:'🌾',name:'햄스터 전용 사료·간식',why:'균형 잡힌 영양',tag:'씨앗·곡물 혼합',url:'',show:true,highlight:false});
+    } else if(isBird){
+      allProds.push({icon:'🏠',name:'앵무새 케이지 (대형)',why:'날개짓 할 공간 필수',tag:'스테인리스 · 청소 편리',url:'',show:true,highlight:true});
+      allProds.push({icon:'🎵',name:'앵무새 장난감·횃대 세트',why:'지루함 방지·발 건강',tag:'천연 나무 · 다양한 질감',url:'',show:true,highlight:false});
+      allProds.push({icon:'🌿',name:'앵무새 전용 사료',why:'조류 전용 영양',tag:'씨앗+펠렛 혼합 추천',url:'',show:true,highlight:false});
+    } else if(isFerret){
+      allProds.push({icon:'🏠',name:'페럿 케이지 (3층형)',why:'활동적인 페럿에게 충분한 공간',tag:'해먹 포함 · 조립식',url:'',show:true,highlight:true});
+      allProds.push({icon:'🎮',name:'페럿 터널·장난감',why:'호기심 많은 페럿 필수템',tag:'다양한 텍스처',url:'',show:true,highlight:false});
+      allProds.push({icon:'🍖',name:'페럿 전용 사료',why:'고단백 육식성 페럿에 맞춤',tag:'고단백·저탄수화물',url:'',show:true,highlight:false});
+    } else if(isHedgehog){
+      allProds.push({icon:'🏠',name:'고슴도치 케이지',why:'충분한 활동 공간',tag:'바닥재 포함 · 환기 좋음',url:'',show:true,highlight:true});
+      allProds.push({icon:'🎡',name:'고슴도치 쳇바퀴',why:'야간 운동 필수',tag:'발 안전 설계',url:'',show:true,highlight:false});
+      allProds.push({icon:'🍗',name:'고슴도치 전용 사료',why:'균형 영양 섭취',tag:'곤충 단백질 포함',url:'',show:true,highlight:false});
+    } else {
+      // 기타 일반
+      allProds.push({icon:'🏠',name:'소동물 케이지',why:'안전하고 쾌적한 공간',tag:'청소 편리 · 환기 좋음',url:'',show:true,highlight:false});
+      allProds.push({icon:'🎮',name:'소동물 장난감 세트',why:'지루함 방지',tag:'나무 소재 · 안전한 재질',url:'',show:pScore>=50,highlight:false});
+      allProds.push({icon:'🌾',name:'전용 사료·간식',why:'종별 맞춤 영양',tag:'소동물 전용',url:'',show:true,highlight:true});
+      allProds.push({icon:'💊',name:'소동물 영양제',why:'기본 건강 관리',tag:'소동물 전용 · 소화 도움',url:'',show:true,highlight:false});
+    }
+  }
+
+  allProds.forEach(p=>{
+    if(!p.url) p.url=coupangSearchUrl(p.name);
+  });
+  const prods=allProds.filter(p=>p.show).slice(0,4);
+
+  // 쿠팡 검색용 키워드 (성격·동물별 상위 3개)
+  const coupangKeywords=buildCoupangKeywords({
+    pt,dogSize,catType,otherAnimal,
+    iScore,eScore,pScore,seScore,prob
+  });
+
+  return{type,desc,summary,
+    traits:[
+      {label:'🏃 에너지',val:eScore},
+      {label:'🤝 사교성',val:sScore},
+      {label:'🦅 독립성',val:iScore},
+      {label:'🎮 장난기',val:pScore},
+      {label:'🎓 훈련성',val:tScore},
+      {label:'💛 애정도',val:aScore},
+      {label:'🌸 예민도',val:seScore},
+      {label:'👑 고집',val:goScore},
+    ],
+    tips:tips.slice(0,4),
+    prods,coupangKeywords
+  };
+}
+
+// ── 쿠팡 파트너스 검색 키워드 생성 ──
+function buildCoupangKeywords(o){
+  const {pt,dogSize,catType,otherAnimal,iScore,eScore,pScore,seScore,prob}=o;
+  const kw=[];
+  if(pt==='dog'){
+    const size=dogSize==='소형견'?'소형견':dogSize==='대형견'?'대형견':'강아지';
+    if(iScore<=35||(prob||'').includes('분리')) kw.push('강아지 콩 장난감');
+    else if(pScore>=70||eScore>=70) kw.push(`${size} 노즈워크 매트`);
+    else if(seScore>=65) kw.push('강아지 진정 스프레이');
+    else kw.push(`${size} 장난감`);
+    if(eScore>=55) kw.push(`${size} 하네스`);
+    kw.push(`${size} 영양제`);
+  } else if(pt==='cat'){
+    if(catType==='다묘가정'){
+      kw.push('고양이 페로몬 디퓨저 다묘');
+      kw.push('고양이 분리 급식기');
+    } else if(iScore>=55||seScore>=55){
+      kw.push('캣타워 숨숨집');
+    } else if(pScore>=65){
+      kw.push('고양이 낚싯대 장난감');
+    } else {
+      kw.push('고양이 장난감');
+    }
+    if(seScore>=60&&catType!=='다묘가정') kw.push('고양이 페로몬 디퓨저');
+    kw.push('고양이 영양제');
+  } else if(pt==='rabbit'){
+    kw.push('티모시 건초');
+    kw.push('토끼 장난감');
+    kw.push('토끼 영양제');
+  } else if(pt==='other'){
+    const oa=(otherAnimal||'').toLowerCase();
+    if(oa.includes('햄스터')||oa.includes('햄찌')){
+      kw.push('햄스터 케이지');kw.push('햄스터 쳇바퀴');kw.push('햄스터 사료');
+    } else if(oa.includes('새')||oa.includes('앵무')||oa.includes('잉꼬')){
+      kw.push('앵무새 케이지');kw.push('앵무새 장난감');
+    } else if(oa.includes('페럿')){
+      kw.push('페럿 케이지');kw.push('페럿 사료');
+    } else if(oa.includes('고슴도치')){
+      kw.push('고슴도치 케이지');kw.push('고슴도치 사료');
+    } else if(otherAnimal){
+      kw.push(`${otherAnimal} 케이지`);kw.push(`${otherAnimal} 사료`);
+    }
+  }
+  return kw.slice(0,3);
+}
+
+// ── 쿠팡 상품 비동기 로드 (Netlify Function 경유) ──
+async function loadCoupangProducts(keywords){
+  if(!keywords||!keywords.length) return [];
+  const calls=keywords.map(k=>
+    fetch(`/.netlify/functions/coupang-search?keyword=${encodeURIComponent(k)}&limit=2`)
+      .then(r=>r.ok?r.json():null)
+      .catch(()=>null)
+  );
+  const results=await Promise.all(calls);
+  const seen=new Set();
+  const out=[];
+  for(const r of results){
+    if(!r||!r.products) continue;
+    for(const p of r.products){
+      if(!p||!p.id||seen.has(p.id)) continue;
+      seen.add(p.id);
+      out.push(p);
+    }
+  }
+  return out.slice(0,6);
+}
+
+// ── 쿠팡 일반 URL → 파트너스 affiliate 링크 변환 ──
+// summary 인라인 링크와 prodList fallback 카드의 href를 파트너스 링크로 일괄 변환
+async function convertCoupangLinks(){
+  const containerIds=['summaryText','prodList'];
+  const linkMap=new Map(); // originalUrl → [<a>, ...]
+  const urls=[];
+  for(const id of containerIds){
+    const c=document.getElementById(id);
+    if(!c) continue;
+    c.querySelectorAll('a[href*="coupang.com"]').forEach(a=>{
+      const href=a.getAttribute('href');
+      if(!href) return;
+      // 이미 파트너스 단축 URL이면 건너뛰기
+      if(href.indexOf('link.coupang.com')>=0) return;
+      if(!linkMap.has(href)){
+        linkMap.set(href,[]);
+        urls.push(href);
+      }
+      linkMap.get(href).push(a);
+    });
+  }
+  if(urls.length===0) return;
+  try{
+    const res=await fetch('/.netlify/functions/coupang-deeplink',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({urls})
+    });
+    if(!res.ok) return;
+    const data=await res.json();
+    const map=(data&&data.links)||{};
+    for(const [original,anchors] of linkMap){
+      const partner=map[original];
+      if(!partner) continue;
+      anchors.forEach(a=>a.setAttribute('href',partner));
+    }
+  }catch(e){}
+}
+
+function bindCoupangInlineTracking(){
+  const summary=document.getElementById('summaryText');
+  if(!summary) return;
+  summary.querySelectorAll('a[href*="coupang.com"],a[href*="coupa.ng"]').forEach(a=>{
+    if(a.dataset.trackingBound==='1') return;
+    a.dataset.trackingBound='1';
+    a.addEventListener('click',()=>{
+      const label=(a.textContent||'본문 추천 링크').trim();
+      trackClick(label);
+    });
+  });
+}
+
+function renderCoupangProducts(products){
+  if(!products||products.length===0) return;
+  const list=document.getElementById('prodList');
+  if(!list) return;
+  list.innerHTML=products.map((p,i)=>{
+    const name=escapeHTML(p.name||'상품');
+    const url=escapeHTML(p.url||'#');
+    const img=escapeHTML(p.image||'');
+    const cat=escapeHTML(p.category||'');
+    const price=p.price?Number(p.price).toLocaleString()+'원':'';
+    const badges=[];
+    if(p.isRocket) badges.push('🚀 로켓');
+    if(p.isFreeShipping) badges.push('무료배송');
+    const why=[price,...badges].filter(Boolean).join(' · ');
+    const cls=i===0?' highlight':'';
+    return `<a class="prod-item${cls}" href="${url}" target="_blank" rel="noopener" onclick="trackClick(${jsStringAttr(p.name)})">
+      <div class="prod-img" style="overflow:hidden;padding:0;">${img?`<img src="${img}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">`:'🛒'}</div>
+      <div class="prod-info">
+        <div class="prod-name" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${name}</div>
+        <div class="prod-why">${why}</div>
+        <div class="prod-tag">${cat}</div>
+      </div>
+      <div class="prod-cta">쿠팡<br>보기 →</div>
+    </a>`;
+  }).join('');
+}
+
+function showResult(){
+  const r=calcPersonality();
+  window.__currentResult=r;
+  window.__currentPetName=petName;
+  trackEvent('complete',{petType,resultType:r.type});
+  document.getElementById('resultWrap').classList.add('show');
+  document.getElementById('rIcon').textContent=petIcons[petType]||'🐾';
+  document.getElementById('rBadge').textContent=r.type;
+  document.getElementById('rName').textContent=`${nm(petName)}의 성격 분석 결과`;
+  document.getElementById('rDesc').textContent=r.desc;
+  document.getElementById('summaryText').innerHTML=r.summary;
+  document.getElementById('traitList').innerHTML=r.traits.map(t=>`
+    <div class="trait-item">
+      <span class="trait-label">${t.label}</span>
+      <div class="trait-bar-bg"><div class="trait-bar-fill" style="width:${t.val}%"></div></div>
+      <span class="trait-num">${t.val}</span>
+    </div>`).join('');
+  document.getElementById('tipList').innerHTML=r.tips.map(t=>`
+    <div class="tip-item"><span class="tip-icon">${t.i}</span><span class="tip-text">${t.t}</span></div>`).join('');
+
+  // 쿠팡 파트너스 상품 렌더링
+  document.getElementById('prodSubtitle').textContent=`${nm(petName)}의 성격에 맞게 골라드린 용품이에요 🛒`;
+  document.getElementById('prodList').innerHTML=r.prods.map(p=>`
+    <a class="prod-item${p.highlight?' highlight':''}" href="${escapeHTML(p.url)}" target="_blank" rel="noopener" onclick="trackClick(${jsStringAttr(p.name)})">
+      <div class="prod-img">${p.icon}</div>
+      <div class="prod-info">
+        <div class="prod-name">${p.name}</div>
+        <div class="prod-why">✓ ${p.why}</div>
+        <div class="prod-tag">${p.tag}</div>
+      </div>
+      <div class="prod-cta">쿠팡<br>보기 →</div>
+    </a>`).join('');
+
+  // 결과가 보이는 즉시 summary와 fallback 링크를 파트너스 링크로 변환한다.
+  bindCoupangInlineTracking();
+  convertCoupangLinks();
+
+  // 쿠팡 실제 상품 비동기 로드 → 성공 시 위 fallback 교체
+  // 실제 상품으로 교체된 뒤 새 링크도 한 번 더 파트너스 affiliate 링크로 변환한다.
+  loadCoupangProducts(r.coupangKeywords)
+    .then(products=>{if(products.length>0) renderCoupangProducts(products);})
+    .catch(()=>{})
+    .finally(()=>{
+      bindCoupangInlineTracking();
+      convertCoupangLinks();
+    });
+
+  window.scrollTo(0,0);
+}
+
+function trackClick(productName){
+  trackEvent('coupang_click',{product:productName,petType});
+}
+
+// ── 공유 헬퍼 ──
+const SITE_URL='https://frabjous-dusk-9711f2.netlify.app';
+const OG_IMAGE_URL=SITE_URL+'/og-image.png?v=3';
+const TEST_URL=SITE_URL+'/quiz.html?v=3';
+
+function showToast(msg){
+  const t=document.getElementById('shareToast');
+  if(!t) return;
+  t.textContent=msg;
+  t.classList.add('show');
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+function cleanType(t){
+  // 이모지·기호 제거 → "활발한 사랑꾼" 형태
+  return String(t||'').replace(/[^\p{L}\p{N}\s]/gu,'').trim();
+}
+
+async function clipboardWrite(text){
+  if(navigator.clipboard && window.isSecureContext){
+    try{ await navigator.clipboard.writeText(text); return true; }catch(e){}
+  }
+  try{
+    const ta=document.createElement('textarea');
+    ta.value=text; ta.setAttribute('readonly','');
+    ta.style.cssText='position:fixed;left:-9999px;top:0;';
+    document.body.appendChild(ta);
+    ta.select();
+    const ok=document.execCommand('copy');
+    document.body.removeChild(ta);
+    return ok;
+  }catch(e){ return false; }
+}
+
+// Web Share API + 클립보드 폴백 (카카오 SDK 미사용 — 도메인 등록 불필요)
+// 모바일에서는 OS 공유 시트가 열리고 카톡을 선택할 수 있어요.
+async function nativeShare(title,text,url,kind){
+  trackEvent('share_click',{kind:kind||'share'});
+  const data={title,text,url};
+  if(navigator.share){
+    try{
+      await navigator.share(data);
+      return true;
+    }catch(e){
+      if(e&&e.name==='AbortError') return true; // 사용자가 닫았음 — 폴백 불필요
+    }
+  }
+  // 데스크톱·미지원 브라우저: 클립보드 복사 폴백
+  const ok=await clipboardWrite(text+'\n'+url);
+  if(ok) showToast('링크가 복사됐어요! 카톡에 붙여넣어 보내세요 😊');
+  else prompt('아래 내용을 복사해서 카톡으로 보내주세요', text+'\n'+url);
+  return false;
+}
+
+function shareTestKakao(){
+  nativeShare(
+    '우리 아이 성격 테스트해봐!',
+    '12가지 질문으로 기질 분석 + 케어 팁 🐾',
+    TEST_URL,
+    'test'
+  );
+}
+
+function shareResultKakao(){
+  const r=window.__currentResult;
+  const name=window.__currentPetName||'우리 아이';
+  const animal=nm(name);
+  const typeText=cleanType(r&&r.type)||'특별한 성격';
+  nativeShare(
+    `${animal}는 ${typeText}이래!`,
+    `우리 아이 성격도 테스트해봐 🐾`,
+    TEST_URL,
+    'result'
+  );
+}
+
+async function copyShareLink(kind){
+  trackEvent('share_click',{kind:'copy_'+(kind||'test')});
+  const r=window.__currentResult;
+  const name=window.__currentPetName||'우리 아이';
+  let text;
+  if(r){
+    text=`🐾 ${nm(name)}는 ${cleanType(r.type)}이래!\n우리 아이 성격도 테스트해봐\n${TEST_URL}`;
+  } else {
+    text=`🐾 우리 아이 성격 테스트해봐!\n12가지 질문으로 기질 분석 + 케어 팁\n${TEST_URL}`;
+  }
+  const ok=await clipboardWrite(text);
+  if(ok) showToast('링크가 복사됐어요 😊');
+  else prompt('아래 링크를 복사해서 공유해 주세요', text);
+}
+
+async function saveResultImage(){
+  trackEvent('share_click',{kind:'save_image'});
+  if(typeof html2canvas!=='function'){
+    showToast('이미지 라이브러리 로드 중이에요. 잠시 후 다시 시도해 주세요.');
+    return;
+  }
+  const r=window.__currentResult;
+  const name=window.__currentPetName||'우리 아이';
+  // 정사각형 캔버스 컨테이너 생성 (인스타그램 1080x1080)
+  const card=document.createElement('div');
+  card.style.cssText='position:fixed;left:-99999px;top:0;width:1080px;height:1080px;background:linear-gradient(160deg,#1c2128 0%,#0d1117 50%,#1c2128 100%);color:#f0ede8;font-family:"DM Sans","Noto Sans KR",sans-serif;padding:80px 70px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;';
+  const traitsHtml=r&&r.traits?r.traits.slice(0,5).map(t=>`<div style="display:flex;align-items:center;gap:14px;width:100%;margin-bottom:14px;"><div style="width:130px;font-size:22px;color:#9a9080;text-align:left;">${escapeHTML(t.label)}</div><div style="flex:1;height:10px;background:rgba(255,255,255,0.08);border-radius:50px;overflow:hidden;"><div style="height:100%;width:${t.val}%;background:linear-gradient(90deg,#f4845f,#f7a88a);border-radius:50px;"></div></div><div style="width:50px;font-size:20px;color:#52504a;text-align:right;">${t.val}</div></div>`).join(''):'';
+  card.innerHTML=`
+    <div style="font-size:140px;line-height:1;margin-bottom:30px;">${petIcons[petType]||'🐾'}</div>
+    <div style="display:inline-block;border:2px solid rgba(244,132,95,0.4);border-radius:50px;padding:10px 28px;font-size:24px;color:#f4845f;background:rgba(244,132,95,0.08);margin-bottom:24px;font-weight:500;">${escapeHTML(r&&r.type||'성격 분석')}</div>
+    <div style="font-size:50px;font-weight:600;color:#f0ede8;margin-bottom:20px;letter-spacing:-0.02em;">${escapeHTML(nm(name))}의<br>성격 분석 결과</div>
+    <div style="font-size:26px;color:#9a9080;line-height:1.6;margin-bottom:50px;font-weight:300;max-width:880px;">${escapeHTML(r&&r.desc||'')}</div>
+    <div style="width:100%;max-width:840px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:24px;padding:36px 40px;margin-bottom:40px;">
+      <div style="font-size:18px;letter-spacing:0.12em;text-transform:uppercase;color:#f4845f;margin-bottom:22px;font-weight:600;">✦ 성격 특성</div>
+      ${traitsHtml}
+    </div>
+    <div class="share-watermark" style="position:absolute;bottom:36px;left:0;right:0;font-size:22px;color:rgba(255,255,255,0.5);text-align:center;letter-spacing:0.05em;">🐾 frabjous-dusk-9711f2.netlify.app</div>
+  `;
+  document.body.appendChild(card);
+  try{
+    const canvas=await html2canvas(card,{backgroundColor:'#0d1117',scale:1,useCORS:true,logging:false,width:1080,height:1080});
+    const dataUrl=canvas.toDataURL('image/png');
+    // navigator.share with file (iOS Safari, 일부 Android)
+    if(navigator.canShare){
+      try{
+        const blob=await(await fetch(dataUrl)).blob();
+        const file=new File([blob],`pet-personality-${Date.now()}.png`,{type:'image/png'});
+        if(navigator.canShare({files:[file]})){
+          await navigator.share({files:[file],title:'반려동물 성격 분석 결과'});
+          return;
+        }
+      }catch(e){ if(e&&e.name==='AbortError') return; }
+    }
+    // fallback: 다운로드 링크
+    const a=document.createElement('a');
+    a.href=dataUrl;
+    a.download=`pet-personality-${Date.now()}.png`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    showToast('이미지가 저장됐어요 📸');
+  }catch(e){
+    showToast('이미지 저장에 실패했어요');
+  }finally{
+    if(card.parentNode) card.parentNode.removeChild(card);
+  }
+}
+
+function restart(){location.reload();}
+
+// ── 카카오톡 인앱브라우저 안내 배너 ──
+(function(){
+  if(!/KAKAOTALK/i.test(navigator.userAgent||'')) return;
+  function mount(){
+    if(document.getElementById('kakaoInappBanner')) return;
+    var url=location.href;
+    var banner=document.createElement('div');
+    banner.id='kakaoInappBanner';
+    banner.setAttribute('role','status');
+    banner.style.cssText='position:fixed;top:0;left:0;right:0;background:#fee500;color:#3c1e1e;padding:11px 14px;font-size:13px;line-height:1.5;z-index:9999;display:flex;align-items:center;gap:10px;box-shadow:0 2px 12px rgba(0,0,0,0.25);font-family:"Noto Sans KR",-apple-system,BlinkMacSystemFont,sans-serif;';
+    banner.innerHTML='<span style="flex:1;font-weight:500;">💡 외부 브라우저로 열면 공유·이미지 저장이 더 잘 돼요</span>'+
+      '<button id="kakaoOpenExternal" style="padding:7px 12px;background:#3c1e1e;color:#fee500;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:12px;flex-shrink:0;font-family:inherit;">열기</button>'+
+      '<button id="kakaoBannerClose" aria-label="닫기" style="padding:6px 8px;background:transparent;color:#3c1e1e;border:none;cursor:pointer;font-size:18px;line-height:1;flex-shrink:0;">×</button>';
+    document.body.prepend(banner);
+    var pb=document.querySelector('.prog-bar');
+    if(pb) pb.style.top=(banner.offsetHeight||44)+'px';
+    document.getElementById('kakaoOpenExternal').onclick=function(){
+      location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(url);
+    };
+    document.getElementById('kakaoBannerClose').onclick=function(){
+      banner.remove();
+      if(pb) pb.style.top='0';
+    };
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',mount);
+  else mount();
+})();
+</script>
+</body>
+</html>

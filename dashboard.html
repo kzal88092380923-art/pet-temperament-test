@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d1117">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<meta name="robots" content="noindex, nofollow">
+<title>반려동물 테스트 Analytics 🐾</title>
+<meta name="description" content="GA4 기준 실시간 접속·완주·쿠팡 클릭 통계 대시보드">
+<meta property="og:type" content="website">
+<meta property="og:title" content="반려동물 테스트 Analytics 🐾">
+<meta property="og:description" content="GA4 실시간 통계 대시보드">
+<meta property="og:image" content="https://frabjous-dusk-9711f2.netlify.app/og-image.png?v=3">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://frabjous-dusk-9711f2.netlify.app/dashboard.html">
+<meta property="og:locale" content="ko_KR">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HFQCEBY2PW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HFQCEBY2PW');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d1117;--surface:#161b22;--card:#1c2128;
+  --border:rgba(255,255,255,0.07);
+  --orange:#f4845f;--orange-lt:#f7a88a;--orange-dim:rgba(244,132,95,0.13);
+  --teal:#4ec9b0;--teal-dim:rgba(78,201,176,0.12);
+  --purple:#c084fc;--purple-dim:rgba(192,132,252,0.1);
+  --green:#5aaa78;--green-dim:rgba(90,170,120,0.12);
+  --text:#f0ede8;--text2:#9a9080;--text3:#52504a;
+  --r:14px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans','Noto Sans KR',sans-serif;font-size:14px;min-height:100vh;}
+
+/* ── 헤더 ── */
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 20px;position:sticky;top:0;z-index:50;}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
+.header-title{font-size:0.95rem;font-weight:600;display:flex;align-items:center;gap:8px;}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 6px rgba(90,170,120,0.6);animation:pulse 2s ease-in-out infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.header-sub{font-size:0.7rem;color:var(--text3);}
+.period-tabs{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;}
+.ptab{padding:5px 12px;border-radius:50px;border:1px solid var(--border);background:transparent;font-family:inherit;font-size:0.72rem;color:var(--text3);cursor:pointer;transition:all 0.1s;min-height:32px;}
+.ptab.active{background:var(--orange-dim);border-color:rgba(244,132,95,0.3);color:var(--orange-lt);}
+.date-range-row{display:none;margin-top:10px;gap:8px;align-items:center;font-size:0.72rem;color:var(--text2);flex-wrap:wrap;}
+.date-range-row.show{display:flex;}
+.date-range-row input[type=date]{background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);padding:6px 9px;font-family:inherit;font-size:0.74rem;color-scheme:dark;}
+.date-range-row button{background:var(--orange-dim);border:1px solid rgba(244,132,95,0.3);color:var(--orange-lt);border-radius:8px;padding:6px 12px;font-family:inherit;font-size:0.72rem;cursor:pointer;min-height:32px;}
+.daily-chart{display:flex;align-items:flex-end;gap:3px;height:120px;margin-top:10px;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch;}
+.daily-col{flex:1;min-width:14px;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.daily-bar{width:100%;border-radius:3px 3px 0 0;min-height:3px;background:linear-gradient(180deg,var(--teal),#7eddd0);transition:height 0.8s cubic-bezier(.4,0,.2,1);position:relative;}
+.daily-bar:hover{filter:brightness(1.15);}
+.daily-bar-label{font-size:0.58rem;color:var(--text3);transform:rotate(-45deg);transform-origin:right top;white-space:nowrap;margin-top:8px;}
+.daily-value{position:absolute;top:-22px;left:50%;transform:translateX(-50%);font-size:0.66rem;color:var(--text2);white-space:nowrap;opacity:0;transition:opacity 0.15s;pointer-events:none;background:var(--card);padding:2px 6px;border-radius:4px;border:1px solid var(--border);}
+.daily-col:hover .daily-value{opacity:1;}
+.cumulative-card{background:linear-gradient(135deg,rgba(244,132,95,0.12),rgba(78,201,176,0.08));border:1px solid rgba(244,132,95,0.2);border-radius:var(--r);padding:24px 20px;margin-bottom:14px;text-align:center;position:relative;overflow:hidden;}
+.cumulative-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--orange),var(--orange-lt),var(--teal));}
+.cumulative-label{font-size:0.72rem;color:var(--text2);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.cumulative-val{font-size:3.8rem;font-weight:700;color:var(--orange-lt);letter-spacing:-0.04em;line-height:1;margin-bottom:6px;}
+.cumulative-sub{font-size:0.76rem;color:var(--text3);}
+.foot-notice{margin:20px 16px 30px;padding:14px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;font-size:0.7rem;color:var(--text3);line-height:1.7;text-align:center;}
+
+.wrap{padding:14px 16px 80px;}
+
+/* ── 핵심 지표 4개 ── */
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.kpi-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px 15px;position:relative;overflow:hidden;}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.kpi-card.c-orange::before{background:linear-gradient(90deg,var(--orange),var(--orange-lt));}
+.kpi-card.c-teal::before{background:linear-gradient(90deg,var(--teal),#7eddd0);}
+.kpi-card.c-purple::before{background:linear-gradient(90deg,var(--purple),#d8b4fe);}
+.kpi-card.c-green::before{background:linear-gradient(90deg,var(--green),#7ec89a);}
+
+.kpi-label{font-size:0.65rem;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.kpi-val{font-size:2rem;font-weight:600;line-height:1;margin-bottom:4px;letter-spacing:-0.03em;}
+.kpi-val.orange{color:var(--orange-lt);}
+.kpi-val.teal{color:var(--teal);}
+.kpi-val.purple{color:var(--purple);}
+.kpi-val.green{color:var(--green);}
+.kpi-change{display:flex;align-items:center;gap:4px;font-size:0.72rem;}
+.kpi-change.up{color:var(--green);}
+.kpi-change.down{color:#e05a5a;}
+.kpi-change.neutral{color:var(--text3);}
+.kpi-sub{font-size:0.68rem;color:var(--text3);margin-top:3px;}
+
+/* ── 전환 퍼널 ── */
+.funnel-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:14px;}
+.card-title{font-size:0.65rem;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;font-weight:500;}
+.funnel-list{display:flex;flex-direction:column;gap:8px;}
+.funnel-item{position:relative;}
+.funnel-label-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;}
+.funnel-label{font-size:0.82rem;color:var(--text2);display:flex;align-items:center;gap:6px;}
+.funnel-icon{font-size:0.9rem;}
+.funnel-nums{display:flex;align-items:center;gap:8px;}
+.funnel-count{font-size:0.88rem;font-weight:500;color:var(--text);}
+.funnel-pct{font-size:0.72rem;color:var(--text3);}
+.funnel-bar-bg{height:8px;background:rgba(255,255,255,0.05);border-radius:50px;overflow:hidden;}
+.funnel-bar-fill{height:100%;border-radius:50px;transition:width 1s cubic-bezier(.4,0,.2,1);}
+.funnel-arrow{text-align:center;font-size:0.65rem;color:var(--text3);margin:2px 0;}
+
+/* ── 전환율 게이지 ── */
+.gauge-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.gauge-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;text-align:center;}
+.gauge-title{font-size:0.62rem;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;}
+.gauge-wrap{position:relative;width:90px;height:50px;margin:0 auto 8px;}
+.gauge-svg{width:100%;height:100%;}
+.gauge-val{position:absolute;bottom:0;left:50%;transform:translateX(-50%);font-size:1.1rem;font-weight:600;line-height:1;}
+.gauge-label{font-size:0.7rem;color:var(--text3);}
+
+/* ── 시간대별 차트 ── */
+.chart-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:14px;}
+.bar-chart{display:flex;align-items:flex-end;gap:4px;height:80px;margin-top:8px;}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.bar-fill{width:100%;border-radius:4px 4px 0 0;min-height:4px;transition:height 0.8s cubic-bezier(.4,0,.2,1);}
+.bar-label{font-size:0.6rem;color:var(--text3);}
+
+/* ── 실시간 접속자 ── */
+.realtime-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:14px;}
+.realtime-big{display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 0;}
+.realtime-num{font-size:3.5rem;font-weight:700;color:var(--green);letter-spacing:-0.04em;line-height:1;}
+.realtime-label{font-size:0.78rem;color:var(--text2);line-height:1.5;}
+
+/* ── 쿠팡 클릭 상세 ── */
+.click-list{display:flex;flex-direction:column;gap:7px;}
+.click-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.02);border-radius:10px;border:1px solid var(--border);}
+.click-icon{font-size:1.2rem;flex-shrink:0;}
+.click-info{flex:1;}
+.click-name{font-size:0.82rem;font-weight:500;color:var(--text);}
+.click-bar-bg{height:4px;background:rgba(255,255,255,0.07);border-radius:50px;margin-top:4px;overflow:hidden;}
+.click-bar-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,var(--orange),var(--orange-lt));}
+.click-count{font-size:0.82rem;font-weight:600;color:var(--orange-lt);flex-shrink:0;}
+
+/* ── GA 연동 안내 ── */
+.ga-notice{background:rgba(78,201,176,0.06);border:1px solid rgba(78,201,176,0.15);border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:0.75rem;color:var(--teal);line-height:1.8;}
+.ga-notice strong{color:var(--teal);font-weight:600;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="header-title">
+      <div class="live-dot"></div>
+      🐾 반려동물 테스트 Analytics
+    </div>
+    <div class="period-tabs">
+      <button class="ptab active" data-period="today" onclick="setPeriod('today',this)">오늘</button>
+      <button class="ptab" data-period="week" onclick="setPeriod('week',this)">7일</button>
+      <button class="ptab" data-period="month" onclick="setPeriod('month',this)">30일</button>
+      <button class="ptab" data-period="custom" onclick="setPeriod('custom',this)">직접선택</button>
+    </div>
+  </div>
+  <div class="date-range-row" id="dateRangeRow">
+    <label>시작 <input type="date" id="dateStart"></label>
+    <label>종료 <input type="date" id="dateEnd"></label>
+    <button type="button" onclick="applyCustomRange()">적용</button>
+  </div>
+  <div class="header-sub" id="lastUpdate">마지막 업데이트: 방금 전</div>
+</div>
+
+<div class="wrap">
+
+  <!-- 데이터 출처 안내 -->
+  <div class="ga-notice" id="gaNotice">
+    <strong>📊 GA4 데이터로 집계해요</strong><br>
+    측정 ID G-HFQCEBY2PW의 실시간 접속자, 오늘 방문자, 완주율, 쿠팡 클릭수를 표시해요.<br>
+    Netlify 환경변수 설정 전에는 이 브라우저의 localStorage 데이터로 임시 표시돼요.
+  </div>
+
+  <!-- 누적 접속자 (메인 강조) -->
+  <div class="cumulative-card">
+    <div class="cumulative-label">📈 누적 접속자</div>
+    <div class="cumulative-val" id="cumulativeNum">—</div>
+    <div class="cumulative-sub" id="cumulativeSub">전체 기간 (GA4 데이터 기준)</div>
+  </div>
+
+  <!-- 실시간 접속자 -->
+  <div class="realtime-card">
+    <div class="card-title">실시간 접속자</div>
+    <div class="realtime-big">
+      <div class="realtime-num" id="realtimeNum">3</div>
+      <div class="realtime-label">지금 이 순간<br>테스트 중인 분들</div>
+    </div>
+  </div>
+
+  <!-- 핵심 지표 4개 -->
+  <div class="kpi-grid">
+    <div class="kpi-card c-orange">
+      <div class="kpi-label">오늘 방문자</div>
+      <div class="kpi-val orange" id="kpiVisit">247</div>
+      <div class="kpi-change up" id="kpiVisitChange">↑ 12% 어제 대비</div>
+      <div class="kpi-sub" id="kpiVisitSub">누적 1,284명</div>
+    </div>
+    <div class="kpi-card c-teal">
+      <div class="kpi-label">완주자 수</div>
+      <div class="kpi-val teal" id="kpiComplete">89</div>
+      <div class="kpi-change up" id="kpiCompleteChange">↑ 8% 어제 대비</div>
+      <div class="kpi-sub" id="kpiCompleteSub">누적 421명</div>
+    </div>
+    <div class="kpi-card c-purple">
+      <div class="kpi-label">완주율</div>
+      <div class="kpi-val purple" id="kpiRate">36%</div>
+      <div class="kpi-change up" id="kpiRateChange">↑ 3%p 어제 대비</div>
+      <div class="kpi-sub">업계 평균 25%</div>
+    </div>
+    <div class="kpi-card c-green">
+      <div class="kpi-label">쿠팡 클릭</div>
+      <div class="kpi-val green" id="kpiClick">34</div>
+      <div class="kpi-change up" id="kpiClickChange">↑ 21% 어제 대비</div>
+      <div class="kpi-sub" id="kpiClickSub">클릭률 38%</div>
+    </div>
+  </div>
+
+  <!-- 전환 퍼널 -->
+  <div class="funnel-card">
+    <div class="card-title">전환 퍼널</div>
+    <div class="funnel-list">
+      <div class="funnel-item">
+        <div class="funnel-label-row">
+          <span class="funnel-label"><span class="funnel-icon">👆</span> 접속</span>
+          <div class="funnel-nums">
+            <span class="funnel-count" id="f1">247</span>
+            <span class="funnel-pct">100%</span>
+          </div>
+        </div>
+        <div class="funnel-bar-bg"><div class="funnel-bar-fill" id="fb1" style="width:100%;background:linear-gradient(90deg,var(--orange),var(--orange-lt));"></div></div>
+      </div>
+      <div class="funnel-arrow">↓</div>
+      <div class="funnel-item">
+        <div class="funnel-label-row">
+          <span class="funnel-label"><span class="funnel-icon">📝</span> 시작</span>
+          <div class="funnel-nums">
+            <span class="funnel-count" id="f2">183</span>
+            <span class="funnel-pct" id="fp2">74%</span>
+          </div>
+        </div>
+        <div class="funnel-bar-bg"><div class="funnel-bar-fill" id="fb2" style="width:74%;background:linear-gradient(90deg,var(--teal),#7eddd0);"></div></div>
+      </div>
+      <div class="funnel-arrow">↓</div>
+      <div class="funnel-item">
+        <div class="funnel-label-row">
+          <span class="funnel-label"><span class="funnel-icon">✅</span> 완주</span>
+          <div class="funnel-nums">
+            <span class="funnel-count" id="f3">89</span>
+            <span class="funnel-pct" id="fp3">36%</span>
+          </div>
+        </div>
+        <div class="funnel-bar-bg"><div class="funnel-bar-fill" id="fb3" style="width:36%;background:linear-gradient(90deg,var(--purple),#d8b4fe);"></div></div>
+      </div>
+      <div class="funnel-arrow">↓</div>
+      <div class="funnel-item">
+        <div class="funnel-label-row">
+          <span class="funnel-label"><span class="funnel-icon">🛒</span> 쿠팡 클릭</span>
+          <div class="funnel-nums">
+            <span class="funnel-count" id="f4">34</span>
+            <span class="funnel-pct" id="fp4">38%</span>
+          </div>
+        </div>
+        <div class="funnel-bar-bg"><div class="funnel-bar-fill" id="fb4" style="width:14%;background:linear-gradient(90deg,var(--green),#7ec89a);"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 전환율 게이지 -->
+  <div class="gauge-row">
+    <div class="gauge-card">
+      <div class="gauge-title">완주율</div>
+      <div class="gauge-wrap">
+        <svg class="gauge-svg" viewBox="0 0 100 55">
+          <path d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="10" stroke-linecap="round"/>
+          <path d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke="url(#g1)" stroke-width="10" stroke-linecap="round"
+            stroke-dasharray="126" stroke-dashoffset="80" id="gauge1path"/>
+          <defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#c084fc"/><stop offset="100%" stop-color="#d8b4fe"/></linearGradient></defs>
+        </svg>
+        <div class="gauge-val purple" id="gauge1val">36%</div>
+      </div>
+      <div class="gauge-label">접속자 대비 완주</div>
+    </div>
+    <div class="gauge-card">
+      <div class="gauge-title">쿠팡 클릭률</div>
+      <div class="gauge-wrap">
+        <svg class="gauge-svg" viewBox="0 0 100 55">
+          <path d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="10" stroke-linecap="round"/>
+          <path d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke="url(#g2)" stroke-width="10" stroke-linecap="round"
+            stroke-dasharray="126" stroke-dashoffset="78" id="gauge2path"/>
+          <defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#5aaa78"/><stop offset="100%" stop-color="#7ec89a"/></linearGradient></defs>
+        </svg>
+        <div class="gauge-val green" id="gauge2val">38%</div>
+      </div>
+      <div class="gauge-label">완주자 대비 클릭</div>
+    </div>
+  </div>
+
+  <!-- 일별 접속자 그래프 -->
+  <div class="chart-card">
+    <div class="card-title" id="dailyChartTitle">일별 접속자</div>
+    <div class="daily-chart" id="dailyChart"></div>
+  </div>
+
+  <!-- 시간대별 접속 -->
+  <div class="chart-card">
+    <div class="card-title">시간대별 접속자</div>
+    <div class="bar-chart" id="barChart"></div>
+  </div>
+
+  <!-- 쿠팡 상품별 클릭 -->
+  <div class="funnel-card">
+    <div class="card-title">쿠팡 상품별 클릭 수</div>
+    <div class="click-list" id="clickList"></div>
+  </div>
+
+  <div class="foot-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로 일정액의 수수료를 제공받을 수 있습니다.</div>
+
+</div>
+
+<script>
+let period='today';
+let customStart=null, customEnd=null;
+const ANALYTICS_KEY='petTestAnalytics_v1';
+
+function fmtDate(d){
+  const y=d.getFullYear(), m=String(d.getMonth()+1).padStart(2,'0'), dd=String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${dd}`;
+}
+function parseISO(s){
+  if(!s) return null;
+  const m=String(s).match(/^(\d{4})-?(\d{2})-?(\d{2})$/);
+  if(!m) return null;
+  const d=new Date(Number(m[1]),Number(m[2])-1,Number(m[3]));
+  return isNaN(d.getTime())?null:d;
+}
+
+function escapeHTML(value){
+  return String(value??'').replace(/[&<>"']/g,ch=>({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[ch]));
+}
+
+// ── localStorage에서 이벤트 로드 ──
+function loadEvents(){
+  try{return (JSON.parse(localStorage.getItem(ANALYTICS_KEY))||{events:[]}).events||[];}
+  catch(e){return [];}
+}
+
+// ── 기간 범위 + 비교 기간 ──
+function periodRange(p){
+  const now=Date.now();
+  if(p==='today'){
+    const s=new Date(); s.setHours(0,0,0,0);
+    return {start:s.getTime(),end:now,prevStart:s.getTime()-86400000,prevEnd:s.getTime(),label:'어제 대비'};
+  }
+  if(p==='week'){
+    return {start:now-7*86400000,end:now,prevStart:now-14*86400000,prevEnd:now-7*86400000,label:'지난주 대비'};
+  }
+  return {start:now-30*86400000,end:now,prevStart:now-60*86400000,prevEnd:now-30*86400000,label:'지난달 대비'};
+}
+
+function pctChange(curr,prev){
+  if(!prev||prev<=0) return null;
+  return Math.round(((curr-prev)/prev)*100);
+}
+
+function fmtChange(el,change,label,suffix){
+  suffix=suffix||'%';
+  if(change===null||change===undefined){
+    el.textContent='— 이전 데이터 없음';
+    el.className='kpi-change neutral';
+  } else if(change>0){
+    el.textContent=`↑ ${change}${suffix} ${label}`;
+    el.className='kpi-change up';
+  } else if(change<0){
+    el.textContent=`↓ ${Math.abs(change)}${suffix} ${label}`;
+    el.className='kpi-change down';
+  } else {
+    el.textContent='→ 변동 없음';
+    el.className='kpi-change neutral';
+  }
+}
+
+function currentPeriodParams(){
+  const today=new Date();
+  let start, end;
+  if(period==='today'){ start=new Date(today); end=new Date(today); }
+  else if(period==='week'){ start=new Date(today); start.setDate(today.getDate()-6); end=new Date(today); }
+  else if(period==='month'){ start=new Date(today); start.setDate(today.getDate()-29); end=new Date(today); }
+  else if(period==='custom' && customStart && customEnd){ start=customStart; end=customEnd; }
+  else { start=new Date(today); end=new Date(today); }
+  return {start:fmtDate(start),end:fmtDate(end),period};
+}
+
+async function loadGA4Dashboard(){
+  const p=currentPeriodParams();
+  const qs=`?period=${p.period}&start=${p.start}&end=${p.end}`;
+  const res=await fetch('/.netlify/functions/ga4-dashboard'+qs,{cache:'no-store'});
+  const data=await res.json().catch(()=>({}));
+  if(!res.ok) throw new Error(data.error||'GA4 데이터를 불러오지 못했어요');
+  return data;
+}
+
+function setNotice(mode,message){
+  const el=document.getElementById('gaNotice');
+  if(!el) return;
+  if(mode==='ga4'){
+    el.innerHTML='<strong>📊 GA4 실시간 데이터</strong><br>측정 ID G-HFQCEBY2PW에서 가져온 오늘 기준 데이터예요.<br>GA4 Data API 특성상 일부 지표는 몇 분 지연될 수 있어요.';
+  } else {
+    el.innerHTML='<strong>⚠️ GA4 설정 확인 필요</strong><br>'+escapeHTML(message||'GA4 데이터를 불러오지 못해 localStorage 데이터로 임시 표시 중이에요.')+'<br>Netlify에 GA4_PROPERTY_ID와 Google 서비스 계정 환경변수를 설정해 주세요.';
+  }
+}
+
+function renderGA4(data){
+  const todayVisitors=Number(data.todayVisitors||0);
+  const visitsForRate=Number(data.visitEvents||0)||todayVisitors;
+  const completions=Number(data.completions||0);
+  const completionRate=visitsForRate>0?Math.round((completions/visitsForRate)*100):Number(data.completionRate||0);
+  const coupangClicks=Number(data.coupangClicks||0);
+  const clickRate=completions>0?Math.round((coupangClicks/completions)*100):0;
+
+  document.getElementById('realtimeNum').textContent=Number(data.realtimeUsers||0).toLocaleString();
+  document.getElementById('kpiVisit').textContent=todayVisitors.toLocaleString();
+  document.getElementById('kpiVisitChange').textContent='GA4 activeUsers';
+  document.getElementById('kpiVisitChange').className='kpi-change neutral';
+  document.getElementById('kpiVisitSub').textContent=`visit 이벤트 ${Number(data.visitEvents||0).toLocaleString()}회`;
+
+  document.getElementById('kpiComplete').textContent=completions.toLocaleString();
+  document.getElementById('kpiCompleteChange').textContent='complete 이벤트';
+  document.getElementById('kpiCompleteChange').className='kpi-change neutral';
+  document.getElementById('kpiCompleteSub').textContent='오늘 테스트 완료';
+
+  document.getElementById('kpiRate').textContent=completionRate+'%';
+  document.getElementById('kpiRateChange').textContent='완주 / 방문';
+  document.getElementById('kpiRateChange').className='kpi-change neutral';
+
+  document.getElementById('kpiClick').textContent=coupangClicks.toLocaleString();
+  document.getElementById('kpiClickChange').textContent='click 이벤트';
+  document.getElementById('kpiClickChange').className='kpi-change neutral';
+  document.getElementById('kpiClickSub').textContent=`클릭률 ${clickRate}%`;
+
+  document.getElementById('f1').textContent=todayVisitors.toLocaleString();
+  document.getElementById('f2').textContent=Number(data.visitEvents||0).toLocaleString();
+  document.getElementById('fp2').textContent=visitsForRate>0?'100%':'0%';
+  document.getElementById('fb2').style.width=visitsForRate>0?'100%':'0%';
+  document.getElementById('f3').textContent=completions.toLocaleString();
+  document.getElementById('fp3').textContent=completionRate+'%';
+  document.getElementById('fb3').style.width=completionRate+'%';
+  document.getElementById('f4').textContent=coupangClicks.toLocaleString();
+  document.getElementById('fp4').textContent=clickRate+'%';
+  document.getElementById('fb4').style.width=(visitsForRate>0?Math.round(coupangClicks/visitsForRate*100):0)+'%';
+
+  document.getElementById('gauge1val').textContent=completionRate+'%';
+  document.getElementById('gauge2val').textContent=clickRate+'%';
+  document.getElementById('gauge1path').style.strokeDashoffset=126-(126*Math.min(completionRate,100)/100);
+  document.getElementById('gauge2path').style.strokeDashoffset=126-(126*Math.min(clickRate,100)/100);
+
+  document.getElementById('barChart').innerHTML='<div style="width:100%;text-align:center;color:var(--text3);font-size:0.78rem;padding:26px 0;">GA4 요약 지표 모드</div>';
+  document.getElementById('clickList').innerHTML='<div style="text-align:center;color:var(--text3);font-size:0.78rem;padding:20px 0;">상품별 클릭 상세는 GA4 탐색 보고서에서 확인해 주세요</div>';
+
+  // 누적 + 일별
+  const cum=Number(data.totalVisitors||data.cumulativeUsers||0);
+  document.getElementById('cumulativeNum').textContent=cum.toLocaleString();
+  document.getElementById('cumulativeSub').textContent=data.cumulativeSince?`${data.cumulativeSince} 이후 누적`:'전체 기간 (GA4 데이터 기준)';
+  renderDailyChart(data.daily||[], data.periodLabel||'');
+
+  document.getElementById('lastUpdate').textContent=`마지막 업데이트: ${new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}`;
+  setNotice('ga4');
+}
+
+// 상품 이름 → 아이콘 매핑 (테스트 페이지와 동기화)
+const PRODUCT_ICONS={
+  '노즈워크 매트':'🧩','콩 장난감 (KONG Classic)':'🟠','캣타워·숨숨집':'🏰',
+  '낚싯대 장난감':'🎣','강아지 진정 스프레이':'🌿','훈련용 소프트 간식':'🍖',
+  '자동 급식기':'🥣','슬리커 브러시':'🪮','고양이 페로몬 디퓨저':'🌿',
+  '고양이 페로몬 디퓨저 (다묘용)':'🌿','분리 급식기 (다묘용)':'🍽️',
+  '고양이 동굴 침대':'🛏️','혼자노는 장난감 세트':'🧶','고양이 그루밍 브러시':'🪮',
+  '고양이 이동 배낭':'🎒','고양이 외부 기생충 예방':'💉',
+  '소형견 하네스 세트':'🐩','소형견 캐리어·이동장':'🛏️','소형견 의류·패딩':'👗',
+  '대형견 하네스 & 리드줄':'🦮','대형견 목욕 용품 세트':'🛁','대형견 껌·덴탈 트릿':'🦴',
+  '하네스 & 리드줄 세트':'🦮','강아지 종합 영양제':'💊','고양이 종합 영양제':'💊',
+  '티모시 건초 (1단)':'🌾','토끼 인클로저·울타리':'🏠','토끼 터널·장난감':'🎠','토끼 전용 영양제':'💊'
+};
+
+function periodRange2(p){
+  // 새로 추가된 period 옵션 처리 (week 동일, month는 30일, custom은 customStart/End)
+  const now=Date.now();
+  if(p==='today'){
+    const s=new Date(); s.setHours(0,0,0,0);
+    return {start:s.getTime(),end:now,prevStart:s.getTime()-86400000,prevEnd:s.getTime(),label:'어제 대비',days:1};
+  }
+  if(p==='week'){
+    const s=new Date(); s.setHours(0,0,0,0); s.setDate(s.getDate()-6);
+    return {start:s.getTime(),end:now,prevStart:s.getTime()-7*86400000,prevEnd:s.getTime(),label:'지난주 대비',days:7};
+  }
+  if(p==='month'){
+    const s=new Date(); s.setHours(0,0,0,0); s.setDate(s.getDate()-29);
+    return {start:s.getTime(),end:now,prevStart:s.getTime()-30*86400000,prevEnd:s.getTime(),label:'지난달 대비',days:30};
+  }
+  if(p==='custom' && customStart && customEnd){
+    const s=new Date(customStart); s.setHours(0,0,0,0);
+    const e=new Date(customEnd); e.setHours(23,59,59,999);
+    const ms=e.getTime()-s.getTime();
+    return {start:s.getTime(),end:e.getTime(),prevStart:s.getTime()-ms-1,prevEnd:s.getTime()-1,label:'이전 기간 대비',days:Math.max(1,Math.round(ms/86400000)+1)};
+  }
+  const s=new Date(); s.setHours(0,0,0,0);
+  return {start:s.getTime(),end:now,prevStart:s.getTime()-86400000,prevEnd:s.getTime(),label:'어제 대비',days:1};
+}
+
+function computeData(p){
+  const all=loadEvents();
+  const r=periodRange2(p);
+  const inRange=all.filter(e=>e.t>=r.start&&e.t<=r.end);
+  const inPrev=all.filter(e=>e.t>=r.prevStart&&e.t<r.prevEnd);
+  const cnt=(arr,type)=>arr.filter(e=>e.type===type).length;
+
+  const visit=cnt(inRange,'visit'),start=cnt(inRange,'start'),
+        complete=cnt(inRange,'complete'),click=cnt(inRange,'coupang_click');
+  const pVisit=cnt(inPrev,'visit'),pComplete=cnt(inPrev,'complete'),pClick=cnt(inPrev,'coupang_click');
+
+  const rate=visit>0?Math.round(complete/visit*100):0;
+  const pRate=pVisit>0?Math.round(pComplete/pVisit*100):0;
+
+  // 시간대별 (오늘은 24시간 분포, 기간이 길면 누적)
+  const hours=Array(24).fill(0);
+  inRange.filter(e=>e.type==='visit').forEach(e=>{hours[new Date(e.t).getHours()]++;});
+
+  // 일별 (기간 내 날짜별 visit 카운트)
+  const daily=[];
+  const dayMs=86400000;
+  const startDay=new Date(r.start); startDay.setHours(0,0,0,0);
+  const endDay=new Date(r.end); endDay.setHours(0,0,0,0);
+  for(let t=startDay.getTime(); t<=endDay.getTime(); t+=dayMs){
+    const dayStart=t, dayEnd=t+dayMs;
+    const users=inRange.filter(e=>e.type==='visit'&&e.t>=dayStart&&e.t<dayEnd).length;
+    daily.push({date:fmtDate(new Date(t)),users});
+  }
+  // 누적
+  const cumulative=cnt(all,'visit');
+  const earliest=all.length>0?Math.min(...all.map(e=>e.t)):Date.now();
+
+  // 상품별 클릭
+  const productMap={};
+  inRange.filter(e=>e.type==='coupang_click').forEach(e=>{
+    const n=e.product||'(이름 없음)';
+    productMap[n]=(productMap[n]||0)+1;
+  });
+  const products=Object.entries(productMap)
+    .map(([name,clk])=>({icon:PRODUCT_ICONS[name]||'🛒',name,click:clk}))
+    .sort((a,b)=>b.click-a.click).slice(0,8);
+
+  // 실시간: 마지막 5분 내 visit
+  const now=Date.now();
+  const realtime=all.filter(e=>e.type==='visit'&&e.t>now-5*60000).length;
+
+  return {
+    label:r.label,realtime,
+    visit, visitTotal:cnt(all,'visit'), visitChange:pctChange(visit,pVisit),
+    complete, completeTotal:cnt(all,'complete'), completeChange:pctChange(complete,pComplete),
+    rate, rateChange: pVisit>0?(rate-pRate):null,
+    click, clickChange:pctChange(click,pClick),
+    start, hours, products, daily, cumulative,
+    cumulativeSince:all.length>0?fmtDate(new Date(earliest)):'',
+    periodLabel: p==='today'?'오늘':p==='week'?'최근 7일':p==='month'?'최근 30일':'사용자 지정'
+  };
+}
+
+function setPeriod(p,btn){
+  period=p;
+  document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const row=document.getElementById('dateRangeRow');
+  if(p==='custom'){
+    row.classList.add('show');
+    if(!customStart||!customEnd){
+      const today=new Date(), weekAgo=new Date(today); weekAgo.setDate(today.getDate()-6);
+      document.getElementById('dateStart').value=fmtDate(weekAgo);
+      document.getElementById('dateEnd').value=fmtDate(today);
+    }
+    return;
+  }
+  row.classList.remove('show');
+  render();
+}
+
+function applyCustomRange(){
+  const s=parseISO(document.getElementById('dateStart').value);
+  const e=parseISO(document.getElementById('dateEnd').value);
+  if(!s||!e){ alert('날짜를 선택해 주세요'); return; }
+  if(s>e){ alert('시작일이 종료일보다 빠를 수 없어요'); return; }
+  customStart=s; customEnd=e;
+  render();
+}
+
+function renderDailyChart(daily,periodLabel){
+  const el=document.getElementById('dailyChart');
+  const title=document.getElementById('dailyChartTitle');
+  if(title) title.textContent=`일별 접속자${periodLabel?' · '+periodLabel:''}`;
+  if(!el) return;
+  if(!Array.isArray(daily)||daily.length===0){
+    el.innerHTML='<div style="width:100%;text-align:center;color:var(--text3);font-size:0.78rem;padding:34px 0;">기간 내 데이터가 없어요</div>';
+    return;
+  }
+  const max=Math.max(1,...daily.map(d=>Number(d.users||0)));
+  el.innerHTML=daily.map(d=>{
+    const v=Number(d.users||0);
+    const h=v>0?Math.max(4,Math.round((v/max)*100)):2;
+    const label=String(d.date||'').slice(-5).replace(/-/g,'/');
+    return `<div class="daily-col"><div style="position:relative;width:100%;height:100px;display:flex;align-items:flex-end;">
+      <div class="daily-bar" style="height:${h}%;"><span class="daily-value">${v}</span></div>
+    </div><span class="daily-bar-label">${label}</span></div>`;
+  }).join('');
+}
+
+async function render(){
+  try{
+    const ga4=await loadGA4Dashboard();
+    renderGA4(ga4);
+    return;
+  }catch(e){
+    setNotice('fallback',e.message);
+  }
+
+  const d=computeData(period);
+
+  // 누적 + 일별
+  document.getElementById('cumulativeNum').textContent=d.cumulative.toLocaleString();
+  document.getElementById('cumulativeSub').textContent=d.cumulativeSince?`${d.cumulativeSince} 이후 누적 (localStorage)`:'아직 데이터가 없어요';
+  renderDailyChart(d.daily,d.periodLabel);
+
+  // KPI
+  document.getElementById('realtimeNum').textContent=d.realtime;
+  document.getElementById('kpiVisit').textContent=d.visit.toLocaleString();
+  fmtChange(document.getElementById('kpiVisitChange'),d.visitChange,d.label);
+  document.getElementById('kpiVisitSub').textContent=`누적 ${d.visitTotal.toLocaleString()}명`;
+
+  document.getElementById('kpiComplete').textContent=d.complete.toLocaleString();
+  fmtChange(document.getElementById('kpiCompleteChange'),d.completeChange,d.label);
+  document.getElementById('kpiCompleteSub').textContent=`누적 ${d.completeTotal.toLocaleString()}명`;
+
+  document.getElementById('kpiRate').textContent=d.rate+'%';
+  fmtChange(document.getElementById('kpiRateChange'),d.rateChange,d.label,'%p');
+
+  document.getElementById('kpiClick').textContent=d.click.toLocaleString();
+  fmtChange(document.getElementById('kpiClickChange'),d.clickChange,d.label);
+  const clickRate=d.complete>0?Math.round((d.click/d.complete)*100):0;
+  document.getElementById('kpiClickSub').textContent=`클릭률 ${clickRate}%`;
+
+  // 퍼널
+  const visitN=d.visit;
+  const startPct=visitN>0?Math.round((d.start/visitN)*100):0;
+  const completePct=visitN>0?Math.round((d.complete/visitN)*100):0;
+  const clickPct=d.complete>0?Math.round((d.click/d.complete)*100):0;
+  document.getElementById('f1').textContent=visitN.toLocaleString();
+  document.getElementById('f2').textContent=d.start.toLocaleString();
+  document.getElementById('fp2').textContent=startPct+'%';
+  document.getElementById('fb2').style.width=startPct+'%';
+  document.getElementById('f3').textContent=d.complete.toLocaleString();
+  document.getElementById('fp3').textContent=completePct+'%';
+  document.getElementById('fb3').style.width=completePct+'%';
+  document.getElementById('f4').textContent=d.click.toLocaleString();
+  document.getElementById('fp4').textContent=clickPct+'%';
+  document.getElementById('fb4').style.width=(visitN>0?(d.click/visitN*100):0)+'%';
+
+  // 게이지
+  document.getElementById('gauge1val').textContent=completePct+'%';
+  document.getElementById('gauge2val').textContent=clickPct+'%';
+  document.getElementById('gauge1path').style.strokeDashoffset=126-(126*completePct/100);
+  document.getElementById('gauge2path').style.strokeDashoffset=126-(126*clickPct/100);
+
+  // 시간대 바 차트
+  const hours=d.hours;
+  const maxH=Math.max(1,...hours);
+  const barHtml=hours.map((v,i)=>{
+    const h=v>0?Math.max(4,Math.round((v/maxH)*80)):2;
+    return `<div class="bar-col">
+      <div class="bar-fill" style="height:${h}px;background:${v>0?'linear-gradient(180deg,var(--orange),var(--orange-lt))':'rgba(255,255,255,0.08)'}"></div>
+      ${i%2===0?`<span class="bar-label">${i}시</span>`:'<span class="bar-label"></span>'}
+    </div>`;
+  }).join('');
+  document.getElementById('barChart').innerHTML=barHtml;
+
+  // 쿠팡 클릭 상품
+  if(d.products.length===0){
+    document.getElementById('clickList').innerHTML='<div style="text-align:center;color:var(--text3);font-size:0.78rem;padding:20px 0;">아직 클릭 기록이 없어요</div>';
+  } else {
+    const maxClick=d.products[0]?.click||1;
+    document.getElementById('clickList').innerHTML=d.products.map(p=>`
+      <div class="click-item">
+        <span class="click-icon">${escapeHTML(p.icon)}</span>
+        <div class="click-info">
+          <div class="click-name">${escapeHTML(p.name)}</div>
+          <div class="click-bar-bg"><div class="click-bar-fill" style="width:${Math.round((p.click/maxClick)*100)}%"></div></div>
+        </div>
+        <span class="click-count">${p.click}회</span>
+      </div>`).join('');
+  }
+
+  document.getElementById('lastUpdate').textContent=`마지막 업데이트: ${new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}`;
+}
+
+// 10초마다 자동 갱신 (실시간 반영)
+setInterval(render,10000);
+
+// 다른 탭에서 테스트가 진행 중이면 즉시 반영
+window.addEventListener('storage',e=>{
+  if(e.key===ANALYTICS_KEY) render();
+});
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+# Local Netlify folder
+.netlify
+node_modules
+og_capture.js
+og_image_cute.html
