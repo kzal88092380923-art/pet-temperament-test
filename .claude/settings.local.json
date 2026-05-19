@@ -28,7 +28,11 @@
       "Bash(git branch *)",
       "Bash(git push *)",
       "Bash(brew install *)",
-      "Bash(gh auth *)"
+      "Bash(gh auth *)",
+      "Bash(git pull *)",
+      "Bash(lsof -ti:8765)",
+      "Bash(xargs kill -9)",
+      "Bash(python3 -m http.server 8765)"
     ]
   }
 }
