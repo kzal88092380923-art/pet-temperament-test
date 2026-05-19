@@ -38,8 +38,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
-<!-- html2canvas (결과 이미지 저장용) -->
+<!-- 카카오 JS SDK (피드 공유) + html2canvas (결과 이미지 저장) -->
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+  if(window.Kakao && !window.Kakao.isInitialized()){
+    try{ window.Kakao.init('5891618b5bd41967c6c1c2c7eddd1a20'); }catch(e){}
+  }
+</script>
 <style>
 :root{
   --bg:#0d1117;--surface:#161b22;--card:#1c2128;
@@ -1652,36 +1658,44 @@ async function nativeShare(title,text,url,kind){
   return false;
 }
 
+// ── 카카오 피드 공유 (SDK) + Web Share API 폴백 ──
+function buildFeedTemplate({title,description,imageUrl,linkUrl,buttonTitle}){
+  return {
+    objectType:'feed',
+    content:{
+      title,
+      description,
+      imageUrl:imageUrl||OG_IMAGE_URL,
+      imageWidth:1200,
+      imageHeight:630,
+      link:{mobileWebUrl:linkUrl,webUrl:linkUrl}
+    },
+    buttons:[{
+      title:buttonTitle||'테스트 하러가기',
+      link:{mobileWebUrl:linkUrl,webUrl:linkUrl}
+    }]
+  };
+}
+
+function sendKakaoFeed(template){
+  if(!(window.Kakao&&Kakao.Share&&Kakao.isInitialized())) return false;
+  try{
+    Kakao.Share.sendDefault(template);
+    return true;
+  }catch(e){return false;}
+}
+
 function shareTestKakao(){
-  nativeShare(
-    TEST_SHARE_TITLE,
-    TEST_SHARE_DESC,
-    TEST_URL,
-    'test'
-  );
-}
-
-function encodeSharePayload(payload){
-  try{
-    return btoa(unescape(encodeURIComponent(JSON.stringify(payload))))
-      .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-  }catch(e){return '';}
-}
-
-function decodeSharePayload(token){
-  try{
-    const base64=String(token||'').replace(/-/g,'+').replace(/_/g,'/');
-    const padded=base64+'='.repeat((4-base64.length%4)%4);
-    return JSON.parse(decodeURIComponent(escape(atob(padded))));
-  }catch(e){return null;}
-}
-
-function createResultShareUrl(){
-  const payload=encodeSharePayload({
-    petType,petName,petAge,petGender,dogSize,catType,otherAnimal,
-    favoriteTreat,allergyInfo,answers
-  });
-  return payload?`${SITE_URL}/quiz.html?result=${payload}&v=3`:TEST_URL;
+  trackEvent('share_click',{kind:'test'});
+  const sent=sendKakaoFeed(buildFeedTemplate({
+    title:TEST_SHARE_TITLE,
+    description:TEST_SHARE_DESC,
+    linkUrl:TEST_URL,
+    buttonTitle:'테스트 하러가기'
+  }));
+  if(!sent){
+    nativeShare(TEST_SHARE_TITLE,TEST_SHARE_DESC,TEST_URL,'test');
+  }
 }
 
 function shareResultKakao(){
@@ -1689,15 +1703,17 @@ function shareResultKakao(){
   const name=window.__currentPetName||'우리 아이';
   const animal=nm(name);
   const typeText=cleanType(r&&r.type)||'특별한 성격';
-  const scoreLine=resultScoreLine(r);
-  const analysis=r?`${r.desc}\n기질 점수: ${scoreLine}`:'결과 페이지에서 기질 분석을 확인해봐';
-  const resultUrl=createResultShareUrl();
-  nativeShare(
-    `${animal}는 ${typeText}이래!`,
-    `${analysis}\n결과 페이지에서 분석 보기 🐾`,
-    resultUrl,
-    'result'
-  );
+  const desc=(r&&r.desc)?r.desc:'우리 아이 성격도 테스트해봐 🐾';
+  trackEvent('share_click',{kind:'result',resultType:r&&r.type});
+  const sent=sendKakaoFeed(buildFeedTemplate({
+    title:`${animal}는 ${typeText}이래! 🐾`,
+    description:desc,
+    linkUrl:TEST_URL,
+    buttonTitle:'테스트 하러가기'
+  }));
+  if(!sent){
+    nativeShare(`${animal}는 ${typeText}이래!`,desc,TEST_URL,'result');
+  }
 }
 
 async function copyShareLink(kind){
@@ -1706,8 +1722,7 @@ async function copyShareLink(kind){
   const name=window.__currentPetName||'우리 아이';
   let text;
   if(r){
-    const resultUrl=createResultShareUrl();
-    text=`🐾 ${nm(name)}는 ${cleanType(r.type)}이래!\n${r.desc}\n기질 점수: ${resultScoreLine(r)}\n결과 페이지에서 분석 보기\n${resultUrl}`;
+    text=`🐾 ${nm(name)}는 ${cleanType(r.type)}이래!\n${r.desc}\n${TEST_URL}`;
   } else {
     text=`🐾 ${TEST_SHARE_TITLE}\n${TEST_SHARE_DESC}\n${TEST_URL}`;
   }
@@ -1775,31 +1790,6 @@ async function saveResultImage(){
 }
 
 function restart(){location.reload();}
-
-function loadSharedResultIfPresent(){
-  const params=new URLSearchParams(location.search);
-  const payload=decodeSharePayload(params.get('result'));
-  if(!payload||!payload.answers) return false;
-  petType=payload.petType||'';
-  petName=payload.petName||'';
-  petAge=payload.petAge||'';
-  petGender=payload.petGender||'';
-  dogSize=payload.dogSize||'';
-  catType=payload.catType||'';
-  otherAnimal=payload.otherAnimal||'';
-  favoriteTreat=payload.favoriteTreat||'';
-  allergyInfo=payload.allergyInfo||'';
-  answers=payload.answers||{};
-  document.getElementById('formWrap').style.display='none';
-  document.querySelector('.tablet-layout').style.display='none';
-  document.getElementById('progBar').style.display='none';
-  document.getElementById('loadingWrap').classList.remove('show');
-  showResult();
-  trackEvent('shared_result_view',{petType,resultType:window.__currentResult&&window.__currentResult.type});
-  return true;
-}
-
-loadSharedResultIfPresent();
 
 // ── 카카오톡 인앱브라우저 안내 배너 ──
 (function(){
