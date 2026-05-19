@@ -1622,6 +1622,132 @@ function cleanType(t){
   return String(t||'').replace(/[^\p{L}\p{N}\s]/gu,'').trim();
 }
 
+const SHARE_TOKEN_ALPHABET='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_';
+const SHARE_STATE_MAP={
+  petType:['dog','cat','rabbit','other'],
+  age:['1세 미만','1~3세','4~7세','8세 이상'],
+  gender:['남아','여아'],
+  dogSize:['소형견','중형견','대형견',''],
+  catType:['완전실내','실내외겸용','다묘가정',''],
+  treat:['고구마','사과','닭가슴살','고기 말린거'],
+  answers:{
+    q1:['넘쳐흘러요','활발한 편','보통이에요','조용해요'],
+    q2:['매우 고집 있어요','조금 고집 있어요','순한 편이에요','매우 순해요'],
+    q3:['탐험가 타입','관심 있는 것만','별로 없어요','겁이 많아요'],
+    q4:['먼저 다가가요','살펴보다 친해져요','뒤에 숨어요','짖거나 경계해요'],
+    q5:['심하게 불안해해요','조금 기다려요','혼자 잘 놀아요','더 자유로워해요'],
+    q6:['껌딱지예요','좋아해요','가끔 허락해요','건드리지 마세요'],
+    q7:['뭐든 잘 먹어요','편식이 있어요','식욕이 없어요','과식하는 편'],
+    q8:['어디서든 잘 자요','보호자 곁에서만','잘 못 자요','하루종일 자요'],
+    q9:['천재예요','노력하면 돼요','기분에 따라','내 마음대로'],
+    q10:['매우 예민해요','조금 예민해요','보통이에요','둔감해요'],
+    q11:['장난감 없으면 못 살아요','좋아하는 편','가끔 관심','별로 안 좋아해요'],
+    q12:['없어요 — 모범생','짖음이 심해요','물건을 부숴요','분리불안이 있어요']
+  }
+};
+
+function shareIndexOf(list,value,fallback){
+  const idx=list.indexOf(value);
+  return idx>=0?idx:(fallback||0);
+}
+
+function encodeStateToken(values){
+  let buffer=0;
+  let bits=0;
+  let out='';
+  values.forEach(value=>{
+    buffer=(buffer<<2)|(value&3);
+    bits+=2;
+    while(bits>=6){
+      bits-=6;
+      out+=SHARE_TOKEN_ALPHABET[(buffer>>bits)&63];
+      buffer&=(1<<bits)-1;
+    }
+  });
+  if(bits>0) out+=SHARE_TOKEN_ALPHABET[(buffer<<(6-bits))&63];
+  return out;
+}
+
+function decodeStateToken(token){
+  if(!token) return null;
+  let buffer=0;
+  let bits=0;
+  const values=[];
+  for(const ch of String(token)){
+    const idx=SHARE_TOKEN_ALPHABET.indexOf(ch);
+    if(idx<0) return null;
+    buffer=(buffer<<6)|idx;
+    bits+=6;
+    while(bits>=2 && values.length<18){
+      bits-=2;
+      values.push((buffer>>bits)&3);
+      buffer&=(1<<bits)-1;
+    }
+  }
+  return values.length===18?values:null;
+}
+
+function createResultShareUrl(){
+  const answerKeys=['q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','q11','q12'];
+  const answerValues=answerKeys.map(key=>shareIndexOf(SHARE_STATE_MAP.answers[key],answers[key],0));
+  const detailIndex=petType==='dog'
+    ? shareIndexOf(SHARE_STATE_MAP.dogSize,dogSize,0)
+    : petType==='cat'
+      ? shareIndexOf(SHARE_STATE_MAP.catType,catType,0)
+      : 0;
+  const token=encodeStateToken([
+    1,
+    shareIndexOf(SHARE_STATE_MAP.petType,petType,0),
+    shareIndexOf(SHARE_STATE_MAP.age,petAge,0),
+    shareIndexOf(SHARE_STATE_MAP.gender,petGender,0),
+    shareIndexOf(SHARE_STATE_MAP.treat,favoriteTreat,0),
+    detailIndex,
+    ...answerValues
+  ]);
+  const params=new URLSearchParams({st:token,v:'3'});
+  if(petName) params.set('n',petName);
+  if(petType==='other'&&otherAnimal) params.set('oa',otherAnimal);
+  if(allergyInfo) params.set('al',allergyInfo);
+  return `${SITE_URL}/quiz.html?${params.toString()}`;
+}
+
+function loadSharedResultIfPresent(){
+  const params=new URLSearchParams(location.search);
+  const values=decodeStateToken(params.get('st'));
+  if(!values||values[0]!==1) return false;
+  const [
+    ,
+    petTypeIndex,
+    ageIndex,
+    genderIndex,
+    treatIndex,
+    detailIndex,
+    ...answerIndexes
+  ]=values;
+  const answerKeys=['q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','q11','q12'];
+  petType=SHARE_STATE_MAP.petType[petTypeIndex]||'dog';
+  petName=(params.get('n')||'우리 아이').trim();
+  petAge=SHARE_STATE_MAP.age[ageIndex]||SHARE_STATE_MAP.age[0];
+  petGender=SHARE_STATE_MAP.gender[genderIndex]||SHARE_STATE_MAP.gender[0];
+  favoriteTreat=SHARE_STATE_MAP.treat[treatIndex]||SHARE_STATE_MAP.treat[0];
+  allergyInfo=(params.get('al')||'').trim();
+  dogSize=petType==='dog'?(SHARE_STATE_MAP.dogSize[detailIndex]||'소형견'):'';
+  catType=petType==='cat'?(SHARE_STATE_MAP.catType[detailIndex]||'완전실내'):'';
+  otherAnimal=petType==='other'?(params.get('oa')||'반려동물').trim():'';
+  answers={};
+  answerKeys.forEach((key,index)=>{
+    const options=SHARE_STATE_MAP.answers[key];
+    answers[key]=options[answerIndexes[index]]||options[0];
+  });
+  document.getElementById('formWrap').style.display='none';
+  document.querySelector('.tablet-layout').style.display='none';
+  document.getElementById('progBar').style.display='none';
+  document.getElementById('loadingWrap').classList.remove('show');
+  showResult();
+  trackEvent('shared_result_view',{petType,resultType:window.__currentResult&&window.__currentResult.type});
+  return true;
+}
+
 async function clipboardWrite(text){
   if(navigator.clipboard && window.isSecureContext){
     try{ await navigator.clipboard.writeText(text); return true; }catch(e){}
@@ -1640,8 +1766,10 @@ async function clipboardWrite(text){
 
 // Web Share API + 클립보드 폴백 (카카오 SDK 미사용 — 도메인 등록 불필요)
 // 모바일에서는 OS 공유 시트가 열리고 카톡을 선택할 수 있어요.
-async function nativeShare(title,text,url,kind){
-  trackEvent('share_click',{kind:kind||'share'});
+async function nativeShare(title,text,url,kind,opts){
+  if(!opts||opts.track!==false){
+    trackEvent('share_click',{kind:kind||'share'});
+  }
   const data={title,text,url};
   if(navigator.share){
     try{
@@ -1694,7 +1822,7 @@ function shareTestKakao(){
     buttonTitle:'테스트 하러가기'
   }));
   if(!sent){
-    nativeShare(TEST_SHARE_TITLE,TEST_SHARE_DESC,TEST_URL,'test');
+    nativeShare(TEST_SHARE_TITLE,TEST_SHARE_DESC,TEST_URL,'test',{track:false});
   }
 }
 
@@ -1704,15 +1832,17 @@ function shareResultKakao(){
   const animal=nm(name);
   const typeText=cleanType(r&&r.type)||'특별한 성격';
   const desc=(r&&r.desc)?r.desc:'우리 아이 성격도 테스트해봐 🐾';
+  const scoreLine=resultScoreLine(r);
+  const resultUrl=createResultShareUrl();
   trackEvent('share_click',{kind:'result',resultType:r&&r.type});
   const sent=sendKakaoFeed(buildFeedTemplate({
     title:`${animal}는 ${typeText}이래! 🐾`,
     description:desc,
-    linkUrl:TEST_URL,
+    linkUrl:resultUrl,
     buttonTitle:'테스트 하러가기'
   }));
   if(!sent){
-    nativeShare(`${animal}는 ${typeText}이래!`,desc,TEST_URL,'result');
+    nativeShare(`${animal}는 ${typeText}이래!`,`${desc}\n기질 점수: ${scoreLine}`,resultUrl,'result',{track:false});
   }
 }
 
@@ -1722,7 +1852,8 @@ async function copyShareLink(kind){
   const name=window.__currentPetName||'우리 아이';
   let text;
   if(r){
-    text=`🐾 ${nm(name)}는 ${cleanType(r.type)}이래!\n${r.desc}\n${TEST_URL}`;
+    const resultUrl=createResultShareUrl();
+    text=`🐾 ${nm(name)}는 ${cleanType(r.type)}이래!\n${r.desc}\n기질 점수: ${resultScoreLine(r)}\n${resultUrl}`;
   } else {
     text=`🐾 ${TEST_SHARE_TITLE}\n${TEST_SHARE_DESC}\n${TEST_URL}`;
   }
@@ -1790,6 +1921,8 @@ async function saveResultImage(){
 }
 
 function restart(){location.reload();}
+
+loadSharedResultIfPresent();
 
 // ── 카카오톡 인앱브라우저 안내 배너 ──
 (function(){
