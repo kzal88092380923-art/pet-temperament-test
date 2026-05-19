@@ -32,7 +32,8 @@
       "Bash(git pull *)",
       "Bash(lsof -ti:8765)",
       "Bash(xargs kill -9)",
-      "Bash(python3 -m http.server 8765)"
+      "Bash(python3 -m http.server 8765)",
+      "Bash(lsof -i :8888 -i :8080 -i :3000 -sTCP:LISTEN)"
     ]
   }
 }
