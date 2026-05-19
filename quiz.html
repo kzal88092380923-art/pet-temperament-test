@@ -202,6 +202,8 @@ body.nav-switching .nav,.sec-banner.show + .tablet-layout .nav{opacity:0;pointer
 .share-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 .share-grid .share-btn{margin:0;}
 .restart-btn{width:100%;padding:13px;background:transparent;border:1px solid var(--border);border-radius:11px;font-family:inherit;font-size:0.85rem;color:var(--text3);cursor:pointer;display:block;text-align:center;min-height:46px;margin-top:6px;}
+.dev-link{display:block;text-align:center;padding:12px 8px;margin-top:4px;font-size:0.78rem;color:var(--text3);text-decoration:none;letter-spacing:0.02em;transition:color 0.15s;}
+.dev-link:hover,.dev-link:active{color:var(--orange-lt);}
 .toast{position:fixed;left:50%;bottom:90px;-webkit-transform:translateX(-50%);transform:translateX(-50%);background:rgba(13,17,23,0.95);color:#fff;padding:11px 18px;border-radius:30px;font-size:0.8rem;z-index:200;border:1px solid var(--border);box-shadow:0 8px 24px rgba(0,0,0,0.3);opacity:0;transition:opacity 0.2s;pointer-events:none;}
 .toast.show{opacity:1;}
 .share-watermark{position:absolute;bottom:14px;right:14px;font-size:11px;color:rgba(255,255,255,0.7);font-weight:500;letter-spacing:0.04em;text-shadow:0 1px 3px rgba(0,0,0,0.4);pointer-events:none;}
@@ -762,6 +764,7 @@ body.nav-switching .nav,.sec-banner.show + .tablet-layout .nav{opacity:0;pointer
       <button class="share-btn save-img icon" type="button" onclick="saveResultImage()">📸 이미지 저장</button>
     </div>
     <button class="restart-btn" type="button" onclick="restart()">다시 테스트하기</button>
+    <a class="dev-link" href="https://x.com/Jamespaakstore" target="_blank" rel="noopener noreferrer">🐾 개발자 X → @Jamespaakstore</a>
   </div>
 </div>
 <div class="toast" id="shareToast"></div>
