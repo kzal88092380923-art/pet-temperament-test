@@ -1809,6 +1809,8 @@ async function nativeShare(title,text,url,kind,opts){
 
 // ── 카카오 피드 공유 (SDK) + Web Share API 폴백 ──
 function buildFeedTemplate({title,description,imageUrl,imageWidth,imageHeight,linkUrl,buttonTitle}){
+  // 카드 본문 링크는 전달된 URL(없으면 테스트 페이지)로, 버튼 링크는 항상 테스트 페이지로 고정
+  const cardUrl=linkUrl||TEST_URL;
   return {
     objectType:'feed',
     content:{
@@ -1817,11 +1819,11 @@ function buildFeedTemplate({title,description,imageUrl,imageWidth,imageHeight,li
       imageUrl:imageUrl||OG_IMAGE_URL,
       imageWidth:imageWidth||1200,
       imageHeight:imageHeight||630,
-      link:{mobileWebUrl:linkUrl,webUrl:linkUrl}
+      link:{mobileWebUrl:cardUrl,webUrl:cardUrl}
     },
     buttons:[{
       title:buttonTitle||'테스트 하러가기',
-      link:{mobileWebUrl:linkUrl,webUrl:linkUrl}
+      link:{mobileWebUrl:TEST_URL,webUrl:TEST_URL}
     }]
   };
 }

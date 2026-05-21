@@ -34,7 +34,29 @@
       "Bash(xargs kill -9)",
       "Bash(python3 -m http.server 8765)",
       "Bash(lsof -i :8888 -i :8080 -i :3000 -sTCP:LISTEN)",
-      "Bash(python3 -c ' *)"
+      "Bash(python3 -c ' *)",
+      "Bash(ipconfig getifaddr *)",
+      "Bash(lsof -nP -iTCP:8888 -sTCP:LISTEN)",
+      "Read(//Users/jh/.claude/**)",
+      "Bash(git -C /Users/jh/Desktop/main status --short)"
+    ],
+    "ask": [
+      "Bash(netlify deploy)",
+      "Bash(netlify deploy *)",
+      "Bash(netlify api restoreSiteDeploy *)"
+    ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/jh/.claude/ss-autopush.sh",
+            "timeout": 30
+          }
+        ]
+      }
     ]
   }
 }
