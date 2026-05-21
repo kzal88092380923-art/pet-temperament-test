@@ -20,7 +20,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:alt" content="우리 댕댕이·냥이 성격 분석">
-<meta property="og:url" content="https://frabjous-dusk-9711f2.netlify.app/quiz.html?v=3">
+<meta property="og:url" content="https://frabjous-dusk-9711f2.netlify.app/quiz.html">
 <meta property="og:locale" content="ko_KR">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="반려견/반려묘/반려동물 기질 테스트">
@@ -212,7 +212,17 @@ body.nav-switching .nav,.sec-banner.show + .tablet-layout .nav{opacity:0;pointer
 .dev-link:hover,.dev-link:active{color:var(--orange-lt);}
 .toast{position:fixed;left:50%;bottom:90px;-webkit-transform:translateX(-50%);transform:translateX(-50%);background:rgba(13,17,23,0.95);color:#fff;padding:11px 18px;border-radius:30px;font-size:0.8rem;z-index:200;border:1px solid var(--border);box-shadow:0 8px 24px rgba(0,0,0,0.3);opacity:0;transition:opacity 0.2s;pointer-events:none;}
 .toast.show{opacity:1;}
-.share-watermark{position:absolute;bottom:14px;right:14px;font-size:11px;color:rgba(255,255,255,0.7);font-weight:500;letter-spacing:0.04em;text-shadow:0 1px 3px rgba(0,0,0,0.4);pointer-events:none;}
+.intro-modal{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(0,0,0,0.66);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);}
+.intro-modal.show{display:flex;}
+.intro-box{background:var(--card);border:1px solid var(--border);border-radius:20px;max-width:380px;width:100%;padding:30px 26px 24px;text-align:center;box-shadow:0 18px 50px rgba(0,0,0,0.5);animation:introPop 0.22s ease;}
+@keyframes introPop{from{opacity:0;transform:scale(0.94) translateY(8px);}to{opacity:1;transform:none;}}
+.intro-emoji{font-size:2.6rem;line-height:1;margin-bottom:12px;}
+.intro-title{font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:10px;}
+.intro-desc{font-size:0.84rem;color:var(--text2);line-height:1.7;font-weight:300;margin-bottom:18px;}
+.intro-dev{display:flex;align-items:center;justify-content:center;gap:7px;font-size:0.8rem;color:var(--text3);padding:11px;border:1px solid var(--border);border-radius:11px;margin-bottom:16px;text-decoration:none;}
+.intro-dev b{color:var(--orange-lt);font-weight:600;}
+.intro-btn{width:100%;padding:13px;background:var(--orange);color:#fff;border:none;border-radius:11px;font-family:inherit;font-size:0.9rem;font-weight:600;cursor:pointer;min-height:48px;}
+.intro-btn:active{opacity:0.85;transform:scale(0.99);}
 .disclaimer{margin:0 16px 16px;padding:12px 14px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;font-size:0.7rem;color:var(--text3);line-height:1.7;text-align:center;}
 
 /* ════════════════════════════
@@ -774,6 +784,17 @@ body.nav-switching .nav,.sec-banner.show + .tablet-layout .nav{opacity:0;pointer
   </div>
 </div>
 <div class="toast" id="shareToast"></div>
+
+<!-- 첫 화면 개인정보 안내 팝업 -->
+<div class="intro-modal" id="introModal" onclick="if(event.target===this)closeIntroModal()">
+  <div class="intro-box" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+    <div class="intro-emoji">🔒</div>
+    <div class="intro-title" id="introTitle">결과는 절대 저장되지 않아요</div>
+    <div class="intro-desc">입력하신 정보와 테스트 결과는 서버에 저장되지 않고,<br>모든 분석은 내 기기 안에서만 이뤄져요 😊</div>
+    <a class="intro-dev" href="https://x.com/Jamespaakstore" target="_blank" rel="noopener noreferrer">🐾 만든 사람 · <b>@Jamespaakstore</b></a>
+    <button class="intro-btn" type="button" onclick="closeIntroModal()">테스트 시작하기 →</button>
+  </div>
+</div>
 
 <script>
 const petIcons={dog:'🐶',cat:'🐱',rabbit:'🐰',other:'🐹'};
@@ -1536,7 +1557,7 @@ function renderCoupangProducts(products){
     const why=[price,...badges].filter(Boolean).join(' · ');
     const cls=i===0?' highlight':'';
     return `<a class="prod-item${cls}" href="${url}" target="_blank" rel="noopener" onclick="trackClick(${jsStringAttr(p.name)})">
-      <div class="prod-img" style="overflow:hidden;padding:0;">${img?`<img src="${img}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">`:'🛒'}</div>
+      <div class="prod-img" style="overflow:hidden;padding:0;">${img?`<img src="${img}" alt="" loading="lazy" referrerpolicy="no-referrer" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="var p=this.parentNode;if(p){p.textContent='🛒';}">`:'🛒'}</div>
       <div class="prod-info">
         <div class="prod-name" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${name}</div>
         <div class="prod-why">${why}</div>
@@ -1604,7 +1625,7 @@ function trackClick(productName){
 // ── 공유 헬퍼 ──
 const SITE_URL='https://frabjous-dusk-9711f2.netlify.app';
 const OG_IMAGE_URL=SITE_URL+'/og-image.png?v=3';
-const TEST_URL=SITE_URL+'/quiz.html?v=3';
+const TEST_URL=SITE_URL+'/quiz.html';
 const TEST_SHARE_TITLE='반려견/반려묘/반려동물 기질 테스트';
 const TEST_SHARE_DESC='12가지 질문으로 기질 분석 + 케어 팁 🐾';
 
@@ -1787,15 +1808,15 @@ async function nativeShare(title,text,url,kind,opts){
 }
 
 // ── 카카오 피드 공유 (SDK) + Web Share API 폴백 ──
-function buildFeedTemplate({title,description,imageUrl,linkUrl,buttonTitle}){
+function buildFeedTemplate({title,description,imageUrl,imageWidth,imageHeight,linkUrl,buttonTitle}){
   return {
     objectType:'feed',
     content:{
       title,
       description,
       imageUrl:imageUrl||OG_IMAGE_URL,
-      imageWidth:1200,
-      imageHeight:630,
+      imageWidth:imageWidth||1200,
+      imageHeight:imageHeight||630,
       link:{mobileWebUrl:linkUrl,webUrl:linkUrl}
     },
     buttons:[{
@@ -1826,7 +1847,53 @@ function shareTestKakao(){
   }
 }
 
-function shareResultKakao(){
+// ── 결과 카드 이미지 생성 (카카오 공유 + 이미지 저장 공용) ──
+// square=true  → 카카오 피드용 1080x1080 고정 카드 (해설 230자 요약)
+// square=false → 이미지 저장용 가변 높이 카드 (해설 전문, 워터마크 없음)
+function buildResultCardEl(square){
+  const r=window.__currentResult;
+  const name=window.__currentPetName||'우리 아이';
+  const card=document.createElement('div');
+  card.style.cssText='position:fixed;left:-99999px;top:0;width:1080px;'
+    +(square?'height:1080px;':'')
+    +'background:linear-gradient(160deg,#1c2128 0%,#0d1117 50%,#1c2128 100%);'
+    +'color:#f0ede8;font-family:"DM Sans","Noto Sans KR",sans-serif;'
+    +'padding:60px 68px;box-sizing:border-box;display:flex;flex-direction:column;'
+    +'align-items:center;justify-content:flex-start;text-align:center;';
+  const traitsHtml=r&&r.traits?r.traits.slice(0,4).map(t=>`<div style="display:flex;align-items:center;gap:14px;width:100%;margin-bottom:12px;"><div style="width:130px;font-size:21px;color:#9a9080;text-align:left;">${escapeHTML(t.label)}</div><div style="flex:1;height:10px;background:rgba(255,255,255,0.08);border-radius:50px;overflow:hidden;"><div style="height:100%;width:${t.val}%;background:linear-gradient(90deg,#f4845f,#f7a88a);border-radius:50px;"></div></div><div style="width:54px;font-size:20px;color:#f0ede8;text-align:right;">${t.val}</div></div>`).join(''):'';
+  const fullAnalysis=plainTextFromHTML(r&&r.summary)||(r&&r.desc)||'';
+  const analysisText=square?fullAnalysis.slice(0,230):fullAnalysis;
+  const analysisEllipsis=(square&&fullAnalysis.length>230)?'...':'';
+  card.innerHTML=`
+    <div style="font-size:112px;line-height:1;margin-bottom:22px;">${petIcons[petType]||'🐾'}</div>
+    <div style="display:inline-block;border:2px solid rgba(244,132,95,0.4);border-radius:50px;padding:9px 26px;font-size:23px;color:#f4845f;background:rgba(244,132,95,0.08);margin-bottom:18px;font-weight:500;">${escapeHTML(r&&r.type||'성격 분석')}</div>
+    <div style="font-size:46px;font-weight:600;color:#f0ede8;margin-bottom:16px;letter-spacing:-0.02em;">${escapeHTML(nm(name))}의<br>기질 테스트 결과</div>
+    <div style="font-size:25px;color:#9a9080;line-height:1.55;margin-bottom:28px;font-weight:300;max-width:880px;">${escapeHTML(r&&r.desc||'')}</div>
+    <div style="width:100%;max-width:850px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:24px;padding:30px 38px;margin-bottom:22px;">
+      <div style="font-size:18px;letter-spacing:0.12em;text-transform:uppercase;color:#f4845f;margin-bottom:20px;font-weight:600;">✦ 기질 점수</div>
+      ${traitsHtml}
+    </div>
+    <div style="width:100%;max-width:850px;background:rgba(78,201,176,0.08);border:1px solid rgba(78,201,176,0.22);border-radius:22px;padding:26px 34px;text-align:left;">
+      <div style="font-size:18px;letter-spacing:0.12em;text-transform:uppercase;color:#4ec9b0;margin-bottom:13px;font-weight:600;text-align:center;">✦ 결과 분석</div>
+      <div style="font-size:22px;color:#d7d1c8;line-height:1.72;font-weight:300;">${escapeHTML(analysisText)}${analysisEllipsis}</div>
+    </div>
+  `;
+  document.body.appendChild(card);
+  return card;
+}
+
+async function captureResultCanvas(square){
+  if(document.fonts&&document.fonts.ready){ try{ await document.fonts.ready; }catch(e){} }
+  const card=buildResultCardEl(square);
+  try{
+    const h=square?1080:Math.ceil(card.offsetHeight);
+    return await html2canvas(card,{backgroundColor:'#0d1117',scale:1,useCORS:true,logging:false,width:1080,height:h,windowWidth:1080});
+  }finally{
+    if(card.parentNode) card.parentNode.removeChild(card);
+  }
+}
+
+async function shareResultKakao(){
   const r=window.__currentResult;
   const name=window.__currentPetName||'우리 아이';
   const animal=nm(name);
@@ -1835,9 +1902,27 @@ function shareResultKakao(){
   const scoreLine=resultScoreLine(r);
   const resultUrl=createResultShareUrl();
   trackEvent('share_click',{kind:'result',resultType:r&&r.type});
+
+  // 결과 카드(1080x1080)를 만들어 카카오 서버에 업로드 → 피드 이미지로 사용
+  let imageUrl=OG_IMAGE_URL,imageWidth=1200,imageHeight=630;
+  if(window.Kakao&&Kakao.Share&&Kakao.Share.uploadImage&&Kakao.isInitialized()&&typeof html2canvas==='function'){
+    showToast('결과 이미지 만드는 중이에요... 🎨');
+    try{
+      const canvas=await captureResultCanvas(true);
+      const blob=await new Promise(res=>canvas.toBlob(res,'image/png'));
+      if(blob){
+        const file=new File([blob],`pet-result-${Date.now()}.png`,{type:'image/png'});
+        const up=await Kakao.Share.uploadImage({file:[file]});
+        const url=up&&up.infos&&up.infos.original&&up.infos.original.url;
+        if(url){ imageUrl=url; imageWidth=1080; imageHeight=1080; }
+      }
+    }catch(e){ /* 업로드 실패 시 기본 OG 이미지로 폴백 */ }
+  }
+
   const sent=sendKakaoFeed(buildFeedTemplate({
     title:`${animal}는 ${typeText}이래! 🐾`,
     description:desc,
+    imageUrl,imageWidth,imageHeight,
     linkUrl:resultUrl,
     buttonTitle:'테스트 하러가기'
   }));
@@ -1868,33 +1953,11 @@ async function saveResultImage(){
     showToast('이미지 라이브러리 로드 중이에요. 잠시 후 다시 시도해 주세요.');
     return;
   }
-  const r=window.__currentResult;
-  const name=window.__currentPetName||'우리 아이';
-  // 정사각형 캔버스 컨테이너 생성 (인스타그램 1080x1080)
-  const card=document.createElement('div');
-  card.style.cssText='position:fixed;left:-99999px;top:0;width:1080px;height:1080px;background:linear-gradient(160deg,#1c2128 0%,#0d1117 50%,#1c2128 100%);color:#f0ede8;font-family:"DM Sans","Noto Sans KR",sans-serif;padding:54px 68px 74px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;';
-  const traitsHtml=r&&r.traits?r.traits.slice(0,4).map(t=>`<div style="display:flex;align-items:center;gap:14px;width:100%;margin-bottom:12px;"><div style="width:130px;font-size:21px;color:#9a9080;text-align:left;">${escapeHTML(t.label)}</div><div style="flex:1;height:10px;background:rgba(255,255,255,0.08);border-radius:50px;overflow:hidden;"><div style="height:100%;width:${t.val}%;background:linear-gradient(90deg,#f4845f,#f7a88a);border-radius:50px;"></div></div><div style="width:54px;font-size:20px;color:#f0ede8;text-align:right;">${t.val}</div></div>`).join(''):'';
-  const analysisText=(plainTextFromHTML(r&&r.summary)||r&&r.desc||'').slice(0,230);
-  card.innerHTML=`
-    <div style="font-size:112px;line-height:1;margin-bottom:22px;">${petIcons[petType]||'🐾'}</div>
-    <div style="display:inline-block;border:2px solid rgba(244,132,95,0.4);border-radius:50px;padding:9px 26px;font-size:23px;color:#f4845f;background:rgba(244,132,95,0.08);margin-bottom:18px;font-weight:500;">${escapeHTML(r&&r.type||'성격 분석')}</div>
-    <div style="font-size:46px;font-weight:600;color:#f0ede8;margin-bottom:16px;letter-spacing:-0.02em;">${escapeHTML(nm(name))}의<br>기질 테스트 결과</div>
-    <div style="font-size:25px;color:#9a9080;line-height:1.55;margin-bottom:28px;font-weight:300;max-width:880px;">${escapeHTML(r&&r.desc||'')}</div>
-    <div style="width:100%;max-width:850px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:24px;padding:30px 38px;margin-bottom:22px;">
-      <div style="font-size:18px;letter-spacing:0.12em;text-transform:uppercase;color:#f4845f;margin-bottom:20px;font-weight:600;">✦ 기질 점수</div>
-      ${traitsHtml}
-    </div>
-    <div style="width:100%;max-width:850px;background:rgba(78,201,176,0.08);border:1px solid rgba(78,201,176,0.22);border-radius:22px;padding:26px 34px;margin-bottom:24px;text-align:left;">
-      <div style="font-size:18px;letter-spacing:0.12em;text-transform:uppercase;color:#4ec9b0;margin-bottom:13px;font-weight:600;text-align:center;">✦ 결과 분석</div>
-      <div style="font-size:22px;color:#d7d1c8;line-height:1.72;font-weight:300;">${escapeHTML(analysisText)}${analysisText.length>=230?'...':''}</div>
-    </div>
-    <div class="share-watermark" style="position:absolute;bottom:34px;left:0;right:0;font-size:21px;color:rgba(255,255,255,0.5);text-align:center;letter-spacing:0.05em;">🐾 frabjous-dusk-9711f2.netlify.app</div>
-  `;
-  document.body.appendChild(card);
   try{
-    const canvas=await html2canvas(card,{backgroundColor:'#0d1117',scale:1,useCORS:true,logging:false,width:1080,height:1080});
+    // 콘텐츠 높이에 맞춘 가변 카드 → 해설글 잘림 없음, 워터마크 없음
+    const canvas=await captureResultCanvas(false);
     const dataUrl=canvas.toDataURL('image/png');
-    // navigator.share with file (iOS Safari, 일부 Android)
+    // navigator.share with file (iOS Safari, 일부 Android) → 사진첩 저장
     if(navigator.canShare){
       try{
         const blob=await(await fetch(dataUrl)).blob();
@@ -1915,14 +1978,23 @@ async function saveResultImage(){
     showToast('이미지가 저장됐어요 📸');
   }catch(e){
     showToast('이미지 저장에 실패했어요');
-  }finally{
-    if(card.parentNode) card.parentNode.removeChild(card);
   }
 }
 
-function restart(){location.reload();}
+function restart(){location.href=location.origin+location.pathname;}
 
-loadSharedResultIfPresent();
+// ── 첫 화면 개인정보 안내 팝업 ──
+function showIntroModal(){
+  const m=document.getElementById('introModal');
+  if(m) m.classList.add('show');
+}
+function closeIntroModal(){
+  const m=document.getElementById('introModal');
+  if(m) m.classList.remove('show');
+}
+
+// 공유 결과 페이지가 아니면 첫 화면 안내 팝업 표시
+if(!loadSharedResultIfPresent()) showIntroModal();
 
 // ── 카카오톡 인앱브라우저 안내 배너 ──
 (function(){
