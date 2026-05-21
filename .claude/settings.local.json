@@ -38,7 +38,8 @@
       "Bash(ipconfig getifaddr *)",
       "Bash(lsof -nP -iTCP:8888 -sTCP:LISTEN)",
       "Read(//Users/jh/.claude/**)",
-      "Bash(git -C /Users/jh/Desktop/main status --short)"
+      "Bash(git -C /Users/jh/Desktop/main status --short)",
+      "Bash(git -C /Users/jh/Desktop/main diff --stat)"
     ],
     "ask": [
       "Bash(netlify deploy)",
