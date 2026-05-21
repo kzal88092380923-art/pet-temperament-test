@@ -1808,9 +1808,8 @@ async function nativeShare(title,text,url,kind,opts){
 }
 
 // ── 카카오 피드 공유 (SDK) + Web Share API 폴백 ──
-function buildFeedTemplate({title,description,imageUrl,imageWidth,imageHeight,linkUrl,buttonTitle}){
-  // 카드 본문 링크는 전달된 URL(없으면 테스트 페이지)로, 버튼 링크는 항상 테스트 페이지로 고정
-  const cardUrl=linkUrl||TEST_URL;
+function buildFeedTemplate({title,description,imageUrl,imageWidth,imageHeight,buttonTitle}){
+  // 카드 본문·버튼 링크 모두 항상 테스트 페이지로 고정 (결과 URL 사용 안 함)
   return {
     objectType:'feed',
     content:{
@@ -1819,7 +1818,7 @@ function buildFeedTemplate({title,description,imageUrl,imageWidth,imageHeight,li
       imageUrl:imageUrl||OG_IMAGE_URL,
       imageWidth:imageWidth||1200,
       imageHeight:imageHeight||630,
-      link:{mobileWebUrl:cardUrl,webUrl:cardUrl}
+      link:{mobileWebUrl:TEST_URL,webUrl:TEST_URL}
     },
     buttons:[{
       title:buttonTitle||'테스트 하러가기',
@@ -1841,7 +1840,6 @@ function shareTestKakao(){
   const sent=sendKakaoFeed(buildFeedTemplate({
     title:TEST_SHARE_TITLE,
     description:TEST_SHARE_DESC,
-    linkUrl:TEST_URL,
     buttonTitle:'테스트 하러가기'
   }));
   if(!sent){
@@ -1925,7 +1923,6 @@ async function shareResultKakao(){
     title:`${animal}는 ${typeText}이래! 🐾`,
     description:desc,
     imageUrl,imageWidth,imageHeight,
-    linkUrl:resultUrl,
     buttonTitle:'테스트 하러가기'
   }));
   if(!sent){
