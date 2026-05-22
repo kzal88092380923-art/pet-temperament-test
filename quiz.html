@@ -1215,75 +1215,74 @@ function calcPersonality(){
   const safeTreat=escapeHTML(favoriteTreat);
   const safeAllergy=escapeHTML(allergyInfo);
 
-  // 문단 1: 기질 설명
+  // 문단 1: 기질 — 에너지 + 고집/훈련
   summary+=`<p style="margin-bottom:14px;">`;
-  // 세분화 소개
-  if(pt==='dog'&&dogSize) summary+=`<strong>${safeDogSize} ${nm(p)}</strong>는 `;
-  else if(pt==='cat'&&catType) summary+=`<strong>${safeCatType} 고양이 ${nm(p)}</strong>는 `;
-  else if(pt==='other'&&otherAnimal) summary+=`<strong>${safeOtherAnimal} ${nm(p)}</strong>는 `;
-  else summary+=`<strong>${nm(p)}</strong>는 `;
-  if(eScore>=75) summary+=`<strong>${nm(p)}는 에너지가 넘치는 활발한 아이예요.</strong> 가만히 있는 걸 정말 못 하는 타입으로, 항상 뭔가를 하고 싶어해요. `;
-  else if(eScore<=40) summary+=`<strong>${nm(p)}는 조용하고 느긋한 성격이에요.</strong> 바쁘게 움직이기보다 편안한 일상을 즐기는 타입이에요. `;
-  else summary+=`<strong>${nm(p)}는 균형 잡힌 에너지를 가진 아이예요.</strong> 활발하게 놀다가도 쉬고 싶을 때는 확실히 쉬는 타입이에요. `;
+  if(pt==='dog'&&dogSize) summary+=`<strong>${safeDogSize} ${nm(p)}</strong> — `;
+  else if(pt==='cat'&&catType) summary+=`<strong>${safeCatType} ${nm(p)}</strong> — `;
+  else if(pt==='other'&&otherAnimal) summary+=`<strong>${safeOtherAnimal} ${nm(p)}</strong> — `;
+  else summary+=`<strong>${nm(p)}</strong> — `;
+  if(eScore>=75) summary+=`<strong>에너지 총량이 그냥 무한대예요.</strong> 5분 전에 미친 듯이 뛰어놀았는데 또 눈 반짝이며 "한 번 더?" 하죠? 집사 체력이 먼저 방전됩니다. 😮‍💨 `;
+  else if(eScore<=40) summary+=`<strong>세상 느긋한 평화주의자예요.</strong> 햇볕 좋은 자리 하나면 하루가 완성돼요. 가끔 살아있나 싶어 쳐다보게 되지만... 그 평온함, 사실 우리가 배워야 할지도 몰라요. 😌 `;
+  else summary+=`<strong>놀 땐 화끈하게, 쉴 땐 확실하게.</strong> 완급 조절의 달인이에요. ON·OFF가 분명해서 같이 사는 입장에선 사실 제일 편한 타입이죠. 😎 `;
 
-  if(goScore>=70) summary+=`고집도 있어서 한번 마음먹으면 끝까지 밀고 나가는 편이에요. 강압적인 훈련보다는 <a href="${fallbackProductUrl('treat')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">맛있는 간식</a>으로 달래는 게 훨씬 효과적이에요. `;
-  else if(tScore>=75) summary+=`훈련도 잘 따르는 편이라 칭찬과 <a href="${fallbackProductUrl('treat')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">간식</a>을 활용한 훈련이 잘 맞아요. `;
+  if(goScore>=70) summary+=`고집은 또 어찌나 센지, 한번 아니라고 하면 협상 테이블 자체가 사라져요. 윽박질러 봤자 서로 기분만 상하죠. 이럴 땐 <a href="${fallbackProductUrl('treat')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">맛있는 간식</a> 한 장이 백 마디 말보다 강력합니다. 뇌물... 아니, 보상이에요. 😏 `;
+  else if(tScore>=75) summary+=`배우는 머리는 또 진짜 좋아요. 칭찬 한 번에 <a href="${fallbackProductUrl('treat')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">간식</a> 한 번이면 "나 천재인가?" 싶을 만큼 쑥쑥 따라옵니다. 🎓 `;
   summary+=`</p>`;
 
   // 문단 2: 사회성 + 동물별 특성
   summary+=`<p style="margin-bottom:14px;">`;
-  if(sScore>=70) summary+=`낯선 사람에게도 먼저 다가가는 사교적인 성격 덕분에 어디서든 사랑받는 아이예요. `;
-  else if(sScore<=35) summary+=`낯선 환경이나 사람에게는 시간이 필요해요. 천천히 적응할 수 있도록 여유를 줘야 해요. `;
-  else summary+=`낯선 상황에서는 살짝 관망하다가 안전하다 싶으면 친해지는 스타일이에요. `;
+  if(sScore>=70) summary+=`낯선 사람만 봐도 "내 친구 왔다!" 모드예요. 경계심? 그게 뭔가요. 온 세상이 다 자기편인 줄 알죠. 어디 데려가도 인기 폭발이지만... 가끔은 우리만 좋아해줬으면 싶기도 하고요. 🥹 `;
+  else if(sScore<=35) summary+=`낯선 사람·낯선 곳 앞에선 일단 얼음이에요. 겁쟁이가 아니라 신중한 거예요. 마음 여는 데 시간이 좀 걸릴 뿐. 그래서 ${nm(p)}가 우리한테만 보여주는 그 애교는, 아무한테나 주는 게 아니란 거 — 알죠? 💛 `;
+  else summary+=`처음 보는 건 일단 멀리서 스캔부터. "안전한가?" 확인이 끝나야 슬금슬금 다가오는 신중파예요. 🔍 `;
 
   if(pt==='dog'){
-    if(iScore<=30) summary+=`특히 보호자와 떨어지는 걸 많이 힘들어해요. 외출 전에 <a href="${fallbackProductUrl('kong')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">콩 장난감에 간식을 넣어두면</a> 혼자 있는 시간이 훨씬 편해져요. `;
-    else if(iScore>=75) summary+=`혼자 있는 것도 잘 견디는 독립적인 아이예요. `;
+    if(iScore<=30) summary+=`근데 우리랑 떨어지는 건 죽어도 못 견뎌요. 현관문 소리만 나도 세상 무너진 표정 짓죠. 외출 전에 <a href="${fallbackProductUrl('kong')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">콩 장난감에 간식을 채워두면</a> "어? 이거 뭐지?" 하다가 혼자 있는 시간이 훌쩍 지나가요. `;
+    else if(iScore>=75) summary+=`그러면서도 혼자만의 시간을 의외로 잘 즐겨요. 쿨한 척하는 츤데레인 거죠. 😏 `;
   } else if(pt==='cat'){
-    if(iScore>=70) summary+=`고양이답게 자기만의 공간과 시간을 중요하게 여겨요. <a href="${fallbackProductUrl('cat_house')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">캣타워나 숨숨집</a>이 있으면 스트레스가 훨씬 줄어들어요. `;
-    else summary+=`고양이치고는 사람을 좋아하는 편이에요. `;
+    if(iScore>=70) summary+=`역시 고양이는 고양이. 자기만의 공간과 시간은 신성불가침이에요. <a href="${fallbackProductUrl('cat_house')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">캣타워나 숨숨집</a> 하나 놓아주면 "여기 내 왕국" 하면서 스트레스가 쫙 빠져요. `;
+    else summary+=`고양이치고는 은근 껌딱지예요. "나 고양이 맞나? 강아지인가?" 싶을 정도로요. 🐶🐱 `;
   } else if(pt==='rabbit'){
-    summary+=`토끼는 생각보다 사회적인 동물이에요. 안전한 공간에서 조금씩 교류를 늘려나가는 것이 좋아요. `;
+    summary+=`토끼는 보기보다 외로움을 타는 동물이에요. 안전한 공간에서 천천히, 조금씩 마음의 거리를 좁혀가 주세요. `;
   }
   summary+=`</p>`;
 
-  // 문단 3: 자극·놀이 + 상품 임베드
+  // 문단 3: 놀이·자극 + 예민함
   summary+=`<p style="margin-bottom:14px;">`;
   if(pScore>=75){
-    summary+=`놀이와 자극에 대한 욕구가 아주 강한 ${nm(p)}예요. 단순한 장난감보다는 `;
-    if(pt==='dog') summary+=`<a href="${fallbackProductUrl('nosework')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">노즈워크 매트</a>처럼 두뇌를 쓰는 장난감이 에너지를 훨씬 효율적으로 발산시켜줘요. `;
-    else if(pt==='cat') summary+=`<a href="${fallbackProductUrl('cat_wand')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">낚싯대 장난감</a>처럼 사냥 본능을 자극하는 놀이가 딱이에요. `;
-    else summary+=`다양한 자극을 줄 수 있는 장난감이 필요해요. `;
+    summary+=`${nm(p)}한테 노는 건 인생 그 자체예요. 심심함은 가장 가혹한 형벌이고요. 단순한 장난감은 3분이면 질려버려요. `;
+    if(pt==='dog') summary+=`<a href="${fallbackProductUrl('nosework')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">노즈워크 매트</a>처럼 머리 쓰는 놀이를 주면, 그 넘치는 에너지가 "딴짓"이 아니라 "몰입"으로 바뀝니다. (집사 평화는 덤) `;
+    else if(pt==='cat') summary+=`<a href="${fallbackProductUrl('cat_wand')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">낚싯대 장난감</a> 흔드는 순간 눈빛이 맹수로 돌변하는 거 보면... 작은 호랑이 한 마리 키우는 기분이죠. 🐯 `;
+    else summary+=`머리와 몸을 동시에 쓰는 다양한 자극이 꼭 필요해요. `;
   } else if(pScore<=30){
-    summary+=`장난감보다는 조용한 환경에서 보호자 옆에 있는 걸 더 좋아하는 ${nm(p)}예요. `;
-    if(pt==='cat') summary+=`<a href="${fallbackProductUrl('cat_bed')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">폭신한 고양이 침대</a>하나만 있어도 행복해할 거예요. `;
+    summary+=`${nm(p)}는 화려한 장난감보다 그냥 우리 옆자리가 1등이에요. 별거 안 해도 같이 있는 것만으로 행복한 타입이죠. `;
+    if(pt==='cat') summary+=`<a href="${fallbackProductUrl('cat_bed')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">폭신한 고양이 침대</a> 하나면 "여기가 천국" 하는 표정 지어줄 거예요. ☁️ `;
   } else {
-    summary+=`적당히 놀고 적당히 쉬는 균형 잡힌 ${nm(p)}예요. `;
+    summary+=`놀 만큼 놀고 쉴 만큼 쉬는, 적당주의의 정석이에요. 👍 `;
   }
 
   if(seScore>=75){
-    summary+=`감각이 예민한 편이라 큰 소리나 갑작스러운 변화에 스트레스를 받을 수 있어요. `;
-    if(pt==='cat') summary+=`<a href="${fallbackProductUrl('cat_calming')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">페로몬 디퓨저</a>를 활용하면 일상적인 불안을 줄이는 데 도움이 돼요. `;
-    else summary+=`<a href="${fallbackProductUrl('calming')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">진정 스프레이</a>를 활용해보세요. `;
+    summary+=`그리고 ${nm(p)}, 생각보다 유리멘탈이에요. 큰 소리 한 번, 갑작스러운 변화 하나에 온종일 기분이 가라앉기도 해요. 예민한 게 아니라 섬세한 거예요. `;
+    if(pt==='cat') summary+=`<a href="${fallbackProductUrl('cat_calming')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">페로몬 디퓨저</a>로 공기부터 안심시켜 주면 한결 편안해해요. `;
+    else summary+=`<a href="${fallbackProductUrl('calming')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">진정 스프레이</a>가 그 작은 마음을 가만히 다독여 줄 거예요. `;
   }
   summary+=`</p>`;
 
-  // 문단 4: 건강·생활 습관 + 상품
+  // 문단 4: 식습관·건강
   summary+=`<p style="margin-bottom:0;">`;
-  if(food.includes('과식')) summary+=`식욕이 왕성한 ${nm(p)}! 귀엽지만 비만은 건강의 적이에요. <a href="${fallbackProductUrl('feeder')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">자동 급식기</a>로 규칙적인 식사 습관을 만들어주세요. `;
-  else if(food.includes('식욕이')) summary+=`식욕이 별로 없는 ${nm(p)}는 기호성 좋은 음식으로 식욕을 자극해보세요. `;
-  else summary+=`식습관이 나쁘지 않은 ${nm(p)}예요. `;
+  if(food.includes('과식')) summary+=`먹는 거 앞에선 ${nm(p)}, 자제력이 0이에요. "방금 먹었잖아"는 안 통하죠. 그 초롱초롱한 눈빛에 또 넘어가면... 건강검진 날 후회합니다. 😅 <a href="${fallbackProductUrl('feeder')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">자동 급식기</a>로 양 조절은 기계한테 맡겨버리세요. 우리 의지보다 훨씬 믿음직해요. `;
+  else if(food.includes('식욕이')) summary+=`반대로 ${nm(p)}는 입이 좀 짧아요. "한 입만 더..." 사정하는 게 일상이죠. 기호성 좋은 음식으로 살살 꼬셔봐야 해요. `;
+  else summary+=`식습관은 다행히 모범생이에요. 이건 칭찬받아 마땅해요. 👏 `;
 
   if(favoriteTreat&&hasAllergyTo(favoriteTreat)){
-    summary+=`입력해주신 알러지(${safeAllergy})를 고려하면 ${safeTreat} 대신 <a href="${coupangSearchUrl(treatRec.keyword)}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">${escapeHTML(treatRec.name)}</a> 쪽으로 대체 추천해요. `;
+    summary+=`참, 알러지(${safeAllergy})가 있으니 ${safeTreat}는 잠깐 접어두고 <a href="${coupangSearchUrl(treatRec.keyword)}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">${escapeHTML(treatRec.name)}</a> 쪽으로 바꿔주는 게 안전해요. 맛도 절대 안 밀려요. `;
   } else if(favoriteTreat){
-    summary+=`${nm(p)}가 좋아하는 ${safeTreat} 계열 간식은 <a href="${coupangSearchUrl(treatRec.keyword)}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">${escapeHTML(treatRec.name)}</a>으로 골라보면 좋아요. `;
+    summary+=`${nm(p)}가 환장하는 ${safeTreat} 계열은 <a href="${coupangSearchUrl(treatRec.keyword)}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">${escapeHTML(treatRec.name)}</a> 정도면 "오늘 집사 일 잘했네" 소리 듣습니다. `;
   }
 
-  if(pt==='dog') summary+=`마지막으로 <a href="${fallbackProductUrl('vitamin_dog')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">강아지 전용 영양제</a>로 기본 건강을 꼼꼼히 챙겨주세요. 관절·피부·면역을 함께 케어하는 종합 영양제가 특히 좋아요. 💊`;
-  else if(pt==='cat') summary+=`<a href="${fallbackProductUrl('vitamin_cat')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">고양이 전용 영양제</a>도 빠뜨리지 마세요. 특히 비뇨기 건강과 헤어볼 케어가 중요해요. 💊`;
-  else if(pt==='rabbit') summary+=`토끼는 <a href="${fallbackProductUrl('rabbit_hay')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">건초(티모시)</a>가 식단의 70% 이상이어야 해요. 건강의 기본이에요. 🌾`;
-  else summary+=`기본 건강 관리를 위한 영양제 챙겨주세요. 💊`;
+  if(pt==='dog') summary+=`마지막으로 — 지금은 펄펄 날아다녀도 시간은 우리보다 빨라요. <a href="${fallbackProductUrl('vitamin_dog')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">강아지 전용 영양제</a>로 관절·피부·면역을 미리 챙겨주는 게, 10년 뒤에도 같이 산책하는 비결이에요. 💊`;
+  else if(pt==='cat') summary+=`마지막으로 — 고양이는 아파도 티를 잘 안 내요. <a href="${fallbackProductUrl('vitamin_cat')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">고양이 전용 영양제</a>로 비뇨기·헤어볼을 미리미리 챙겨주세요. 아프고 나서 후회하지 말고요. 💊`;
+  else if(pt==='rabbit') summary+=`마지막으로 — 토끼 건강의 9할은 <a href="${fallbackProductUrl('rabbit_hay')}" style="color:var(--orange);text-decoration:none;font-weight:500" target="_blank" rel="noopener">건초(티모시)</a>에서 와요. 식단의 70% 이상은 무조건 건초. 이건 타협 불가예요. 🌾`;
+  else summary+=`마지막으로 기본 영양제 하나는 꼭 챙겨주세요. 오래오래 함께하려면요. 💊`;
   summary+=`</p>`;
 
   // ── 케어 팁 ──
@@ -1994,34 +1993,6 @@ function closeIntroModal(){
 
 // 공유 결과 페이지가 아니면 첫 화면 안내 팝업 표시
 if(!loadSharedResultIfPresent()) showIntroModal();
-
-// ── 카카오톡 인앱브라우저 안내 배너 ──
-(function(){
-  if(!/KAKAOTALK/i.test(navigator.userAgent||'')) return;
-  function mount(){
-    if(document.getElementById('kakaoInappBanner')) return;
-    var url=location.href;
-    var banner=document.createElement('div');
-    banner.id='kakaoInappBanner';
-    banner.setAttribute('role','status');
-    banner.style.cssText='position:fixed;top:0;left:0;right:0;background:#fee500;color:#3c1e1e;padding:11px 14px;font-size:13px;line-height:1.5;z-index:9999;display:flex;align-items:center;gap:10px;box-shadow:0 2px 12px rgba(0,0,0,0.25);font-family:"Noto Sans KR",-apple-system,BlinkMacSystemFont,sans-serif;';
-    banner.innerHTML='<span style="flex:1;font-weight:500;">💡 외부 브라우저로 열면 공유·이미지 저장이 더 잘 돼요</span>'+
-      '<button id="kakaoOpenExternal" style="padding:7px 12px;background:#3c1e1e;color:#fee500;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:12px;flex-shrink:0;font-family:inherit;">열기</button>'+
-      '<button id="kakaoBannerClose" aria-label="닫기" style="padding:6px 8px;background:transparent;color:#3c1e1e;border:none;cursor:pointer;font-size:18px;line-height:1;flex-shrink:0;">×</button>';
-    document.body.prepend(banner);
-    var pb=document.querySelector('.prog-bar');
-    if(pb) pb.style.top=(banner.offsetHeight||44)+'px';
-    document.getElementById('kakaoOpenExternal').onclick=function(){
-      location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(url);
-    };
-    document.getElementById('kakaoBannerClose').onclick=function(){
-      banner.remove();
-      if(pb) pb.style.top='0';
-    };
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',mount);
-  else mount();
-})();
 </script>
 </body>
 </html>
