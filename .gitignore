@@ -5,3 +5,11 @@ og_capture.js
 og_image_cute.html
 child-mbti/
 dist/
+
+# main 폴더 안의 독립 프로젝트 (각자 별도 저장소)
+hub/
+nutrifit/
+
+# 로컬 전용
+.DS_Store
+.claude/settings.local.json
