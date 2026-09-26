@@ -17,10 +17,13 @@ WHITELIST=(
   og-image.png
   sitemap.xml
   robots.txt
+  _redirects
 )
 
 MUST_BE_404=(/hub/ /nutrifit/ /child-mbti/ /CLAUDE.md /deploy.sh /netlify.toml /dist/)
-MUST_BE_200=(/ /quiz.html "/quiz.html?st=check&v=3" /sitemap.xml /robots.txt /og-image.png)
+MUST_BE_200=(/quiz.html "/quiz.html?st=check&v=3" /sitemap.xml /robots.txt /og-image.png)
+# 루트는 서버에서 quiz.html로 301 (쿼리스트링·리퍼러 유지) — "요청경로 기대Location" 쌍
+MUST_BE_301=("/?utm_source=deploycheck /quiz.html?utm_source=deploycheck" "/index.html /quiz.html")
 
 cd "$SCRIPT_DIR"
 
@@ -68,6 +71,16 @@ check() {
 }
 for p in "${MUST_BE_404[@]}"; do check "$p" 404; done
 for p in "${MUST_BE_200[@]}"; do check "$p" 200; done
+for pair in "${MUST_BE_301[@]}"; do
+  read -r p want <<< "$pair"
+  out=$(curl -s -o /dev/null -w "%{http_code} %{redirect_url}" "$DRAFT_URL$p")
+  if [ "${out%% *}" = "301" ] && [[ "${out#* }" == *"$want" ]]; then
+    echo "  ✓ $p → 301 $want"
+  else
+    echo "  ✗ $p → $out (기대값 301 …$want)"
+    FAILED=1
+  fi
+done
 
 if [ "$FAILED" -ne 0 ]; then
   echo "✗ 검증 실패 — Production 승격하지 않음 (draft만 남음)"
