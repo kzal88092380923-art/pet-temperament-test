@@ -1921,6 +1921,7 @@ function buildResultCardEl(square){
       <div style="font-size:28px;font-weight:700;margin-bottom:12px;">결과 분석</div>
       <div style="font-size:24px;font-weight:500;line-height:1.65;color:#2D2B25;word-break:keep-all;">${escapeHTML(analysisText)}${analysisEllipsis}</div>
     </div>
+    <div data-card-cta style="flex-shrink:0;text-align:center;font-size:22px;font-weight:700;color:${ink};">나도 해보기 → ${escapeHTML(TEST_URL.replace(/^https?:\/\//,''))}</div>
   `;
   document.body.appendChild(card);
   return card;
