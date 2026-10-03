@@ -161,99 +161,124 @@ body.nav-switching .nav{opacity:0;pointer-events:none;transform:translateY(8px);
 .lprog-bg{margin-top:22px;width:100%;max-width:300px;height:14px;background:#fff;border:2px solid var(--ink);border-radius:50px;overflow:hidden;}
 .lprog-fill{height:100%;background:var(--lime);box-shadow:inset -2px 0 0 var(--ink);border-radius:50px;transition:width 0.4s ease;width:0%;}
 
-/* ── 결과 ── */
+/* ── 결과 (design-ref/petcard/ResultV2) : 간격 16 · 카드 테두리 2.5 · 모서리 24 · 카드 제목 17 ── */
 .result-wrap{
   display:none;
-  --accent:var(--lime);
-  --text:#1C1B18;--text2:#2D2B25;--text3:#55524A;
+  --accent:var(--lime);--accent-soft:rgba(200,241,105,0.33);
+  --text:#1C1B18;--text2:#3A3832;--text3:#55524A;
   background:var(--cream);color:var(--ink);min-height:100vh;
 }
 .result-wrap.show{display:block;}
 body:has(.result-wrap.show){background:#FBF6EC;}
-.r-inner{max-width:480px;margin:0 auto;padding-bottom:28px;}
+.r-inner{max-width:480px;margin:0 auto;padding:16px 20px 40px;display:flex;flex-direction:column;gap:16px;}
 
-.r-top{display:flex;align-items:center;justify-content:space-between;padding:18px 20px 6px;}
+.r-top{display:flex;align-items:center;justify-content:space-between;min-height:32px;}
 .r-top-title{font-size:var(--fs-aux);font-weight:700;}
-.r-sticker{font-size:var(--fs-aux);font-weight:700;background:var(--accent);border:2px solid var(--ink);padding:3px 12px;border-radius:999px;}
+.r-sticker{font-size:12px;font-weight:700;background:var(--accent);border:2px solid var(--ink);padding:4px 10px;border-radius:999px;}
 
-.r-hero{position:relative;margin:10px 20px 0;background:var(--accent);border:2.5px solid var(--ink);border-radius:28px;padding:22px 20px 20px;overflow:hidden;}
-.r-spark{position:absolute;}
-.r-spark.s1{right:18px;top:16px;}
-.r-spark.s2{right:60px;top:58px;}
-.r-name{font-size:var(--fs-sub);font-weight:700;padding-right:70px;line-height:1.3;}
-.r-face-frame{width:170px;height:150px;margin:6px auto 4px;border-radius:48% 52% 46% 54%;background:var(--cream);border:2.5px solid var(--ink);display:flex;align-items:center;justify-content:center;transform:rotate(-2deg);}
-.r-face-frame .face{width:126px;height:116px;}
-.r-type{text-align:center;margin-top:10px;font-size:var(--fs-title);font-weight:800;letter-spacing:-0.03em;line-height:1.2;word-break:keep-all;}
-.r-scribble{display:block;margin:2px auto 0;max-width:100%;}
-.r-desc{text-align:center;font-size:var(--fs-body);font-weight:500;margin-top:8px;color:var(--text2);line-height:1.6;word-break:keep-all;}
+.r-hero{background:var(--accent);border:2.5px solid var(--ink);border-radius:28px;padding:22px 20px 24px;display:flex;flex-direction:column;align-items:center;gap:6px;}
+.r-name{align-self:flex-start;font-size:var(--fs-body);font-weight:700;line-height:1.3;}
+.r-face-frame{width:168px;height:150px;margin:4px 0 8px;border-radius:50%;background:var(--cream);border:2.5px solid var(--ink);display:flex;align-items:center;justify-content:center;transform:rotate(-2deg);}
+.r-face-frame .face{width:124px;height:114px;}
+.r-type{text-align:center;font-size:30px;font-weight:800;letter-spacing:-0.03em;line-height:1.2;word-break:keep-all;}
+.r-scribble{display:block;max-width:100%;}
+.r-desc{text-align:center;font-size:14px;font-weight:500;margin-top:4px;line-height:1.6;word-break:keep-all;}
 
-.r-tags{display:flex;flex-wrap:wrap;gap:8px;padding:16px 20px 0;justify-content:center;}
+.r-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
 .r-tag{font-size:var(--fs-aux);font-weight:700;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:6px 12px;}
-.r-quick-share{padding:16px 20px 0;}
 
-.r-body{padding:18px 20px 0;display:flex;flex-direction:column;gap:12px;}
-.r-card{background:#fff;border:2px solid var(--ink);border-radius:20px;padding:16px;}
-.r-card-title{font-size:var(--fs-sub);font-weight:700;line-height:1.2;margin-bottom:12px;}
+/* 버튼 */
+.r-quick{display:flex;gap:8px;}
+.btn-kakao,.btn-primary{flex:1;min-height:52px;padding:12px;border:2px solid var(--ink);border-radius:16px;font-family:inherit;font-size:var(--fs-body);font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-kakao{background:#FEE500;color:var(--ink);}
+.btn-primary{background:var(--ink);color:var(--cream);min-height:54px;font-size:16px;}
+.btn-kakao span,.btn-primary span,.restart-btn span{display:inline-flex;}
+.btn-icon{width:52px;min-height:52px;flex-shrink:0;background:#fff;border:2px solid var(--ink);border-radius:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink);}
+.btn-icon .ic{width:22px;height:22px;}
+.btn-kakao:active,.btn-primary:active,.btn-icon:active{box-shadow:inset 0 0 0 999px rgba(28,27,24,0.08);}
 
-/* 특성 점수 */
-.trait-list{display:flex;flex-direction:column;gap:10px;}
-.trait-item{display:flex;align-items:center;gap:10px;}
-.trait-label{display:flex;align-items:center;gap:6px;font-size:var(--fs-aux);font-weight:700;width:84px;flex-shrink:0;}
-.trait-bar-bg{flex:1;height:12px;background:var(--cream);border:2px solid var(--ink);border-radius:50px;overflow:hidden;}
+/* 섹션 카드 */
+.r-card{background:#fff;border:2.5px solid var(--ink);border-radius:24px;padding:20px 18px;display:flex;flex-direction:column;gap:12px;}
+.r-card-title{margin:0;font-size:var(--fs-sub);font-weight:700;line-height:1.3;}
+.r-card-head{display:flex;align-items:baseline;justify-content:space-between;}
+.r-card-count{font-size:12px;font-weight:500;color:var(--text3);}
+
+/* 성격 특성: 이름 + 막대 + 숫자 */
+.trait-list{display:flex;flex-direction:column;gap:12px;}
+.trait-item{display:flex;align-items:center;gap:10px;min-height:22px;}
+.trait-label{width:58px;font-size:var(--fs-aux);font-weight:700;flex-shrink:0;}
+.trait-bar-bg{flex:1;height:12px;background:var(--cream);border:2px solid var(--ink);border-radius:999px;overflow:hidden;}
 .trait-bar-fill{height:100%;background:var(--accent);box-shadow:inset -2px 0 0 var(--ink);transition:width 1s ease;}
-.trait-num{font-size:var(--fs-aux);font-weight:800;width:28px;text-align:right;flex-shrink:0;}
+.trait-num{width:26px;font-size:var(--fs-aux);font-weight:800;text-align:right;flex-shrink:0;}
 
 /* 종합 분석 */
-.r-summary{font-size:var(--fs-body);font-weight:500;line-height:1.8;color:var(--text2);}
-.r-summary strong{font-weight:700;color:var(--ink);background:linear-gradient(transparent 62%,var(--accent) 62%);}
+.r-summary{font-size:var(--fs-body);font-weight:500;line-height:1.7;color:var(--ink);}
+.r-summary p{margin:0 0 10px!important;}
+.r-summary p:last-child{margin-bottom:0!important;}
+.r-summary strong{font-weight:700;background:linear-gradient(transparent 62%,var(--accent) 62%);}
 .r-summary.collapsed > p:nth-of-type(n+3){display:none;}
-.r-more{display:block;width:100%;margin-top:12px;min-height:44px;padding:10px;background:#fff;border:2px solid var(--ink);border-radius:14px;font-family:inherit;font-size:var(--fs-body);font-weight:700;color:var(--ink);cursor:pointer;}
-.r-more[hidden]{display:none;}
+.r-summary.collapsed > p:nth-of-type(2){margin-bottom:0!important;}
 .r-summary a{color:var(--ink)!important;font-weight:700!important;text-decoration:underline!important;text-underline-offset:3px;}
+.r-more{align-self:flex-start;background:none;border:none;padding:6px 0;min-height:44px;font-family:inherit;font-size:14px;font-weight:700;color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer;}
+.r-more[hidden]{display:none;}
 
 /* 케어 팁 */
 .tip-list{display:flex;flex-direction:column;gap:8px;}
-.tip-item{padding:11px 13px;background:#fff;border:2px solid var(--ink);border-radius:14px;}
-.tip-text{font-size:var(--fs-aux);font-weight:500;color:var(--text2);line-height:1.7;}
+.tip-item{padding:12px 14px;background:var(--cream);border:2px solid var(--ink);border-radius:16px;}
+.tip-text{font-size:14px;font-weight:500;color:var(--text2);line-height:1.6;}
 .tip-text strong{color:var(--ink);font-weight:700;}
 
-/* 추천 용품 - 쿠팡 파트너스 */
-.prod-section-title{font-size:var(--fs-aux);font-weight:500;color:var(--text3);margin-bottom:10px;line-height:1.6;}
+/* 추천 용품: 카드 전체가 링크 */
+.prod-section-title{margin-top:-4px;font-size:var(--fs-aux);font-weight:500;color:var(--text3);line-height:1.5;}
 .prod-list{display:flex;flex-direction:column;gap:10px;}
-.prod-item{display:flex;align-items:flex-start;gap:12px;padding:12px;background:#fff;border:2px solid var(--ink);border-radius:16px;cursor:pointer;text-decoration:none;color:var(--ink);}
+.prod-item{display:flex;align-items:flex-start;gap:12px;padding:12px;background:#fff;border:2px solid var(--ink);border-radius:18px;cursor:pointer;text-decoration:none;color:var(--ink);}
 .prod-item:active{box-shadow:inset 0 0 0 999px rgba(28,27,24,0.07);}
-.prod-img{position:relative;width:56px;height:56px;border-radius:12px;background:#fff;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:4px;}
-.prod-img .ic{width:26px;height:26px;color:var(--text3);}
+.prod-img{position:relative;width:64px;height:64px;border-radius:14px;background:#fff;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:4px;}
+.prod-img .ic{width:28px;height:28px;color:var(--text3);}
 .prod-img img{position:absolute;inset:4px;width:calc(100% - 8px);height:calc(100% - 8px);object-fit:contain;background:#fff;display:block;}
-.prod-info{flex:1;min-width:0;}
-.prod-name{font-size:var(--fs-body);font-weight:700;color:var(--ink);margin-bottom:3px;line-height:1.3;}
-.prod-why{font-size:var(--fs-aux);font-weight:500;color:var(--text2);margin-bottom:2px;}
-.prod-tag{font-size:var(--fs-aux);font-weight:500;color:var(--text3);}
-.prod-cta{display:inline-flex;align-items:center;gap:4px;margin-top:8px;background:var(--ink);color:var(--cream);border-radius:10px;padding:6px 10px;font-size:var(--fs-aux);font-weight:700;white-space:nowrap;}
-.prod-cta .ic{width:16px;height:16px;}
-.coupang-notice{font-size:var(--fs-aux);font-weight:500;color:var(--text3);text-align:center;margin-top:10px;line-height:1.6;}
-.coupang-notice a{color:var(--ink);}
+.prod-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;}
+.prod-name{font-size:var(--fs-body);font-weight:700;color:var(--ink);line-height:1.35;}
+.prod-why,.prod-tag{font-size:var(--fs-aux);font-weight:500;color:var(--text3);line-height:1.45;}
+.prod-cta{margin-top:2px;font-size:var(--fs-aux);font-weight:700;color:var(--ink);}
+.coupang-notice{font-size:12px;font-weight:500;color:var(--text3);text-align:center;line-height:1.6;word-break:keep-all;}
 
-.result-wrap .disclaimer{margin:16px 20px 0;padding:10px 14px;background:transparent;border:2px dashed var(--ink);border-radius:14px;font-size:var(--fs-aux);color:var(--text3);line-height:1.6;text-align:center;}
+/* 공유 블록 */
+.r-share{background:var(--accent-soft);border:2.5px solid var(--ink);border-radius:28px;padding:22px 18px;display:flex;flex-direction:column;gap:14px;}
+.r-share-head{display:flex;gap:14px;align-items:center;}
+.story-thumb{width:62px;height:100px;flex-shrink:0;border-radius:12px;border:2px solid var(--ink);background:var(--cream);padding:5px;}
+.story-thumb-card{width:100%;height:100%;border-radius:8px;border:1.5px solid var(--ink);background:var(--accent);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:2px;}
+.story-thumb-face{width:38px;height:35px;}
+.story-thumb-type{font-size:8px;font-weight:800;line-height:1.15;text-align:center;word-break:keep-all;}
+.r-share-title{font-size:18px;font-weight:800;letter-spacing:-0.02em;}
+.r-share-sub{margin-top:4px;font-size:var(--fs-aux);font-weight:500;line-height:1.5;color:var(--text2);}
+.r-share-links{display:flex;align-items:center;justify-content:center;gap:4px;font-size:14px;font-weight:700;}
+.r-share-links button{background:none;border:none;padding:10px 8px;min-height:44px;font-family:inherit;font-size:14px;font-weight:700;color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer;}
+.r-share-links span{color:var(--text3);}
+.r-share-line{height:2px;background:var(--ink);opacity:0.12;}
+.r-invite{display:flex;align-items:center;justify-content:space-between;min-height:44px;background:none;border:none;padding:0;font-family:inherit;color:var(--ink);text-align:left;cursor:pointer;}
+.r-invite b{display:block;font-size:14px;font-weight:700;}
+.r-invite small{display:block;margin-top:2px;font-size:12px;font-weight:500;color:var(--text2);}
+.r-invite-arrow{font-size:18px;font-weight:800;}
 
-/* 공유 · 다시 하기 */
-.share-area{padding:22px 20px 0;display:flex;flex-direction:column;gap:10px;}
-.share-btn{width:100%;min-height:52px;padding:12px;background:#fff;color:var(--ink);border:2px solid var(--ink);border-radius:16px;font-family:inherit;font-size:var(--fs-body);font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-align:center;}
-.share-btn:active{transform:translateY(1px);}
-.share-btn.save-img{background:var(--ink);color:var(--cream);min-height:54px;}
-.share-btn.kakao-result{background:#FEE500;}
-.share-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.share-grid .share-btn{padding:10px 8px;gap:6px;min-height:48px;}
-@media(max-width:359px){.share-grid{grid-template-columns:1fr;}}
-.restart-btn{width:100%;min-height:44px;background:none;border:none;color:var(--text3);font-family:inherit;font-size:var(--fs-aux);font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;}
-.restart-btn span{text-decoration:underline;text-underline-offset:3px;}
+/* 하단 */
+.restart-btn{align-self:center;min-height:44px;background:none;border:none;font-family:inherit;font-size:14px;font-weight:700;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
 .restart-btn .ic{width:18px;height:18px;}
-.dev-link{display:block;text-align:center;padding:12px 8px;margin-top:4px;font-size:var(--fs-aux);font-weight:500;color:var(--text3);text-decoration:none;}
-.dev-link:hover,.dev-link:active{color:var(--ink);}
-.privacy-link{display:block;text-align:center;padding:4px 8px 12px;font-size:var(--fs-aux);font-weight:500;color:var(--text3);text-decoration:underline;text-underline-offset:2px;}
+.r-foot{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--text3);text-align:center;}
+.r-foot a{color:var(--text3);}
+
+/* 공유 도움 시트 */
+.sheet{position:fixed;inset:0;z-index:300;display:flex;align-items:flex-end;justify-content:center;background:rgba(28,27,24,0.5);padding:16px;}
+.sheet[hidden]{display:none;}
+.sheet-box{width:100%;max-width:420px;max-height:calc(100vh - 32px);overflow-y:auto;background:var(--cream);border:2.5px solid var(--ink);border-radius:24px;padding:20px 18px;display:flex;flex-direction:column;gap:12px;}
+.sheet-title{font-size:var(--fs-sub);font-weight:700;}
+.sheet-body{display:flex;flex-direction:column;gap:10px;font-size:14px;font-weight:500;line-height:1.6;color:var(--text2);}
+.sheet-body img{display:block;width:min(56vw,220px);margin:0 auto;border:2px solid var(--ink);border-radius:14px;}
+.sheet-body .sheet-btn{min-height:48px;display:flex;align-items:center;justify-content:center;background:#fff;border:2px solid var(--ink);border-radius:14px;font-family:inherit;font-size:var(--fs-body);font-weight:700;color:var(--ink);text-decoration:none;cursor:pointer;}
+.sheet-body .sheet-btn.dark{background:var(--ink);color:var(--cream);}
+.sheet-close{min-height:44px;background:none;border:none;font-family:inherit;font-size:14px;font-weight:700;color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer;}
+@media(max-width:359px){.r-share-links{flex-wrap:wrap;}}
 .toast{position:fixed;left:50%;bottom:90px;-webkit-transform:translateX(-50%);transform:translateX(-50%);background:var(--ink);color:var(--cream);padding:11px 18px;border-radius:30px;font-size:var(--fs-aux);font-weight:700;z-index:200;border:2px solid var(--ink);opacity:0;transition:opacity 0.2s;pointer-events:none;}
 .toast.show{opacity:1;}
-.disclaimer{margin:0 16px 16px;padding:12px 14px;background:transparent;border:2px dashed var(--ink);border-radius:14px;font-size:var(--fs-aux);color:var(--text3);line-height:1.7;text-align:center;}
 
 /* ════════════════════════════
    태블릿 (768px ~)
@@ -706,57 +731,100 @@ body:has(.result-wrap.show){background:#FBF6EC;}
   <div class="r-top">
     <div class="r-top-title">반려동물 성격 테스트</div>
     <div class="r-sticker">결과 나왔다!</div>
- </div>
+  </div>
+
+  <!-- 결과 카드 -->
   <div class="r-hero">
-    <svg class="r-spark s1" width="34" height="34" viewBox="0 0 40 40" fill="none" stroke="#1C1B18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4 L23 16 L35 19 L23 23 L20 36 L17 23 L5 20 L17 16 Z"></path></svg>
-    <svg class="r-spark s2" width="20" height="20" viewBox="0 0 40 40" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 L22 17 L33 20 L22 23 L20 34 L18 23 L7 20 L18 17 Z"></path></svg>
     <div class="r-name" id="rName"></div>
     <div class="r-face-frame" id="rFace"></div>
     <div class="r-type" id="rBadge"></div>
-    <svg class="r-scribble" width="210" height="16" viewBox="0 0 210 16" fill="none" aria-hidden="true"><path d="M4 10 C 40 3, 80 14, 120 7 C 150 2, 180 12, 206 6" stroke="#FF4FA3" stroke-width="5" stroke-linecap="round"></path></svg>
+    <svg class="r-scribble" width="190" height="12" viewBox="0 0 190 12" fill="none" aria-hidden="true"><path d="M4 8 C 40 3, 80 11, 120 6 C 145 3, 170 9, 186 5" stroke="#FF4FA3" stroke-width="4.5" stroke-linecap="round"/></svg>
     <div class="r-desc" id="rDesc"></div>
- </div>
+  </div>
+
   <div class="r-tags" id="rTags"></div>
-  <div class="r-quick-share">
-    <button class="share-btn kakao-result icon" type="button" onclick="shareResultKakao()" data-icon="talk">카톡으로 결과 공유</button>
- </div>
-  <div class="r-body">
-    <div class="r-card">
-      <div class="r-card-title">성격 특성 분석</div>
-      <div class="trait-list" id="traitList"></div>
-   </div>
-    <div class="r-card">
-      <div class="r-card-title">종합 분석</div>
-      <div class="r-summary" id="summaryText"></div>
-      <button class="r-more" id="summaryMore" type="button" onclick="toggleSummary()" hidden>더 보기</button>
-   </div>
-    <div class="r-card pink">
-      <div class="r-card-title">맞춤 케어 팁</div>
-      <div class="tip-list" id="tipList"></div>
-   </div>
-    <div class="r-card">
-      <div class="r-card-title">맞춤 추천 용품</div>
-      <div class="prod-section-title" id="prodSubtitle"></div>
-      <div class="prod-list" id="prodList"></div>
-      <div class="coupang-notice">
-        이 포스팅은 쿠팡 파트너스 활동의 일환으로<br>
-        일정액의 수수료를 제공받을 수 있습니다.
-     </div>
-   </div>
- </div>
-  <div class="disclaimer">이 결과는 재미로 보는 성격 참고 분석이에요</div>
-  <div class="share-area">
-    <button class="share-btn save-img icon" type="button" onclick="saveResultImage()" data-icon="save">이미지 저장</button>
-    <button class="share-btn kakao-result icon" type="button" onclick="shareResultKakao()" data-icon="talk">카톡 — 결과 공유</button>
-    <div class="share-grid">
-      <button class="share-btn kakao icon" type="button" onclick="shareTestKakao()" data-icon="talk">카톡 테스트 공유</button>
-      <button class="share-btn copy icon" type="button" onclick="copyShareLink()" data-icon="link">링크 복사</button>
-   </div>
-    <button class="restart-btn" type="button" onclick="restart()" data-icon="retry"><span>다시 테스트하기</span></button>
-    <a class="dev-link" href="https://x.com/Jamespaakstore" target="_blank" rel="noopener noreferrer">개발자 X · @Jamespaakstore</a>
-    <a class="privacy-link" href="https://superstarkzal.com/privacy.html" target="_blank" rel="noopener">개인정보처리방침</a>
+
+  <!-- 빠른 공유 -->
+  <div class="r-quick">
+    <button class="btn-kakao" type="button" onclick="shareResultKakao()"><span data-icon="talkInk"></span>카톡으로 결과 공유</button>
+    <button class="btn-icon" type="button" onclick="shareOtherApp()" aria-label="다른 앱으로 공유" data-icon="share"></button>
+  </div>
+
+  <!-- 성격 특성 -->
+  <section class="r-card">
+    <h2 class="r-card-title">성격 특성</h2>
+    <div class="trait-list" id="traitList"></div>
+  </section>
+
+  <!-- 종합 분석 -->
+  <section class="r-card">
+    <h2 class="r-card-title">종합 분석</h2>
+    <div class="r-summary" id="summaryText"></div>
+    <button class="r-more" id="summaryMore" type="button" onclick="toggleSummary()" hidden>더 보기</button>
+  </section>
+
+  <!-- 케어 팁 -->
+  <section class="r-card">
+    <h2 class="r-card-title">맞춤 케어 팁</h2>
+    <div class="tip-list" id="tipList"></div>
+  </section>
+
+  <!-- 추천 용품 -->
+  <section class="r-card">
+    <div class="r-card-head">
+      <h2 class="r-card-title">맞춤 추천 용품</h2>
+      <span class="r-card-count" id="prodCount"></span>
+    </div>
+    <div class="prod-section-title" id="prodSubtitle"></div>
+    <div class="prod-list" id="prodList"></div>
+    <div class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로 일정액의 수수료를 제공받을 수 있습니다.</div>
+  </section>
+
+  <!-- 공유 블록 -->
+  <section class="r-share">
+    <div class="r-share-head">
+      <div class="story-thumb" aria-hidden="true">
+        <div class="story-thumb-card">
+          <div class="story-thumb-face" id="storyThumbFace"></div>
+          <div class="story-thumb-type" id="storyThumbType"></div>
+        </div>
+      </div>
+      <div>
+        <div class="r-share-title">결과 카드로 자랑하기</div>
+        <div class="r-share-sub">친구네 아이는 무슨 타입일까요?</div>
+      </div>
+    </div>
+    <button class="btn-primary" type="button" onclick="shareInstaStory()"><span data-icon="story"></span>인스타 스토리에 올리기</button>
+    <button class="btn-kakao" type="button" onclick="shareResultKakao()"><span data-icon="talkInk"></span>카카오톡으로 보내기</button>
+    <div class="r-share-links">
+      <button type="button" onclick="saveResultImage()">이미지 저장</button>
+      <span aria-hidden="true">·</span>
+      <button type="button" onclick="copyShareLink()">링크 복사</button>
+      <span aria-hidden="true">·</span>
+      <button type="button" onclick="shareOtherApp()">다른 앱</button>
+    </div>
+    <div class="r-share-line"></div>
+    <button class="r-invite" type="button" onclick="shareTestKakao()">
+      <span><b>친구도 해보게 하기</b><small>결과 대신 테스트 링크를 보내요</small></span>
+      <span class="r-invite-arrow" aria-hidden="true">→</span>
+    </button>
+  </section>
+
+  <button class="restart-btn" type="button" onclick="restart()"><span data-icon="retry"></span>다른 아이로 다시 하기</button>
+  <div class="r-foot">
+    <div>이 결과는 재미로 보는 성격 참고 분석이에요</div>
+    <div><a href="https://x.com/Jamespaakstore" target="_blank" rel="noopener noreferrer">개발자 X · @Jamespaakstore</a> · <a href="https://superstarkzal.com/privacy.html" target="_blank" rel="noopener">개인정보처리방침</a></div>
+  </div>
  </div>
 </div>
+
+<!-- 공유 도움 시트 (스토리 저장 안내 · 다른 앱 선택) -->
+<div class="sheet" id="shareSheet" hidden onclick="if(event.target===this)closeShareSheet()">
+  <div class="sheet-box" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <div class="sheet-title" id="sheetTitle"></div>
+    <div class="sheet-body" id="sheetBody"></div>
+    <button class="sheet-close" type="button" onclick="closeShareSheet()">닫기</button>
+  </div>
 </div>
 <div class="toast" id="shareToast"></div>
 
@@ -1496,6 +1564,8 @@ function renderCoupangProducts(products){
   if(!products||products.length===0) return;
   const list=document.getElementById('prodList');
   if(!list) return;
+  const cnt=document.getElementById('prodCount');
+  if(cnt) cnt.textContent=`${products.length}개`;
   list.innerHTML=products.map((p,i)=>{
     const name=escapeHTML(p.name||'상품');
     const url=escapeHTML(p.url||'#');
@@ -1513,7 +1583,7 @@ function renderCoupangProducts(products){
         <div class="prod-name" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${name}</div>
         <div class="prod-why">${why}</div>
         <div class="prod-tag">${cat}</div>
-        <div class="prod-cta">${iconSVG('cart')}쿠팡 보기</div>
+        <div class="prod-cta">쿠팡에서 보기 →</div>
       </div>
     </a>`;
   }).join('');
@@ -1580,6 +1650,9 @@ const ICONS={
   save:'<path d="M16 4 L16 19"/><path d="M10 13 L16 19 L22 13"/><path d="M5 22 L5 27 L27 27 L27 22"/>',
   link:'<path d="M13 19 L19 13"/><path d="M14 9 L17 6 C 20 3, 26 3, 26 9 C 27 12, 25 14, 23 15 L 21 17"/><path d="M18 23 L15 26 C 12 29, 6 29, 6 23 C 5 20, 7 18, 9 17 L 11 15"/>',
   retry:'<path d="M26 16 C 26 22, 21 27, 15 27 C 9 27, 5 22, 5 16 C 5 10, 10 5, 16 5 C 20 5, 23 7, 25 10"/><path d="M26 4 L25 10 L19 9"/>',
+  talkInk:'<path d="M16 5 C 24 5, 29 9, 29 15 C 29 21, 24 24, 16 24 C 14 24, 12 24, 10 23 L 5 27 L 6 21 C 4 19, 3 17, 3 15 C 3 9, 8 5, 16 5 Z" fill="currentColor"/>',
+  share:'<path d="M16 4 L16 20"/><path d="M10 10 L16 4 L22 10"/><path d="M8 15 L6 15 L6 28 L26 28 L26 15 L24 15"/>',
+  story:'<rect x="5" y="5" width="22" height="22" rx="7"/><circle cx="16" cy="16" r="5"/><circle cx="22.5" cy="9.5" r="1.2" fill="currentColor" stroke="none"/>',
   cart:'<path d="M3 5 L7 5 L10 20 L25 20 L28 9 L8 9"/><circle cx="12" cy="26" r="2" fill="currentColor"/><circle cx="23" cy="26" r="2" fill="currentColor"/>',
 };
 function iconSVG(name){
@@ -1623,7 +1696,12 @@ function showResult(){
   document.getElementById('resultWrap').classList.add('show');
   const look=RESULT_LOOKS[cleanType(r.type)]||RESULT_LOOK_DEFAULT;
   document.getElementById('resultWrap').style.setProperty('--accent',look.accent);
+  document.getElementById('resultWrap').style.setProperty('--accent-soft',look.accent+'55');
   document.getElementById('rFace').innerHTML=resultFaceHTML(look.mood);
+  document.getElementById('storyThumbFace').innerHTML=resultFaceHTML(look.mood);
+  document.getElementById('storyThumbType').textContent=cleanType(r.type);
+  storyBlobPromise=null;
+  setTimeout(prepareStoryBlob,1200);
   document.getElementById('rBadge').textContent=cleanType(r.type);
   document.getElementById('rName').textContent=`우리 ${nm(petName)}는…`;
   document.getElementById('rDesc').textContent=r.desc;
@@ -1633,7 +1711,7 @@ function showResult(){
   setupSummaryMore();
   document.getElementById('traitList').innerHTML=r.traits.map(t=>`
     <div class="trait-item">
-      <span class="trait-label">${iconSVG(TRAIT_ICONS[cleanType(t.label)])}${escapeHTML(cleanType(t.label))}</span>
+      <span class="trait-label">${escapeHTML(cleanType(t.label))}</span>
       <div class="trait-bar-bg"><div class="trait-bar-fill" style="width:${t.val}%"></div></div>
       <span class="trait-num">${t.val}</span>
     </div>`).join('');
@@ -1642,6 +1720,7 @@ function showResult(){
 
   // 쿠팡 파트너스 상품 렌더링
   document.getElementById('prodSubtitle').textContent=`${nm(petName)}의 성격에 맞게 골라드린 용품이에요`;
+  document.getElementById('prodCount').textContent=`${r.prods.length}개`;
   document.getElementById('prodList').innerHTML=r.prods.map(p=>`
     <a class="prod-item${p.highlight?' highlight':''}" href="${escapeHTML(p.url)}" target="_blank" rel="noopener" onclick="trackClick(${jsStringAttr(p.name)})">
       <div class="prod-img">${iconSVG('cart')}</div>
@@ -1649,7 +1728,7 @@ function showResult(){
         <div class="prod-name">${p.name}</div>
         <div class="prod-why">${p.why}</div>
         <div class="prod-tag">${p.tag}</div>
-        <div class="prod-cta">${iconSVG('cart')}쿠팡 보기</div>
+        <div class="prod-cta">쿠팡에서 보기 →</div>
       </div>
     </a>`).join('');
 
@@ -1965,6 +2044,146 @@ async function captureResultCanvas(square){
     if(card.parentNode) card.parentNode.removeChild(card);
   }
 }
+
+// ── 인스타 스토리 · 다른 앱 공유 ──
+// 9:16 세로 카드 (1080x1920): 결과 화면과 같은 스타일
+function buildStoryCardEl(){
+  const r=window.__currentResult;
+  const name=window.__currentPetName||'우리 아이';
+  const look=RESULT_LOOKS[cleanType(r&&r.type)]||RESULT_LOOK_DEFAULT;
+  const ink='#1C1B18',cream='#FBF6EC';
+  const card=document.createElement('div');
+  card.style.cssText='position:fixed;left:-99999px;top:0;width:1080px;height:1920px;'
+    +`background:${cream};color:${ink};font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;font-weight:500;`
+    +'padding:96px 76px 84px;box-sizing:border-box;display:flex;flex-direction:column;gap:44px;';
+  const tags=r&&r.traits?r.traits.slice().sort((a,b)=>b.val-a.val).slice(0,3)
+    .map(t=>`<div style="font-size:34px;font-weight:700;background:#fff;border:4px solid ${ink};border-radius:999px;padding:12px 28px;">#${escapeHTML(cleanType(t.label))} ${t.val}</div>`).join(''):'';
+  const traits=r&&r.traits?r.traits.slice(0,4).map(t=>`<div style="display:flex;align-items:center;gap:24px;">
+      <div style="width:132px;font-size:34px;font-weight:700;">${escapeHTML(cleanType(t.label))}</div>
+      <div style="flex:1;height:30px;background:${cream};border:4px solid ${ink};border-radius:999px;overflow:hidden;"><div style="height:100%;width:${t.val}%;background:${look.accent};border-right:4px solid ${ink};box-sizing:border-box;"></div></div>
+      <div style="width:64px;font-size:34px;font-weight:800;text-align:right;">${t.val}</div>
+    </div>`).join(''):'';
+  card.innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <div style="font-size:34px;font-weight:700;">반려동물 성격 테스트</div>
+      <div style="font-size:30px;font-weight:700;background:${look.accent};border:4px solid ${ink};border-radius:999px;padding:8px 26px;">결과 나왔다!</div>
+    </div>
+    <div style="margin:auto 0;display:flex;flex-direction:column;gap:44px;">
+    <div style="background:${look.accent};border:6px solid ${ink};border-radius:64px;padding:52px 56px 60px;display:flex;flex-direction:column;align-items:center;gap:14px;">
+      <div style="align-self:flex-start;font-size:40px;font-weight:700;">우리 ${escapeHTML(nm(name))}는…</div>
+      <div style="width:430px;height:384px;margin:14px 0 20px;border-radius:50%;background:${cream};border:6px solid ${ink};display:flex;align-items:center;justify-content:center;transform:rotate(-2deg);">
+        <div style="width:318px;height:292px;">${faceSVG(petType,look.mood,dogSize)}</div>
+      </div>
+      <div style="font-size:92px;font-weight:800;letter-spacing:-0.03em;line-height:1.15;text-align:center;word-break:keep-all;">${escapeHTML(cleanType(r&&r.type)||'성격 분석')}</div>
+      <svg width="480" height="30" viewBox="0 0 190 12" fill="none" style="display:block;"><path d="M4 8 C 40 3, 80 11, 120 6 C 145 3, 170 9, 186 5" stroke="#FF4FA3" stroke-width="4.5" stroke-linecap="round"/></svg>
+      <div style="margin-top:8px;font-size:38px;font-weight:500;line-height:1.5;text-align:center;word-break:keep-all;">${escapeHTML(r&&r.desc||'')}</div>
+    </div>
+    <div style="display:flex;justify-content:center;gap:16px;">${tags}</div>
+    <div style="background:#fff;border:5px solid ${ink};border-radius:48px;padding:44px 48px;display:flex;flex-direction:column;gap:26px;">
+      <div style="font-size:38px;font-weight:700;">기질 점수</div>
+      ${traits}
+    </div>
+    </div>
+    <div style="text-align:center;font-size:36px;font-weight:700;">나도 해보기 → ${escapeHTML(SITE_URL.replace(/^https?:\/\//,''))}</div>
+  `;
+  document.body.appendChild(card);
+  return card;
+}
+
+async function captureStoryCanvas(){
+  if(document.fonts&&document.fonts.ready){ try{ await document.fonts.ready; }catch(e){} }
+  const card=buildStoryCardEl();
+  try{
+    return await html2canvas(card,{backgroundColor:'#FBF6EC',scale:1,useCORS:true,logging:false,width:1080,height:1920,windowWidth:1080});
+  }finally{
+    if(card.parentNode) card.parentNode.removeChild(card);
+  }
+}
+
+// 탭한 순간 바로 공유할 수 있도록 결과가 나오면 미리 만들어 둔다 (공유 권한은 탭 직후 잠깐만 유효)
+let storyBlobPromise=null;
+function prepareStoryBlob(){
+  if(typeof html2canvas!=='function') return null;
+  storyBlobPromise=captureStoryCanvas()
+    .then(c=>new Promise(res=>c.toBlob(res,'image/png')))
+    .catch(()=>null);
+  return storyBlobPromise;
+}
+
+function isInAppBrowser(){
+  return /KAKAOTALK|Instagram|FBAN|FBAV|Line\/|NAVER\(inapp|DaumApps|everytimeApp/i.test(navigator.userAgent||'');
+}
+
+function downloadURL(url,filename){
+  const a=document.createElement('a');
+  a.href=url;a.download=filename;
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+}
+
+async function shareInstaStory(){
+  trackEvent('share_click',{kind:'insta_story'});
+  if(typeof html2canvas!=='function'){
+    showToast('이미지 라이브러리 로드 중이에요. 잠시 후 다시 시도해 주세요.');
+    return;
+  }
+  const blob=await(storyBlobPromise||prepareStoryBlob());
+  if(!blob){ showToast('스토리 이미지를 만들지 못했어요'); storyBlobPromise=null; return; }
+  const file=new File([blob],`pet-story-${Date.now()}.png`,{type:'image/png'});
+  // 휴대폰: 이미지 파일 공유 → 공유 목록에서 인스타그램(스토리) 선택
+  if(navigator.canShare&&navigator.share){
+    try{
+      if(navigator.canShare({files:[file]})){
+        await navigator.share({files:[file]});
+        trackEvent('story_share',{method:'file'});
+        return;
+      }
+    }catch(e){
+      if(e&&e.name==='AbortError') return;
+    }
+  }
+  // 파일 공유가 안 되면(PC·인앱 브라우저 등): 이미지를 저장하고 안내
+  const url=URL.createObjectURL(blob);
+  const inApp=isInAppBrowser();
+  if(!inApp) downloadURL(url,file.name);
+  openShareSheet('인스타 스토리에 올리기',
+    `<img src="${url}" alt="인스타 스토리용 결과 카드">
+     <p>${inApp
+       ?'이미지를 길게 눌러 사진에 저장한 뒤, 인스타그램 스토리에 올려주세요.'
+       :'저장된 이미지를 인스타 스토리에 올려주세요.'}</p>
+     ${inApp?'':`<a class="sheet-btn" href="${url}" download="${file.name}">이미지 다시 저장</a>`}`);
+  trackEvent('story_share',{method:inApp?'inapp_longpress':'download'});
+}
+
+// 다른 앱: 문구 + 링크 공유, 안 되면 스레드 / X / 링크 복사
+async function shareOtherApp(){
+  trackEvent('share_click',{kind:'other_app'});
+  const r=window.__currentResult;
+  const name=window.__currentPetName||'우리 아이';
+  const url=r?createResultShareUrl():TEST_URL;
+  const text=r?`${nm(name)}는 ${cleanType(r.type)}이래! 우리 아이는 무슨 타입일까?`:TEST_SHARE_TITLE;
+  if(navigator.share){
+    try{ await navigator.share({title:TEST_SHARE_TITLE,text,url}); return; }
+    catch(e){ if(e&&e.name==='AbortError') return; }
+  }
+  const t=encodeURIComponent(text),u=encodeURIComponent(url);
+  openShareSheet('다른 앱으로 공유',
+    `<a class="sheet-btn" href="https://www.threads.net/intent/post?text=${encodeURIComponent(text+' '+url)}" target="_blank" rel="noopener" onclick="trackEvent('share_click',{kind:'threads'})">스레드</a>
+     <a class="sheet-btn" href="https://twitter.com/intent/tweet?text=${t}&url=${u}" target="_blank" rel="noopener" onclick="trackEvent('share_click',{kind:'x'})">X</a>
+     <button class="sheet-btn" type="button" onclick="closeShareSheet();copyShareLink()">링크 복사</button>`);
+}
+
+function openShareSheet(title,html){
+  const sheet=document.getElementById('shareSheet');
+  document.getElementById('sheetTitle').textContent=title;
+  document.getElementById('sheetBody').innerHTML=html;
+  sheet.hidden=false;
+  sheet.querySelector('.sheet-close').focus();
+}
+function closeShareSheet(){
+  const sheet=document.getElementById('shareSheet');
+  if(sheet) sheet.hidden=true;
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeShareSheet(); });
 
 async function shareResultKakao(){
   const r=window.__currentResult;
