@@ -455,22 +455,22 @@ body:has(.result-wrap.show){background:#FBF6EC;}
     <!-- 동물 유형 -->
     <div class="pet-types" id="petTypeOpts">
       <div class="pet-btn" onclick="selPetType(this,'dog')">
-        <span class="pet-icon" data-face="dog:lazy"></span>
+        <span class="pet-icon" data-face="dog:explorer"></span>
         <div class="pet-name">강아지</div>
         <div class="pet-desc">댕댕이</div>
      </div>
       <div class="pet-btn" onclick="selPetType(this,'cat')">
-        <span class="pet-icon" data-face="cat:lazy"></span>
+        <span class="pet-icon" data-face="cat:explorer"></span>
         <div class="pet-name">고양이</div>
         <div class="pet-desc">냥냥이</div>
      </div>
       <div class="pet-btn" onclick="selPetType(this,'rabbit')">
-        <span class="pet-icon" data-face="rabbit:lazy"></span>
+        <span class="pet-icon" data-face="rabbit:explorer"></span>
         <div class="pet-name">토끼</div>
         <div class="pet-desc">폴짝폴짝</div>
      </div>
       <div class="pet-btn" onclick="selPetType(this,'other')">
-        <span class="pet-icon" data-face="other:lazy"></span>
+        <span class="pet-icon" data-face="other:explorer"></span>
         <div class="pet-name">기타</div>
         <div class="pet-desc">직접 입력</div>
      </div>
@@ -1955,31 +1955,51 @@ function shareTestKakao(){
 // square=true  → 카카오 피드용 1080x1080 고정 카드 (해설 230자 요약)
 // square=false → 이미지 저장용 가변 높이 카드 (해설 전문, 워터마크 없음)
 function buildResultCardEl(square){
+  // 공유·저장용 결과 카드: 결과 화면과 같은 스타일 (크림 바탕 · 성격 색 카드 · 그림 얼굴 · Pretendard · 이모지 없음)
   const r=window.__currentResult;
   const name=window.__currentPetName||'우리 아이';
+  const look=RESULT_LOOKS[cleanType(r&&r.type)]||RESULT_LOOK_DEFAULT;
+  const ink='#1C1B18',cream='#FBF6EC';
   const card=document.createElement('div');
   card.style.cssText='position:fixed;left:-99999px;top:0;width:1080px;'
     +(square?'height:1080px;':'')
-    +'background:linear-gradient(160deg,#1c2128 0%,#0d1117 50%,#1c2128 100%);'
-    +'color:#f0ede8;font-family:"DM Sans","Noto Sans KR",sans-serif;'
-    +'padding:60px 68px;box-sizing:border-box;display:flex;flex-direction:column;'
-    +'align-items:center;justify-content:flex-start;text-align:center;';
-  const traitsHtml=r&&r.traits?r.traits.slice(0,4).map(t=>`<div style="display:flex;align-items:center;gap:14px;width:100%;margin-bottom:12px;"><div style="width:130px;font-size:21px;color:#9a9080;text-align:left;">${escapeHTML(t.label)}</div><div style="flex:1;height:10px;background:rgba(255,255,255,0.08);border-radius:50px;overflow:hidden;"><div style="height:100%;width:${t.val}%;background:linear-gradient(90deg,#f4845f,#f7a88a);border-radius:50px;"></div></div><div style="width:54px;font-size:20px;color:#f0ede8;text-align:right;">${t.val}</div></div>`).join(''):'';
-  const fullAnalysis=plainTextFromHTML(r&&r.summary)||(r&&r.desc)||'';
+    +`background:${cream};color:${ink};font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;font-weight:500;`
+    +'padding:52px 64px 56px;box-sizing:border-box;display:flex;flex-direction:column;gap:26px;';
+  const icon=(n,sz)=>iconSVG(n).replace('class="ic"',`width="${sz}" height="${sz}" style="display:block;flex-shrink:0;color:${ink};"`);
+  const traitsHtml=r&&r.traits?r.traits.slice(0,4).map(t=>{
+    const label=cleanType(t.label);
+    return `<div style="display:flex;align-items:center;gap:14px;">
+      ${icon(TRAIT_ICONS[label],34)}
+      <div style="width:96px;font-size:24px;font-weight:700;">${escapeHTML(label)}</div>
+      <div style="flex:1;height:22px;background:${cream};border:3px solid ${ink};border-radius:50px;overflow:hidden;"><div style="height:100%;width:${t.val}%;background:${look.accent};border-right:3px solid ${ink};box-sizing:border-box;"></div></div>
+      <div style="width:44px;font-size:24px;font-weight:800;text-align:right;">${t.val}</div>
+    </div>`;}).join(''):'';
+  const fullAnalysis=stripEmoji(plainTextFromHTML(r&&r.summary)||(r&&r.desc)||'');
   const analysisText=square?fullAnalysis.slice(0,230):fullAnalysis;
   const analysisEllipsis=(square&&fullAnalysis.length>230)?'...':'';
   card.innerHTML=`
-    <div style="font-size:112px;line-height:1;margin-bottom:22px;">${petIcons[petType]||'🐾'}</div>
-    <div style="display:inline-block;border:2px solid rgba(244,132,95,0.4);border-radius:50px;padding:9px 26px;font-size:23px;color:#f4845f;background:rgba(244,132,95,0.08);margin-bottom:18px;font-weight:500;">${escapeHTML(r&&r.type||'성격 분석')}</div>
-    <div style="font-size:46px;font-weight:600;color:#f0ede8;margin-bottom:16px;letter-spacing:-0.02em;">${escapeHTML(nm(name))}의<br>기질 테스트 결과</div>
-    <div style="font-size:25px;color:#9a9080;line-height:1.55;margin-bottom:28px;font-weight:300;max-width:880px;">${escapeHTML(r&&r.desc||'')}</div>
-    <div style="width:100%;max-width:850px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:24px;padding:30px 38px;margin-bottom:22px;">
-      <div style="font-size:18px;letter-spacing:0.12em;text-transform:uppercase;color:#f4845f;margin-bottom:20px;font-weight:600;">✦ 기질 점수</div>
-      ${traitsHtml}
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <div style="font-size:26px;font-weight:700;">반려동물 성격 테스트</div>
+      <div style="font-size:24px;font-weight:700;background:${look.accent};border:3px solid ${ink};border-radius:999px;padding:6px 22px;">결과 나왔다!</div>
     </div>
-    <div style="width:100%;max-width:850px;background:rgba(78,201,176,0.08);border:1px solid rgba(78,201,176,0.22);border-radius:22px;padding:26px 34px;text-align:left;">
-      <div style="font-size:18px;letter-spacing:0.12em;text-transform:uppercase;color:#4ec9b0;margin-bottom:13px;font-weight:600;text-align:center;">✦ 결과 분석</div>
-      <div style="font-size:22px;color:#d7d1c8;line-height:1.72;font-weight:300;">${escapeHTML(analysisText)}${analysisEllipsis}</div>
+    <div style="position:relative;background:${look.accent};border:4px solid ${ink};border-radius:44px;padding:36px 40px;display:flex;align-items:center;gap:40px;">
+      <div style="width:250px;height:222px;flex-shrink:0;border-radius:48% 52% 46% 54%;background:${cream};border:4px solid ${ink};display:flex;align-items:center;justify-content:center;transform:rotate(-2deg);">
+        <div style="width:186px;height:171px;">${faceSVG(petType,look.mood,dogSize)}</div>
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:30px;font-weight:700;">우리 ${escapeHTML(nm(name))}는…</div>
+        <div style="font-size:64px;font-weight:800;letter-spacing:-0.03em;line-height:1.15;margin-top:10px;word-break:keep-all;">${escapeHTML(cleanType(r&&r.type)||'성격 분석')}</div>
+        <svg width="320" height="22" viewBox="0 0 210 16" fill="none" style="display:block;margin-top:4px;"><path d="M4 10 C 40 3, 80 14, 120 7 C 150 2, 180 12, 206 6" stroke="#FF4FA3" stroke-width="5" stroke-linecap="round"/></svg>
+        <div style="font-size:26px;font-weight:500;line-height:1.5;margin-top:14px;word-break:keep-all;">${escapeHTML(r&&r.desc||'')}</div>
+      </div>
+    </div>
+    <div style="background:#fff;border:3px solid ${ink};border-radius:32px;padding:28px 36px;">
+      <div style="font-size:28px;font-weight:700;margin-bottom:20px;">기질 점수</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px 44px;">${traitsHtml}</div>
+    </div>
+    <div style="background:#fff;border:3px solid ${ink};border-radius:32px;padding:28px 36px;${square?'flex:1;min-height:0;overflow:hidden;':''}">
+      <div style="font-size:28px;font-weight:700;margin-bottom:12px;">결과 분석</div>
+      <div style="font-size:24px;font-weight:500;line-height:1.65;color:#2D2B25;word-break:keep-all;">${escapeHTML(analysisText)}${analysisEllipsis}</div>
     </div>
   `;
   document.body.appendChild(card);
@@ -1991,7 +2011,7 @@ async function captureResultCanvas(square){
   const card=buildResultCardEl(square);
   try{
     const h=square?1080:Math.ceil(card.offsetHeight);
-    return await html2canvas(card,{backgroundColor:'#0d1117',scale:1,useCORS:true,logging:false,width:1080,height:h,windowWidth:1080});
+    return await html2canvas(card,{backgroundColor:'#FBF6EC',scale:1,useCORS:true,logging:false,width:1080,height:h,windowWidth:1080});
   }finally{
     if(card.parentNode) card.parentNode.removeChild(card);
   }
