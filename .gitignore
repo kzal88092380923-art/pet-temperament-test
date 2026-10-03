@@ -22,3 +22,6 @@ claude-log.md
 claude-log.txt
 claude-progress.md
 claude-usage.md
+
+# 삭제 예정 파일 보관 폴더 (커밋 금지)
+_to_delete/
