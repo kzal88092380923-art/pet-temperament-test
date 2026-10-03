@@ -38,7 +38,8 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Noto+Sans+KR:wght@300;400;500;600&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <!-- 카카오 JS SDK (피드 공유) + html2canvas (결과 이미지 저장) -->
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -151,66 +152,94 @@ body.nav-switching .nav,.sec-banner.show + .tablet-layout .nav{opacity:0;pointer
 .lprog-bg{margin-top:22px;width:100%;max-width:300px;height:2px;background:rgba(255,255,255,0.07);border-radius:50px;overflow:hidden;}
 .lprog-fill{height:100%;background:linear-gradient(90deg,var(--orange),var(--orange-lt));border-radius:50px;transition:width 0.4s ease;width:0%;}
 
-/* ── 결과 ── */
-.result-wrap{display:none;}
+/* ── 결과 (손그림 카드 스타일 · design-ref/petcard) ── */
+.result-wrap{
+  display:none;
+  --ink:#1C1B18;--cream:#FBF6EC;--accent:#C8F169;--hot:#FF4FA3;--pink-lt:#FFD6EA;
+  --text:#1C1B18;--text2:#2D2B25;--text3:#55524A;--border:#1C1B18;--orange:#C2286E;--teal:#1C1B18;
+  background:var(--cream);color:var(--ink);min-height:100vh;
+  font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+}
 .result-wrap.show{display:block;}
+body:has(.result-wrap.show){background:#FBF6EC;}
+.r-inner{max-width:480px;margin:0 auto;padding-bottom:28px;}
+.result-wrap button:focus-visible,.result-wrap a:focus-visible{outline:3px solid var(--hot);outline-offset:2px;}
 
-.r-hero{padding:28px 20px 22px;text-align:center;background:var(--surface);border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
-.r-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(244,132,95,0.1) 0%,transparent 70%);}
-.r-pet-icon{font-size:3.2rem;display:block;margin-bottom:10px;position:relative;}
-.r-type-badge{display:inline-block;border:1px solid rgba(244,132,95,0.3);border-radius:50px;padding:4px 14px;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--orange);margin-bottom:10px;background:rgba(244,132,95,0.07);position:relative;font-weight:500;}
-.r-name{position:relative;font-size:1.35rem;font-weight:500;color:var(--text);margin-bottom:6px;}
-.r-desc{position:relative;font-size:0.84rem;color:var(--text2);line-height:1.85;font-weight:300;}
+.r-top{display:flex;align-items:center;justify-content:space-between;padding:18px 20px 6px;}
+.r-top-title{font-size:13px;font-weight:700;}
+.r-sticker{font-family:'Gaegu',cursive;font-size:18px;font-weight:700;background:var(--accent);padding:0 10px;border-radius:999px;transform:rotate(-3deg);}
 
-.r-body{padding:14px 16px 80px;}
-.r-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:10px;}
-.r-card-title{font-size:0.65rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--orange);margin-bottom:12px;}
-.r-card-title.t-teal{color:var(--teal);}
-.r-card-title.t-purple{color:var(--purple);}
+.r-hero{position:relative;margin:10px 20px 0;background:var(--accent);border:2.5px solid var(--ink);border-radius:28px 34px 26px 32px;padding:22px 20px 20px;overflow:hidden;}
+.r-spark{position:absolute;}
+.r-spark.s1{right:18px;top:16px;}
+.r-spark.s2{right:60px;top:58px;}
+.r-name{font-family:'Gaegu',cursive;font-size:22px;font-weight:700;padding-right:70px;line-height:1.3;}
+.r-face-frame{width:170px;height:150px;margin:6px auto 4px;border-radius:48% 52% 46% 54%;background:var(--cream);border:2.5px solid var(--ink);display:flex;align-items:center;justify-content:center;transform:rotate(-2deg);}
+.r-face-frame svg{width:120px;height:110px;display:block;}
+.r-face-emoji{font-size:72px;line-height:1;}
+.r-type{text-align:center;margin-top:10px;font-size:30px;font-weight:800;letter-spacing:-0.03em;line-height:1.2;word-break:keep-all;}
+.r-scribble{display:block;margin:2px auto 0;max-width:100%;}
+.r-desc{text-align:center;font-size:14px;font-weight:600;margin-top:8px;color:var(--text2);line-height:1.6;word-break:keep-all;}
+
+.r-tags{display:flex;flex-wrap:wrap;gap:8px;padding:16px 20px 0;justify-content:center;}
+.r-tag{font-size:13px;font-weight:700;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:6px 12px;transform:rotate(-2deg);}
+.r-tag:nth-child(2){background:var(--pink-lt);transform:rotate(1.5deg);}
+.r-tag:nth-child(3){transform:rotate(-1deg);}
+
+.r-body{padding:18px 20px 0;display:flex;flex-direction:column;gap:12px;}
+.r-card{background:#fff;border:2px solid var(--ink);border-radius:20px 24px 18px 22px;padding:16px;}
+.r-card:nth-child(even){border-radius:22px 18px 24px 20px;}
+.r-card.pink{background:var(--pink-lt);}
+.r-card-title{font-family:'Gaegu',cursive;font-size:21px;font-weight:700;line-height:1.1;margin-bottom:12px;}
 
 /* 특성 점수 */
-.trait-list{display:flex;flex-direction:column;gap:10px;}
+.trait-list{display:flex;flex-direction:column;gap:9px;}
 .trait-item{display:flex;align-items:center;gap:10px;}
-.trait-label{font-size:0.76rem;color:var(--text2);width:68px;flex-shrink:0;}
-.trait-bar-bg{flex:1;height:6px;background:rgba(255,255,255,0.07);border-radius:50px;overflow:hidden;}
-.trait-bar-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,var(--orange),var(--orange-lt));transition:width 1s ease;}
-.trait-num{font-size:0.72rem;color:var(--text3);width:32px;text-align:right;flex-shrink:0;}
+.trait-label{font-size:13px;font-weight:600;width:74px;flex-shrink:0;}
+.trait-bar-bg{flex:1;height:12px;background:var(--cream);border:2px solid var(--ink);border-radius:50px;overflow:hidden;}
+.trait-bar-fill{height:100%;background:var(--accent);box-shadow:inset -2px 0 0 var(--ink);transition:width 1s ease;}
+.trait-num{font-size:13px;font-weight:800;width:28px;text-align:right;flex-shrink:0;}
+
+/* 종합 분석 */
+.r-summary{font-size:14.5px;line-height:1.8;color:var(--text2);}
+.r-summary strong{font-weight:800;color:var(--ink);background:linear-gradient(transparent 62%,var(--accent) 62%);}
 
 /* 케어 팁 */
 .tip-list{display:flex;flex-direction:column;gap:8px;}
-.tip-item{display:flex;gap:10px;padding:11px 13px;background:rgba(255,255,255,0.02);border-radius:9px;border:1px solid var(--border);}
+.tip-item{display:flex;gap:10px;padding:11px 13px;background:#fff;border:2px solid var(--ink);border-radius:14px 16px 13px 15px;}
 .tip-icon{font-size:1rem;flex-shrink:0;margin-top:1px;}
-.tip-text{font-size:0.84rem;color:var(--text2);line-height:1.7;font-weight:300;}
-.tip-text strong{color:var(--text);font-weight:500;}
+.tip-text{font-size:13.5px;color:var(--text2);line-height:1.7;}
+.tip-text strong{color:var(--ink);font-weight:800;}
 
 /* 추천 용품 - 쿠팡 파트너스 */
-.prod-section-title{font-size:0.72rem;color:var(--text3);margin-bottom:10px;line-height:1.6;}
+.prod-section-title{font-size:12.5px;color:var(--text3);margin-bottom:10px;line-height:1.6;}
 .prod-list{display:flex;flex-direction:column;gap:10px;}
-.prod-item{display:flex;align-items:center;gap:12px;padding:14px 13px;background:rgba(255,255,255,0.02);border-radius:11px;border:1px solid var(--border);cursor:pointer;text-decoration:none;transition:border-color 0.08s,background 0.08s;}
-.prod-item:active{background:rgba(255,255,255,0.05);transform:scale(0.99);}
-.prod-item.highlight{border-color:rgba(244,132,95,0.3);background:rgba(244,132,95,0.05);}
-.prod-img{width:52px;height:52px;border-radius:10px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0;}
+.prod-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--cream);border:2px solid var(--ink);border-radius:16px 14px 17px 15px;cursor:pointer;text-decoration:none;color:var(--ink);}
+.prod-item:active{transform:scale(0.99);}
+.prod-item.highlight{background:var(--accent);}
+.prod-img{width:52px;height:52px;border-radius:12px;background:#fff;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0;}
 .prod-info{flex:1;min-width:0;}
-.prod-name{font-size:0.88rem;font-weight:500;color:var(--text);margin-bottom:3px;line-height:1.3;}
-.prod-why{font-size:0.72rem;color:var(--teal);margin-bottom:4px;}
-.prod-tag{font-size:0.7rem;color:var(--text3);}
-.prod-cta{display:flex;align-items:center;gap:4px;background:var(--orange);color:#fff;border-radius:8px;padding:6px 10px;font-size:0.72rem;font-weight:600;flex-shrink:0;white-space:nowrap;}
-.coupang-notice{font-size:0.65rem;color:var(--text3);text-align:center;margin-top:8px;padding:6px;line-height:1.6;}
-.coupang-notice a{color:var(--orange);text-decoration:none;}
+.prod-name{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:3px;line-height:1.3;}
+.prod-why{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:3px;}
+.prod-tag{font-size:11.5px;color:var(--text3);}
+.prod-cta{background:var(--ink);color:var(--cream);border-radius:10px;padding:6px 10px;font-size:12px;font-weight:700;flex-shrink:0;white-space:nowrap;text-align:center;line-height:1.35;}
+.coupang-notice{font-size:11px;color:var(--text3);text-align:center;margin-top:10px;line-height:1.6;}
+.coupang-notice a{color:var(--ink);}
 
-.share-area{padding:0 16px 30px;display:flex;flex-direction:column;gap:8px;}
-.share-btn{width:100%;padding:14px;background:var(--orange);color:#fff;border:none;border-radius:11px;font-family:inherit;font-size:0.92rem;font-weight:600;cursor:pointer;display:block;text-align:center;min-height:48px;}
-.share-btn:active{opacity:0.85;-webkit-transform:scale(0.99);transform:scale(0.99);}
-.share-btn.kakao{background:#fee500;color:#3c1e1e;}
-.share-btn.kakao-result{background:#3c1e1e;color:#fee500;}
-.share-btn.copy{background:transparent;color:var(--text);border:1px solid var(--border);}
-.share-btn.save-img{background:transparent;color:var(--text);border:1px solid var(--border);}
-.share-btn.icon{display:inline-flex;align-items:center;justify-content:center;gap:8px;}
-.share-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.share-grid .share-btn{margin:0;}
-.restart-btn{width:100%;padding:13px;background:transparent;border:1px solid var(--border);border-radius:11px;font-family:inherit;font-size:0.85rem;color:var(--text3);cursor:pointer;display:block;text-align:center;min-height:46px;margin-top:6px;}
-.dev-link{display:block;text-align:center;padding:12px 8px;margin-top:4px;font-size:0.78rem;color:var(--text3);text-decoration:none;letter-spacing:0.02em;transition:color 0.15s;}
-.dev-link:hover,.dev-link:active{color:var(--orange-lt);}
+.result-wrap .disclaimer{margin:16px 20px 0;padding:10px 14px;background:transparent;border:2px dashed var(--ink);border-radius:14px;font-size:12px;color:var(--text3);line-height:1.6;text-align:center;}
+
+/* 공유 · 다시 하기 */
+.share-area{padding:22px 20px 0;display:flex;flex-direction:column;gap:10px;}
+.share-btn{width:100%;min-height:52px;padding:12px;background:#fff;color:var(--ink);border:2px solid var(--ink);border-radius:16px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-align:center;}
+.share-btn:active{transform:translateY(1px) scale(0.99);}
+.share-btn.save-img{background:var(--ink);color:var(--cream);min-height:54px;}
+.share-btn.kakao-result{background:#FEE500;}
+.share-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.share-grid .share-btn{font-size:13.5px;padding:10px 8px;gap:6px;min-height:48px;}
+.restart-btn{width:100%;min-height:44px;background:none;border:none;color:var(--text3);font-family:inherit;font-size:13.5px;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;}
+.dev-link{display:block;text-align:center;padding:12px 8px;margin-top:4px;font-size:12.5px;color:var(--text3);text-decoration:none;}
+.dev-link:hover,.dev-link:active{color:var(--ink);}
+.result-wrap .privacy-link{color:var(--text3);font-size:11.5px;}
 .privacy-link{display:block;text-align:center;padding:4px 8px 12px;font-size:0.72rem;color:var(--text3);text-decoration:underline;text-underline-offset:2px;}
 .toast{position:fixed;left:50%;bottom:90px;-webkit-transform:translateX(-50%);transform:translateX(-50%);background:rgba(13,17,23,0.95);color:#fff;padding:11px 18px;border-radius:30px;font-size:0.8rem;z-index:200;border:1px solid var(--border);box-shadow:0 8px 24px rgba(0,0,0,0.3);opacity:0;transition:opacity 0.2s;pointer-events:none;}
 .toast.show{opacity:1;}
@@ -304,19 +333,6 @@ body.nav-switching .nav,.sec-banner.show + .tablet-layout .nav{opacity:0;pointer
     padding-bottom:calc(12px + env(safe-area-inset-bottom));
   }
 
-  /* 결과 화면 */
-  .r-hero{padding:36px 40px 28px;}
-  .r-pet-icon{font-size:4rem;}
-  .r-name{font-size:1.6rem;}
-  .r-body{padding:20px 32px 80px;}
-  .r-card{padding:20px;}
-
-  /* 특성 점수 2열 */
-  .trait-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-
-  /* 공유 */
-  .share-area{padding:0 32px 30px;display:flex;gap:10px;}
-  .share-btn,.restart-btn{flex:1;margin-bottom:0;}
 }
 
 /* ════════════════════════════
@@ -364,13 +380,6 @@ body.nav-switching .nav,.sec-banner.show + .tablet-layout .nav{opacity:0;pointer
 
   /* 선택지 더 크게 */
   .opt{padding:14px 16px;font-size:0.9rem;border-radius:12px;}
-
-  /* 결과 */
-  .r-hero{padding:48px 60px 36px;}
-  .r-pet-icon{font-size:5rem;}
-  .r-name{font-size:1.8rem;}
-  .r-body{padding:24px 40px 80px;}
-  .share-area{padding:0 40px 40px;}
 
   /* 섹션 배너 — PC에서 중앙 팝업 */
   .sec-banner{background:rgba(13,17,23,0.85);backdrop-filter:blur(12px);}
@@ -744,27 +753,36 @@ body.nav-switching .nav,.sec-banner.show + .tablet-layout .nav{opacity:0;pointer
 
 <!-- 결과 -->
 <div class="result-wrap" id="resultWrap">
+ <div class="r-inner">
+  <div class="r-top">
+    <div class="r-top-title">반려동물 성격 테스트</div>
+    <div class="r-sticker">결과 나왔다!</div>
+  </div>
   <div class="r-hero">
-    <span class="r-pet-icon" id="rIcon"></span>
-    <div class="r-type-badge" id="rBadge"></div>
+    <svg class="r-spark s1" width="34" height="34" viewBox="0 0 40 40" fill="none" stroke="#1C1B18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4 L23 16 L35 19 L23 23 L20 36 L17 23 L5 20 L17 16 Z"></path></svg>
+    <svg class="r-spark s2" width="20" height="20" viewBox="0 0 40 40" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 L22 17 L33 20 L22 23 L20 34 L18 23 L7 20 L18 17 Z"></path></svg>
     <div class="r-name" id="rName"></div>
+    <div class="r-face-frame" id="rFace"></div>
+    <div class="r-type" id="rBadge"></div>
+    <svg class="r-scribble" width="210" height="16" viewBox="0 0 210 16" fill="none" aria-hidden="true"><path d="M4 10 C 40 3, 80 14, 120 7 C 150 2, 180 12, 206 6" stroke="#FF4FA3" stroke-width="5" stroke-linecap="round"></path></svg>
     <div class="r-desc" id="rDesc"></div>
   </div>
+  <div class="r-tags" id="rTags"></div>
   <div class="r-body">
     <div class="r-card">
-      <div class="r-card-title">✦ 성격 특성 분석</div>
+      <div class="r-card-title">성격 특성 분석</div>
       <div class="trait-list" id="traitList"></div>
     </div>
-    <div class="r-card" style="border-color:rgba(244,132,95,0.2);background:#1e1a17;">
-      <div class="r-card-title">✦ 종합 분석</div>
-      <div id="summaryText" style="font-size:0.86rem;color:var(--text2);line-height:2;font-weight:300;"></div>
-    </div>
     <div class="r-card">
-      <div class="r-card-title t-teal">✦ 맞춤 케어 팁</div>
+      <div class="r-card-title">종합 분석</div>
+      <div class="r-summary" id="summaryText"></div>
+    </div>
+    <div class="r-card pink">
+      <div class="r-card-title">맞춤 케어 팁</div>
       <div class="tip-list" id="tipList"></div>
     </div>
     <div class="r-card">
-      <div class="r-card-title t-purple">✦ 맞춤 추천 용품</div>
+      <div class="r-card-title">맞춤 추천 용품</div>
       <div class="prod-section-title" id="prodSubtitle"></div>
       <div class="prod-list" id="prodList"></div>
       <div class="coupang-notice">
@@ -775,16 +793,17 @@ body.nav-switching .nav,.sec-banner.show + .tablet-layout .nav{opacity:0;pointer
   </div>
   <div class="disclaimer">이 결과는 재미로 보는 성격 참고 분석이에요 😊</div>
   <div class="share-area">
-    <button class="share-btn kakao icon" type="button" onclick="shareTestKakao()">💬 카톡 — 테스트 공유</button>
+    <button class="share-btn save-img icon" type="button" onclick="saveResultImage()">📸 이미지 저장</button>
     <button class="share-btn kakao-result icon" type="button" onclick="shareResultKakao()">🎉 카톡 — 결과 공유</button>
     <div class="share-grid">
+      <button class="share-btn kakao icon" type="button" onclick="shareTestKakao()">💬 카톡 테스트 공유</button>
       <button class="share-btn copy icon" type="button" onclick="copyShareLink()">🔗 링크 복사</button>
-      <button class="share-btn save-img icon" type="button" onclick="saveResultImage()">📸 이미지 저장</button>
     </div>
     <button class="restart-btn" type="button" onclick="restart()">다시 테스트하기</button>
     <a class="dev-link" href="https://x.com/Jamespaakstore" target="_blank" rel="noopener noreferrer">🐾 개발자 X → @Jamespaakstore</a>
     <a class="privacy-link" href="https://superstarkzal.com/privacy.html" target="_blank" rel="noopener">개인정보처리방침</a>
   </div>
+ </div>
 </div>
 <div class="toast" id="shareToast"></div>
 
@@ -1571,16 +1590,67 @@ function renderCoupangProducts(products){
   }).join('');
 }
 
+// ── 결과 화면 얼굴 · 포인트 색 (design-ref/petcard 시안) ──
+const RESULT_LOOKS={
+  '활발한 사랑꾼':{mood:'sweet',accent:'#FFB38A'},
+  '집사 바라기':{mood:'lazy',accent:'#C8F169'},
+  '자유로운 영혼':{mood:'boss',accent:'#8FD3FF'},
+  '섬세한 감수성파':{mood:'shy',accent:'#FF8FC5'},
+  '장난꾸러기 탐험가':{mood:'explorer',accent:'#FFD24A'},
+  '모범생 우등생':{mood:'sweet',accent:'#9FE8C9'},
+  '나만의 법칙 보스':{mood:'grumpy',accent:'#C9B8FF'},
+  '유니크한 개성파':{mood:'explorer',accent:'#FF8A7A'},
+};
+const RESULT_LOOK_DEFAULT={mood:'lazy',accent:'#C8F169'};
+const FACE_CAT_HEAD='<path d="M22 44 L18 12 L44 30"/><path d="M98 44 L103 11 L76 30"/><path d="M22 44 C 14 70, 30 98, 60 99 C 92 100, 108 72, 98 44 C 90 28, 32 26, 22 44 Z" fill="#FBF6EC"/>';
+const FACE_CAT={
+  lazy:'<path d="M40 59 L54 59"/><path d="M42 59 C 43 64, 51 64, 52 59"/><path d="M66 59 L80 59"/><path d="M68 59 C 69 64, 77 64, 78 59"/><path d="M57 70 L60 74 L63 70"/><path d="M60 74 C 58 80, 52 80, 50 77"/><path d="M60 74 C 62 80, 68 80, 70 77"/><path d="M34 72 L12 68"/><path d="M34 77 L13 80"/><path d="M86 72 L108 68"/><path d="M86 77 L107 80"/>',
+  explorer:'<circle cx="46" cy="58" r="7" fill="#1C1B18"/><circle cx="74" cy="58" r="7" fill="#1C1B18"/><circle cx="48.5" cy="55.5" r="2.4" fill="#FFFFFF" stroke="none"/><circle cx="76.5" cy="55.5" r="2.4" fill="#FFFFFF" stroke="none"/><path d="M57 69 L60 72 L63 69"/><path d="M51 76 C 51 89, 69 89, 69 76 Z" fill="#1C1B18"/><path d="M55 83 C 57 80, 63 80, 65 83" stroke="#FF4FA3" stroke-width="3"/><path d="M34 72 L12 68"/><path d="M34 77 L13 80"/><path d="M86 72 L108 68"/><path d="M86 77 L107 80"/>',
+  shy:'<circle cx="43" cy="60" r="3.8" fill="#1C1B18"/><circle cx="69" cy="60" r="3.8" fill="#1C1B18"/><ellipse cx="38" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"/><ellipse cx="82" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"/><path d="M57 69 L60 73 L63 69"/><path d="M53 80 C 55 77, 57 82, 60 79 C 63 77, 65 82, 67 80"/><path d="M30 76 L12 74"/><path d="M90 76 L108 74"/>',
+  boss:'<path d="M40 58 L54 58"/><path d="M41 58 C 42 65, 53 65, 54 58 Z" fill="#1C1B18"/><path d="M66 58 L80 58"/><path d="M66 58 C 67 65, 78 65, 79 58 Z" fill="#1C1B18"/><path d="M57 70 L60 74 L63 70"/><path d="M56 80 C 60 82, 65 81, 69 76"/><path d="M34 72 L12 68"/><path d="M34 77 L13 80"/><path d="M86 72 L108 68"/><path d="M86 77 L107 80"/>',
+  sweet:'<path d="M41 54 L50 59 L41 64"/><path d="M79 54 L70 59 L79 64"/><ellipse cx="38" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"/><ellipse cx="82" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"/><path d="M57 69 L60 73 L63 69"/><path d="M60 73 C 58 79, 52 79, 50 76"/><path d="M60 73 C 62 79, 68 79, 70 76"/><path d="M34 77 L13 80"/><path d="M86 77 L107 80"/>',
+  grumpy:'<path d="M39 49 L54 55" stroke-width="3.6"/><path d="M81 49 L66 55" stroke-width="3.6"/><ellipse cx="47" cy="61" rx="5.5" ry="2.8" fill="#1C1B18"/><ellipse cx="73" cy="61" rx="5.5" ry="2.8" fill="#1C1B18"/><path d="M57 70 L60 74 L63 70"/><path d="M52 84 C 56 78, 64 78, 68 84"/><path d="M34 72 L12 66"/><path d="M34 77 L13 78"/><path d="M86 72 L108 66"/><path d="M86 77 L107 78"/>',
+};
+// 강아지: 크기별 머리 틀(귀·얼굴형) 위에 표정 층을 얹는다
+const FACE_DOG_HEAD={
+  '소형견':{g:'translate(60 64) scale(1.12 1.0) translate(-60 -62)',head:'<path d="M28 54 C 25 27, 95 27, 92 54 C 97 79, 84 98, 60 98 C 36 98, 23 79, 28 54 Z" fill="#FBF6EC"/><path d="M50 30 C 51 24, 56 23, 58 27 C 59 22, 64 22, 65 27 C 67 23, 71 25, 70 30"/><path d="M37 33 C 27 28, 17 34, 18 43 C 12 47, 13 56, 19 58 C 17 66, 25 70, 31 65 C 36 59, 37 45, 37 33 Z" fill="#F6E1C8"/><path d="M83 33 C 93 28, 103 34, 102 43 C 108 47, 107 56, 101 58 C 103 66, 95 70, 89 65 C 84 59, 83 45, 83 33 Z" fill="#F6E1C8"/>'},
+  '중형견':{g:'',head:'<path d="M30 40 C 30 18, 90 18, 90 40 C 97 62, 90 97, 60 98 C 30 97, 23 62, 30 40 Z" fill="#FBF6EC"/><path d="M70 43 C 84 40, 89 57, 81 64 C 73 67, 65 54, 70 43 Z" fill="#E8D5B0" stroke="none"/><path d="M34 28 C 20 22, 11 38, 15 56 C 17 64, 26 62, 28 52 C 30 44, 31 36, 34 28 Z" fill="#E8D5B0"/><path d="M86 28 C 100 22, 109 38, 105 56 C 103 64, 94 62, 92 52 C 90 44, 89 36, 86 28 Z" fill="#E8D5B0"/>'},
+  '대형견':{g:'translate(60 60) scale(0.96) translate(-60 -58)',head:'<path d="M26 40 C 26 14, 94 14, 94 40 C 101 60, 98 84, 86 95 C 77 104, 43 104, 34 95 C 22 84, 19 60, 26 40 Z" fill="#FBF6EC"/><path d="M40 72 C 36 94, 84 94, 80 72" fill="#FFFFFF" stroke-width="2.4"/><path d="M31 24 C 12 20, 1 50, 5 84 C 7 97, 22 95, 26 78 C 29 62, 28 42, 31 24 Z" fill="#E8C28E"/><path d="M89 24 C 108 20, 119 50, 115 84 C 113 97, 98 95, 94 78 C 91 62, 92 42, 89 24 Z" fill="#E8C28E"/>'},
+};
+const FACE_DOG_NOSE='<path d="M52 70 C 52 65, 68 65, 68 70 C 68 75, 52 75, 52 70 Z" fill="#1C1B18"/><path d="M60 75 L60 79"/>';
+const FACE_DOG={
+  lazy:'<path d="M40 56 L54 56"/><path d="M42 56 C 43 61, 51 61, 52 56"/><path d="M66 56 L80 56"/><path d="M68 56 C 69 61, 77 61, 78 56"/>'+FACE_DOG_NOSE+'<path d="M60 79 C 57 83, 52 83, 50 80"/><path d="M60 79 C 63 83, 68 83, 70 80"/>',
+  explorer:'<circle cx="46" cy="55" r="7" fill="#1C1B18"/><circle cx="74" cy="55" r="7" fill="#1C1B18"/><circle cx="48.5" cy="52.5" r="2.4" fill="#FFFFFF" stroke="none"/><circle cx="76.5" cy="52.5" r="2.4" fill="#FFFFFF" stroke="none"/>'+FACE_DOG_NOSE+'<path d="M46 80 C 50 88, 70 88, 74 80"/><path d="M54 84 C 54 96, 66 96, 66 84" fill="#FF8FC5"/><path d="M60 85 L60 91"/>',
+  shy:'<circle cx="43" cy="57" r="3.8" fill="#1C1B18"/><circle cx="69" cy="57" r="3.8" fill="#1C1B18"/><ellipse cx="38" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"/><ellipse cx="82" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"/>'+FACE_DOG_NOSE+'<path d="M54 83 C 56 80, 58 85, 60 82 C 62 80, 64 85, 66 83"/>',
+  boss:'<path d="M40 55 L54 55"/><path d="M41 55 C 42 62, 53 62, 54 55 Z" fill="#1C1B18"/><path d="M66 55 L80 55"/><path d="M66 55 C 67 62, 78 62, 79 55 Z" fill="#1C1B18"/>'+FACE_DOG_NOSE+'<path d="M60 79 C 63 82, 68 82, 71 77"/>',
+  sweet:'<path d="M41 51 L50 56 L41 61"/><path d="M79 51 L70 56 L79 61"/><ellipse cx="38" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"/><ellipse cx="82" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"/>'+FACE_DOG_NOSE+'<path d="M60 79 C 57 83, 52 83, 50 80"/><path d="M60 79 C 63 83, 68 83, 70 80"/><path d="M62 81 C 62 89, 70 89, 70 81" fill="#FF8FC5"/>',
+  grumpy:'<path d="M39 46 L54 52" stroke-width="3.6"/><path d="M81 46 L66 52" stroke-width="3.6"/><ellipse cx="47" cy="58" rx="5.5" ry="2.8" fill="#1C1B18"/><ellipse cx="73" cy="58" rx="5.5" ry="2.8" fill="#1C1B18"/>'+FACE_DOG_NOSE+'<path d="M51 86 C 55 80, 65 80, 69 86"/>',
+};
+function resultFaceHTML(mood){
+  let inner='';
+  if(petType==='cat') inner=FACE_CAT_HEAD+(FACE_CAT[mood]||FACE_CAT.lazy);
+  else if(petType==='dog'){
+    const h=FACE_DOG_HEAD[dogSize]||FACE_DOG_HEAD['중형견'];
+    inner=h.head+`<g${h.g?` transform="${h.g}"`:''}>${FACE_DOG[mood]||FACE_DOG.lazy}</g>`;
+  }
+  else return `<span class="r-face-emoji">${petIcons[petType]||'🐾'}</span>`;
+  return `<svg viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="성향 얼굴">${inner}</svg>`;
+}
+
 function showResult(){
   const r=calcPersonality();
   window.__currentResult=r;
   window.__currentPetName=petName;
   trackEvent('complete',{petType,resultType:r.type});
   document.getElementById('resultWrap').classList.add('show');
-  document.getElementById('rIcon').textContent=petIcons[petType]||'🐾';
-  document.getElementById('rBadge').textContent=r.type;
-  document.getElementById('rName').textContent=`${nm(petName)}의 성격 분석 결과`;
+  const look=RESULT_LOOKS[cleanType(r.type)]||RESULT_LOOK_DEFAULT;
+  document.getElementById('resultWrap').style.setProperty('--accent',look.accent);
+  document.getElementById('rFace').innerHTML=resultFaceHTML(look.mood);
+  document.getElementById('rBadge').textContent=cleanType(r.type);
+  document.getElementById('rName').textContent=`우리 ${nm(petName)}는…`;
   document.getElementById('rDesc').textContent=r.desc;
+  document.getElementById('rTags').innerHTML=r.traits.slice().sort((a,b)=>b.val-a.val).slice(0,3)
+    .map(t=>`<span class="r-tag">#${escapeHTML(cleanType(t.label))} ${t.val}</span>`).join('');
   document.getElementById('summaryText').innerHTML=r.summary;
   document.getElementById('traitList').innerHTML=r.traits.map(t=>`
     <div class="trait-item">
