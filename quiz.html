@@ -38,7 +38,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Noto+Sans+KR:wght@300;400;500;600&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <!-- 카카오 JS SDK (피드 공유) + html2canvas (결과 이미지 저장) -->
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" crossorigin="anonymous"></script>
@@ -50,37 +50,42 @@
 </script>
 <style>
 :root{
-  /* 손그림 카드 테마 (design-ref/petcard) */
-  --ink:#1C1B18;--cream:#FBF6EC;--lime:#C8F169;--hot:#FF4FA3;--pink-lt:#FFD6EA;--mint:#9FE8C9;
+  /* 통일 규칙 (design-ref/petcard/UNIFY.md): Pretendard 하나, 굵기 800/700/500, 크기 28/17/15/13 */
+  --ink:#1C1B18;--cream:#FBF6EC;--lime:#C8F169;--hot:#FF4FA3;
   --bg:var(--cream);--surface:var(--cream);--card:#FFFFFF;
   --border:var(--ink);
-  --orange:#C2286E;--orange-lt:#C2286E;--orange-dim:var(--lime);
-  --teal:var(--mint);--teal-dim:var(--mint);
-  --purple:#C9B8FF;--purple-dim:#C9B8FF;
+  --orange:var(--ink);--orange-lt:var(--ink);--orange-dim:var(--lime);
+  --teal:var(--lime);--teal-dim:var(--lime);
+  --purple:var(--lime);--purple-dim:var(--lime);
   --text:var(--ink);--text2:#3A372F;--text3:#6B675C;
   --success:var(--ink);--danger:#B3261E;
   --r:18px;--touch:48px;
-  --hand:'Gaegu',cursive;
+  --fs-title:28px;--fs-sub:17px;--fs-body:15px;--fs-aux:13px;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-body{background:var(--bg);color:var(--text);font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;font-size:14px;min-height:100vh;}
+body{background:var(--bg);color:var(--text);font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;font-size:var(--fs-body);font-weight:500;min-height:100vh;}
 :focus-visible{outline:3px solid var(--hot);outline-offset:2px;}
+
+/* ── 아이콘 · 얼굴 ── */
+.ic{width:20px;height:20px;flex-shrink:0;display:block;}
+.face{display:block;width:100%;height:100%;}
 
 /* ── 진행바 ── */
 .prog-bar{background:var(--cream);border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:40;padding:12px 18px;display:flex;align-items:center;gap:12px;}
 .prog-track{flex:1;height:14px;background:#fff;border:2px solid var(--ink);border-radius:50px;overflow:hidden;}
 .prog-fill{height:100%;background:var(--lime);box-shadow:inset -2px 0 0 var(--ink);border-radius:50px;transition:width 0.4s ease;}
-.prog-label{font-family:var(--hand);font-size:17px;font-weight:700;color:var(--ink);white-space:nowrap;line-height:1;}
+.prog-label{font-size:var(--fs-aux);font-weight:700;color:var(--ink);white-space:nowrap;line-height:1;}
 
 /* ── 섹션 전환 배너 ── */
 .sec-banner{display:none;position:fixed;inset:0;background:var(--cream);z-index:80;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center;}
 .sec-banner.show{display:flex;animation:fadeUp 0.3s ease;}
-.sec-banner-icon{width:120px;height:106px;display:flex;align-items:center;justify-content:center;font-size:3rem;margin-bottom:18px;background:var(--lime);border:2.5px solid var(--ink);border-radius:48% 52% 46% 54%;transform:rotate(-3deg);}
-.sec-banner-tag{display:inline-block;padding:0 14px;border-radius:999px;font-family:var(--hand);font-size:18px;font-weight:700;margin-bottom:12px;border:2px solid var(--ink);background:#fff;transform:rotate(2deg);}
-.sec-banner-title{font-size:1.75rem;font-weight:800;color:var(--ink);margin-bottom:8px;letter-spacing:-0.03em;}
-.sec-banner-desc{font-size:0.92rem;color:var(--text2);line-height:1.7;font-weight:500;max-width:280px;margin-bottom:22px;word-break:keep-all;}
-.sec-banner-qcount{font-size:0.8rem;font-weight:600;color:var(--text3);margin-bottom:20px;}
-.sec-banner-btn{min-height:52px;padding:14px 40px;border:2px solid var(--ink);border-radius:16px;background:var(--ink);color:var(--cream);font-family:inherit;font-size:0.95rem;font-weight:700;cursor:pointer;}
+.sec-banner-icon{width:120px;height:106px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;background:var(--lime);border:2.5px solid var(--ink);border-radius:48% 52% 46% 54%;}
+.sec-banner-icon .face{width:92px;height:84px;}
+.sec-banner-tag{display:inline-block;padding:4px 14px;border-radius:999px;font-size:var(--fs-aux);font-weight:700;margin-bottom:12px;border:2px solid var(--ink);background:#fff;}
+.sec-banner-title{font-size:var(--fs-title);font-weight:800;color:var(--ink);margin-bottom:8px;letter-spacing:-0.03em;}
+.sec-banner-desc{font-size:var(--fs-body);color:var(--text2);line-height:1.6;font-weight:500;max-width:280px;margin-bottom:22px;word-break:keep-all;}
+.sec-banner-qcount{font-size:var(--fs-aux);font-weight:500;color:var(--text3);margin-bottom:20px;}
+.sec-banner-btn{min-height:52px;padding:14px 40px;border:2px solid var(--ink);border-radius:16px;background:var(--ink);color:var(--cream);font-family:inherit;font-size:var(--fs-body);font-weight:700;cursor:pointer;}
 .sec-banner-btn:active{transform:translateY(1px);}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
@@ -93,186 +98,180 @@ body{background:var(--bg);color:var(--text);font-family:'Pretendard',-apple-syst
 .screen.active{display:block;animation:slideUp 0.22s cubic-bezier(0.4,0,0.2,1);}
 @keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-.s-label{font-family:var(--hand);font-size:19px;font-weight:700;color:var(--ink);margin-bottom:4px;line-height:1.2;}
-.s-title{font-size:1.5rem;font-weight:800;color:var(--ink);margin-bottom:18px;line-height:1.3;letter-spacing:-0.03em;word-break:keep-all;}
-.s-title::after{content:'';display:block;width:120px;height:12px;margin-top:4px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='12' viewBox='0 0 120 12' fill='none'%3E%3Cpath d='M3 8 C 25 3, 45 10, 68 5 C 85 2, 100 9, 117 4' stroke='%23FF4FA3' stroke-width='4.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat left center/contain;}
-.s-title .sub{display:block;font-size:0.8rem;color:var(--text2);font-weight:500;margin-top:4px;}
+.s-label{font-size:var(--fs-aux);font-weight:700;color:var(--text3);margin-bottom:6px;line-height:1.3;}
+.s-title{font-size:var(--fs-title);font-weight:800;color:var(--ink);margin-bottom:20px;line-height:1.3;letter-spacing:-0.03em;word-break:keep-all;}
+.s-title .sub{display:block;font-size:var(--fs-aux);color:var(--text2);font-weight:500;margin-top:4px;}
+.field-label{font-size:var(--fs-body);font-weight:700;color:var(--ink);margin-bottom:8px;}
 
 /* ── 선택지 ── */
 .opts{display:grid;grid-template-columns:1fr;gap:10px;}
 .opts.col1{grid-template-columns:1fr;}
-.opt{padding:12px 14px;min-height:56px;border:2px solid var(--ink);border-radius:18px 22px 17px 21px;cursor:pointer;font-family:inherit;font-size:0.98rem;font-weight:600;color:var(--ink);background:#fff;transition:background 0.15s ease,transform 0.12s ease,scale 0.08s ease;text-align:center;display:flex;align-items:center;justify-content:center;line-height:1.3;-webkit-user-select:none;user-select:none;}
-.opt:nth-child(even){border-radius:21px 17px 22px 18px;}
+.opt{padding:12px 14px;min-height:56px;border:2px solid var(--ink);border-radius:18px;cursor:pointer;font-family:inherit;font-size:var(--fs-body);font-weight:500;color:var(--ink);background:#fff;transition:background 0.15s ease,scale 0.08s ease;text-align:center;display:flex;align-items:center;justify-content:center;line-height:1.3;-webkit-user-select:none;user-select:none;}
 .opt:active{scale:0.97;}
-.opt.sel{background:var(--lime);font-weight:800;transform:rotate(-1deg);}
+.opt.sel{background:var(--lime);font-weight:700;}
 .opt.full{grid-column:1/-1;}
 
 /* ── 펫 선택 ── */
-.pet-types{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;padding:4px 2px;}
-.pet-btn{padding:16px 10px 14px;border:2.5px solid var(--ink);border-radius:24px 30px 22px 28px;cursor:pointer;font-family:inherit;text-align:center;background:#fff;transform:rotate(-2deg);transition:background 0.15s ease,transform 0.15s ease,scale 0.08s ease;-webkit-user-select:none;user-select:none;}
-.pet-btn:nth-child(2){border-radius:30px 24px 28px 22px;transform:rotate(1.5deg);}
-.pet-btn:nth-child(3){border-radius:28px 22px 30px 24px;transform:rotate(1deg);}
-.pet-btn:nth-child(4){border-radius:22px 28px 24px 30px;transform:rotate(-1.5deg);}
+.pet-types{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px;}
+.pet-btn{padding:16px 10px 14px;border:2.5px solid var(--ink);border-radius:24px;cursor:pointer;font-family:inherit;text-align:center;background:#fff;transition:background 0.15s ease,scale 0.08s ease;-webkit-user-select:none;user-select:none;}
 .pet-btn:active{scale:0.96;}
 .pet-btn.sel{background:var(--lime);}
-.pet-icon{width:68px;height:60px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:2.1rem;background:var(--cream);border:2px solid var(--ink);border-radius:48% 52% 46% 54%;}
-.pet-name{font-size:1rem;font-weight:800;color:var(--ink);}
-.pet-desc{font-family:var(--hand);font-size:16px;font-weight:700;color:var(--text3);margin-top:1px;}
+.pet-icon{width:84px;height:74px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;background:var(--cream);border:2px solid var(--ink);border-radius:48% 52% 46% 54%;}
+.pet-icon .face{width:66px;height:60px;}
+.pet-name{font-size:var(--fs-sub);font-weight:700;color:var(--ink);}
+.pet-desc{font-size:var(--fs-aux);font-weight:500;color:var(--text3);margin-top:2px;}
 .pet-btn.sel .pet-desc{color:var(--ink);}
 
 /* ── 나이·성별 칩 ── */
-.chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
-.chip{padding:9px 14px;min-height:42px;display:inline-flex;align-items:center;border:2px solid var(--ink);border-radius:999px;cursor:pointer;font-family:inherit;font-size:0.9rem;font-weight:600;color:var(--ink);background:#fff;transition:background 0.15s ease,transform 0.15s ease,scale 0.08s ease;-webkit-user-select:none;user-select:none;}
-.chip:active{scale:0.94;}
-.chip.sel{background:var(--lime);font-weight:800;transform:rotate(-2deg);}
+.chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+.chip{padding:9px 16px;min-height:44px;display:inline-flex;align-items:center;border:2px solid var(--ink);border-radius:999px;cursor:pointer;font-family:inherit;font-size:var(--fs-body);font-weight:500;color:var(--ink);background:#fff;transition:background 0.15s ease,scale 0.08s ease;-webkit-user-select:none;user-select:none;}
+.chip:active{scale:0.95;}
+.chip.sel{background:var(--lime);font-weight:700;}
 
 /* 이름 입력 */
-input[type=text]{width:100%;min-height:50px;padding:12px 14px;border:2px solid var(--ink);border-radius:14px 17px 13px 16px;font-family:inherit;font-size:16px;font-weight:600;color:var(--ink);background:#fff;outline:none;transition:box-shadow 0.15s;}
+input[type=text]{width:100%;min-height:50px;padding:12px 14px;border:2px solid var(--ink);border-radius:14px;font-family:inherit;font-size:16px;font-weight:500;color:var(--ink);background:#fff;outline:none;transition:box-shadow 0.15s;}
 input[type=text]:focus{box-shadow:0 0 0 4px var(--lime);}
 input::placeholder{color:#8A867B;font-weight:500;}
 
 /* ── nav ── */
 .nav{position:fixed;bottom:0;left:0;right:0;display:flex;flex-direction:column;gap:8px;padding:12px 20px;padding-bottom:calc(12px + env(safe-area-inset-bottom));background:rgba(251,246,236,0.96);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:2px solid var(--ink);z-index:50;transition:opacity 0.12s ease,transform 0.12s ease;}
 body.nav-switching .nav,.sec-banner.show + .tablet-layout .nav{opacity:0;pointer-events:none;transform:translateY(8px);}
-.err{display:none;color:var(--danger);font-size:0.84rem;font-weight:600;padding:8px 12px;background:#FFE7E3;border:2px solid var(--danger);border-radius:12px;}
+.err{display:none;color:var(--danger);font-size:var(--fs-aux);font-weight:700;padding:8px 12px;background:#fff;border:2px solid var(--danger);border-radius:12px;}
 .err.show{display:block;}
 .nav-btns{display:flex;gap:10px;}
-.btn-back{flex:1;min-height:52px;padding:13px;border:2px solid var(--ink);border-radius:16px;background:#fff;font-family:inherit;font-size:0.92rem;font-weight:700;color:var(--ink);cursor:pointer;}
-.btn-next{flex:2;min-height:52px;padding:13px;border:2px solid var(--ink);border-radius:16px;background:var(--ink);color:var(--cream);font-family:inherit;font-size:0.95rem;font-weight:700;cursor:pointer;}
+.btn-back{flex:1;min-height:52px;padding:13px;border:2px solid var(--ink);border-radius:16px;background:#fff;font-family:inherit;font-size:var(--fs-body);font-weight:700;color:var(--ink);cursor:pointer;}
+.btn-next{flex:2;min-height:52px;padding:13px;border:2px solid var(--ink);border-radius:16px;background:var(--ink);color:var(--cream);font-family:inherit;font-size:var(--fs-body);font-weight:700;cursor:pointer;}
 .btn-next.final{background:var(--lime);color:var(--ink);}
 .btn-back:active,.btn-next:active{transform:translateY(1px);}
 
 /* ── 로딩 ── */
 .loading-wrap{display:none;position:fixed;inset:0;background:var(--cream);z-index:100;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;}
 .loading-wrap.show{display:flex;}
-.l-icon{width:120px;height:106px;display:flex;align-items:center;justify-content:center;font-size:3rem;margin-bottom:20px;background:var(--lime);border:2.5px solid var(--ink);border-radius:48% 52% 46% 54%;animation:bounce 0.9s ease-in-out infinite;}
-@keyframes bounce{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
-.l-title{font-size:1.5rem;font-weight:800;letter-spacing:-0.03em;text-align:center;margin-bottom:4px;}
-.l-sub{font-family:var(--hand);font-size:19px;font-weight:700;color:var(--text2);text-align:center;margin-bottom:24px;}
+.l-icon{width:120px;height:106px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;background:var(--lime);border:2.5px solid var(--ink);border-radius:48% 52% 46% 54%;animation:bounce 0.9s ease-in-out infinite;}
+.l-icon .face{width:92px;height:84px;}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.l-title{font-size:var(--fs-title);font-weight:800;letter-spacing:-0.03em;text-align:center;margin-bottom:6px;}
+.l-sub{font-size:var(--fs-body);font-weight:500;color:var(--text2);text-align:center;margin-bottom:24px;}
 .l-steps{width:100%;max-width:300px;display:flex;flex-direction:column;gap:10px;}
-.lstep{display:flex;align-items:center;gap:10px;padding:11px 14px;background:#fff;border:2px solid var(--ink);border-radius:14px 17px 13px 16px;opacity:0.35;transition:all 0.3s;}
-.lstep.active{opacity:1;background:var(--lime);transform:rotate(-1deg);}
+.lstep{display:flex;align-items:center;gap:10px;padding:11px 14px;background:#fff;border:2px solid var(--ink);border-radius:14px;opacity:0.35;transition:all 0.3s;}
+.lstep.active{opacity:1;background:var(--lime);}
 .lstep.done{opacity:0.75;}
 .ldot{width:12px;height:12px;border-radius:50%;border:2px solid var(--ink);background:#fff;flex-shrink:0;transition:all 0.3s;}
 .lstep.active .ldot{background:var(--ink);animation:dp 0.8s ease-in-out infinite;}
 .lstep.done .ldot{background:var(--ink);}
 @keyframes dp{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
-.ltext{font-size:0.9rem;font-weight:600;color:var(--ink);}
+.ltext{font-size:var(--fs-body);font-weight:500;color:var(--ink);}
+.lstep.active .ltext{font-weight:700;}
 .lprog-bg{margin-top:22px;width:100%;max-width:300px;height:14px;background:#fff;border:2px solid var(--ink);border-radius:50px;overflow:hidden;}
 .lprog-fill{height:100%;background:var(--lime);box-shadow:inset -2px 0 0 var(--ink);border-radius:50px;transition:width 0.4s ease;width:0%;}
 
-/* ── 결과 (손그림 카드 스타일 · design-ref/petcard) ── */
+/* ── 결과 ── */
 .result-wrap{
   display:none;
-  --ink:#1C1B18;--cream:#FBF6EC;--accent:#C8F169;--hot:#FF4FA3;--pink-lt:#FFD6EA;
-  --text:#1C1B18;--text2:#2D2B25;--text3:#55524A;--border:#1C1B18;--orange:#C2286E;--teal:#1C1B18;
+  --accent:var(--lime);
+  --text:#1C1B18;--text2:#2D2B25;--text3:#55524A;
   background:var(--cream);color:var(--ink);min-height:100vh;
-  font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
 }
 .result-wrap.show{display:block;}
 body:has(.result-wrap.show){background:#FBF6EC;}
 .r-inner{max-width:480px;margin:0 auto;padding-bottom:28px;}
-.result-wrap button:focus-visible,.result-wrap a:focus-visible{outline:3px solid var(--hot);outline-offset:2px;}
 
 .r-top{display:flex;align-items:center;justify-content:space-between;padding:18px 20px 6px;}
-.r-top-title{font-size:13px;font-weight:700;}
-.r-sticker{font-family:'Gaegu',cursive;font-size:18px;font-weight:700;background:var(--accent);padding:0 10px;border-radius:999px;transform:rotate(-3deg);}
+.r-top-title{font-size:var(--fs-aux);font-weight:700;}
+.r-sticker{font-size:var(--fs-aux);font-weight:700;background:var(--accent);border:2px solid var(--ink);padding:3px 12px;border-radius:999px;}
 
-.r-hero{position:relative;margin:10px 20px 0;background:var(--accent);border:2.5px solid var(--ink);border-radius:28px 34px 26px 32px;padding:22px 20px 20px;overflow:hidden;}
+.r-hero{position:relative;margin:10px 20px 0;background:var(--accent);border:2.5px solid var(--ink);border-radius:28px;padding:22px 20px 20px;overflow:hidden;}
 .r-spark{position:absolute;}
 .r-spark.s1{right:18px;top:16px;}
 .r-spark.s2{right:60px;top:58px;}
-.r-name{font-family:'Gaegu',cursive;font-size:22px;font-weight:700;padding-right:70px;line-height:1.3;}
+.r-name{font-size:var(--fs-sub);font-weight:700;padding-right:70px;line-height:1.3;}
 .r-face-frame{width:170px;height:150px;margin:6px auto 4px;border-radius:48% 52% 46% 54%;background:var(--cream);border:2.5px solid var(--ink);display:flex;align-items:center;justify-content:center;transform:rotate(-2deg);}
-.r-face-frame svg{width:120px;height:110px;display:block;}
-.r-face-emoji{font-size:72px;line-height:1;}
-.r-type{text-align:center;margin-top:10px;font-size:30px;font-weight:800;letter-spacing:-0.03em;line-height:1.2;word-break:keep-all;}
+.r-face-frame .face{width:126px;height:116px;}
+.r-type{text-align:center;margin-top:10px;font-size:var(--fs-title);font-weight:800;letter-spacing:-0.03em;line-height:1.2;word-break:keep-all;}
 .r-scribble{display:block;margin:2px auto 0;max-width:100%;}
-.r-desc{text-align:center;font-size:14px;font-weight:600;margin-top:8px;color:var(--text2);line-height:1.6;word-break:keep-all;}
+.r-desc{text-align:center;font-size:var(--fs-body);font-weight:500;margin-top:8px;color:var(--text2);line-height:1.6;word-break:keep-all;}
 
 .r-tags{display:flex;flex-wrap:wrap;gap:8px;padding:16px 20px 0;justify-content:center;}
-.r-tag{font-size:13px;font-weight:700;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:6px 12px;transform:rotate(-2deg);}
-.r-tag:nth-child(2){background:var(--pink-lt);transform:rotate(1.5deg);}
-.r-tag:nth-child(3){transform:rotate(-1deg);}
+.r-tag{font-size:var(--fs-aux);font-weight:700;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:6px 12px;}
 .r-quick-share{padding:16px 20px 0;}
 
 .r-body{padding:18px 20px 0;display:flex;flex-direction:column;gap:12px;}
-.r-card{background:#fff;border:2px solid var(--ink);border-radius:20px 24px 18px 22px;padding:16px;}
-.r-card:nth-child(even){border-radius:22px 18px 24px 20px;}
-.r-card.pink{background:var(--pink-lt);}
-.r-card-title{font-family:'Gaegu',cursive;font-size:21px;font-weight:700;line-height:1.1;margin-bottom:12px;}
+.r-card{background:#fff;border:2px solid var(--ink);border-radius:20px;padding:16px;}
+.r-card-title{font-size:var(--fs-sub);font-weight:700;line-height:1.2;margin-bottom:12px;}
 
 /* 특성 점수 */
-.trait-list{display:flex;flex-direction:column;gap:9px;}
+.trait-list{display:flex;flex-direction:column;gap:10px;}
 .trait-item{display:flex;align-items:center;gap:10px;}
-.trait-label{font-size:13px;font-weight:600;width:74px;flex-shrink:0;}
+.trait-label{display:flex;align-items:center;gap:6px;font-size:var(--fs-aux);font-weight:700;width:84px;flex-shrink:0;}
 .trait-bar-bg{flex:1;height:12px;background:var(--cream);border:2px solid var(--ink);border-radius:50px;overflow:hidden;}
 .trait-bar-fill{height:100%;background:var(--accent);box-shadow:inset -2px 0 0 var(--ink);transition:width 1s ease;}
-.trait-num{font-size:13px;font-weight:800;width:28px;text-align:right;flex-shrink:0;}
+.trait-num{font-size:var(--fs-aux);font-weight:800;width:28px;text-align:right;flex-shrink:0;}
 
 /* 종합 분석 */
-.r-summary{font-size:14.5px;line-height:1.8;color:var(--text2);}
-.r-summary strong{font-weight:800;color:var(--ink);background:linear-gradient(transparent 62%,var(--accent) 62%);}
+.r-summary{font-size:var(--fs-body);font-weight:500;line-height:1.8;color:var(--text2);}
+.r-summary strong{font-weight:700;color:var(--ink);background:linear-gradient(transparent 62%,var(--accent) 62%);}
+.r-summary a{color:var(--ink)!important;font-weight:700!important;text-decoration:underline!important;text-underline-offset:3px;}
 
 /* 케어 팁 */
 .tip-list{display:flex;flex-direction:column;gap:8px;}
-.tip-item{display:flex;gap:10px;padding:11px 13px;background:#fff;border:2px solid var(--ink);border-radius:14px 16px 13px 15px;}
-.tip-icon{font-size:1rem;flex-shrink:0;margin-top:1px;}
-.tip-text{font-size:13.5px;color:var(--text2);line-height:1.7;}
-.tip-text strong{color:var(--ink);font-weight:800;}
+.tip-item{padding:11px 13px;background:#fff;border:2px solid var(--ink);border-radius:14px;}
+.tip-text{font-size:var(--fs-aux);font-weight:500;color:var(--text2);line-height:1.7;}
+.tip-text strong{color:var(--ink);font-weight:700;}
 
 /* 추천 용품 - 쿠팡 파트너스 */
-.prod-section-title{font-size:12.5px;color:var(--text3);margin-bottom:10px;line-height:1.6;}
+.prod-section-title{font-size:var(--fs-aux);font-weight:500;color:var(--text3);margin-bottom:10px;line-height:1.6;}
 .prod-list{display:flex;flex-direction:column;gap:10px;}
-.prod-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--cream);border:2px solid var(--ink);border-radius:16px 14px 17px 15px;cursor:pointer;text-decoration:none;color:var(--ink);}
-.prod-item:active{transform:scale(0.99);}
+.prod-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--cream);border:2px solid var(--ink);border-radius:16px;cursor:pointer;text-decoration:none;color:var(--ink);}
+.prod-item:active{scale:0.99;}
 .prod-item.highlight{background:var(--accent);}
-.prod-img{width:52px;height:52px;border-radius:12px;background:#fff;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0;}
+.prod-img{position:relative;width:56px;height:56px;border-radius:12px;background:#fff;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:4px;}
+.prod-img .ic{width:26px;height:26px;color:var(--text3);}
+.prod-img img{position:absolute;inset:4px;width:calc(100% - 8px);height:calc(100% - 8px);object-fit:contain;background:#fff;display:block;}
 .prod-info{flex:1;min-width:0;}
-.prod-name{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:3px;line-height:1.3;}
-.prod-why{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:3px;}
-.prod-tag{font-size:11.5px;color:var(--text3);}
-.prod-cta{background:var(--ink);color:var(--cream);border-radius:10px;padding:6px 10px;font-size:12px;font-weight:700;flex-shrink:0;white-space:nowrap;text-align:center;line-height:1.35;}
-.coupang-notice{font-size:11px;color:var(--text3);text-align:center;margin-top:10px;line-height:1.6;}
+.prod-name{font-size:var(--fs-body);font-weight:700;color:var(--ink);margin-bottom:3px;line-height:1.3;}
+.prod-why{font-size:var(--fs-aux);font-weight:500;color:var(--text2);margin-bottom:2px;}
+.prod-tag{font-size:var(--fs-aux);font-weight:500;color:var(--text3);}
+.prod-cta{display:flex;align-items:center;gap:4px;background:var(--ink);color:var(--cream);border-radius:10px;padding:7px 10px;font-size:var(--fs-aux);font-weight:700;flex-shrink:0;white-space:nowrap;}
+.prod-cta .ic{width:16px;height:16px;}
+.coupang-notice{font-size:var(--fs-aux);font-weight:500;color:var(--text3);text-align:center;margin-top:10px;line-height:1.6;}
 .coupang-notice a{color:var(--ink);}
 
-.result-wrap .disclaimer{margin:16px 20px 0;padding:10px 14px;background:transparent;border:2px dashed var(--ink);border-radius:14px;font-size:12px;color:var(--text3);line-height:1.6;text-align:center;}
+.result-wrap .disclaimer{margin:16px 20px 0;padding:10px 14px;background:transparent;border:2px dashed var(--ink);border-radius:14px;font-size:var(--fs-aux);color:var(--text3);line-height:1.6;text-align:center;}
 
 /* 공유 · 다시 하기 */
 .share-area{padding:22px 20px 0;display:flex;flex-direction:column;gap:10px;}
-.share-btn{width:100%;min-height:52px;padding:12px;background:#fff;color:var(--ink);border:2px solid var(--ink);border-radius:16px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-align:center;}
-.share-btn:active{transform:translateY(1px) scale(0.99);}
+.share-btn{width:100%;min-height:52px;padding:12px;background:#fff;color:var(--ink);border:2px solid var(--ink);border-radius:16px;font-family:inherit;font-size:var(--fs-body);font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-align:center;}
+.share-btn:active{transform:translateY(1px);}
 .share-btn.save-img{background:var(--ink);color:var(--cream);min-height:54px;}
 .share-btn.kakao-result{background:#FEE500;}
 .share-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.share-grid .share-btn{font-size:13.5px;padding:10px 8px;gap:6px;min-height:48px;}
-.restart-btn{width:100%;min-height:44px;background:none;border:none;color:var(--text3);font-family:inherit;font-size:13.5px;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;}
-.dev-link{display:block;text-align:center;padding:12px 8px;margin-top:4px;font-size:12.5px;color:var(--text3);text-decoration:none;}
+.share-grid .share-btn{padding:10px 8px;gap:6px;min-height:48px;}
+.restart-btn{width:100%;min-height:44px;background:none;border:none;color:var(--text3);font-family:inherit;font-size:var(--fs-aux);font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;}
+.restart-btn span{text-decoration:underline;text-underline-offset:3px;}
+.restart-btn .ic{width:18px;height:18px;}
+.dev-link{display:block;text-align:center;padding:12px 8px;margin-top:4px;font-size:var(--fs-aux);font-weight:500;color:var(--text3);text-decoration:none;}
 .dev-link:hover,.dev-link:active{color:var(--ink);}
-.result-wrap .privacy-link{color:var(--text3);font-size:11.5px;}
-.privacy-link{display:block;text-align:center;padding:4px 8px 12px;font-size:0.72rem;color:var(--text3);text-decoration:underline;text-underline-offset:2px;}
-.toast{position:fixed;left:50%;bottom:90px;-webkit-transform:translateX(-50%);transform:translateX(-50%);background:var(--ink);color:var(--cream);padding:11px 18px;border-radius:30px;font-size:0.84rem;font-weight:600;z-index:200;border:2px solid var(--ink);opacity:0;transition:opacity 0.2s;pointer-events:none;}
+.privacy-link{display:block;text-align:center;padding:4px 8px 12px;font-size:var(--fs-aux);font-weight:500;color:var(--text3);text-decoration:underline;text-underline-offset:2px;}
+.toast{position:fixed;left:50%;bottom:90px;-webkit-transform:translateX(-50%);transform:translateX(-50%);background:var(--ink);color:var(--cream);padding:11px 18px;border-radius:30px;font-size:var(--fs-aux);font-weight:700;z-index:200;border:2px solid var(--ink);opacity:0;transition:opacity 0.2s;pointer-events:none;}
 .toast.show{opacity:1;}
 .intro-modal{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(28,27,24,0.55);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);}
 .intro-modal.show{display:flex;}
-.intro-box{background:var(--cream);border:2.5px solid var(--ink);border-radius:28px 34px 26px 32px;max-width:380px;width:100%;padding:28px 24px 20px;text-align:center;animation:introPop 0.22s ease;}
+.intro-box{background:var(--cream);border:2.5px solid var(--ink);border-radius:28px;max-width:380px;width:100%;padding:28px 24px 20px;text-align:center;animation:introPop 0.22s ease;}
 @keyframes introPop{from{opacity:0;transform:scale(0.94) translateY(8px);}to{opacity:1;transform:none;}}
-.intro-emoji{width:96px;height:84px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:2.4rem;line-height:1;background:var(--lime);border:2.5px solid var(--ink);border-radius:48% 52% 46% 54%;transform:rotate(-3deg);}
-.intro-title{font-size:1.2rem;font-weight:800;letter-spacing:-0.02em;color:var(--ink);margin-bottom:10px;word-break:keep-all;}
-.intro-desc{font-size:0.88rem;color:var(--text2);line-height:1.7;font-weight:500;margin-bottom:18px;word-break:keep-all;}
-.intro-dev{display:flex;align-items:center;justify-content:center;gap:7px;font-size:0.84rem;font-weight:600;color:var(--text2);padding:11px;background:#fff;border:2px solid var(--ink);border-radius:14px;margin-bottom:12px;text-decoration:none;}
-.intro-dev b{color:var(--ink);font-weight:800;}
-.intro-btn{width:100%;min-height:52px;padding:13px;background:var(--ink);color:var(--cream);border:2px solid var(--ink);border-radius:16px;font-family:inherit;font-size:0.95rem;font-weight:700;cursor:pointer;}
+.intro-emoji{width:96px;height:84px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;background:var(--lime);border:2.5px solid var(--ink);border-radius:48% 52% 46% 54%;}
+.intro-emoji .face{width:74px;height:68px;}
+.intro-title{font-size:var(--fs-sub);font-weight:800;letter-spacing:-0.02em;color:var(--ink);margin-bottom:10px;word-break:keep-all;}
+.intro-desc{font-size:var(--fs-body);color:var(--text2);line-height:1.6;font-weight:500;margin-bottom:18px;word-break:keep-all;}
+.intro-dev{display:flex;align-items:center;justify-content:center;gap:7px;font-size:var(--fs-aux);font-weight:500;color:var(--text2);padding:11px;background:#fff;border:2px solid var(--ink);border-radius:14px;margin-bottom:12px;text-decoration:none;}
+.intro-dev b{color:var(--ink);font-weight:700;}
+.intro-btn{width:100%;min-height:52px;padding:13px;background:var(--ink);color:var(--cream);border:2px solid var(--ink);border-radius:16px;font-family:inherit;font-size:var(--fs-body);font-weight:700;cursor:pointer;}
 .intro-btn:active{transform:translateY(1px);}
-.disclaimer{margin:0 16px 16px;padding:12px 14px;background:transparent;border:2px dashed var(--ink);border-radius:14px;font-size:0.75rem;color:var(--text3);line-height:1.7;text-align:center;}
+.disclaimer{margin:0 16px 16px;padding:12px 14px;background:transparent;border:2px dashed var(--ink);border-radius:14px;font-size:var(--fs-aux);color:var(--text3);line-height:1.7;text-align:center;}
 
 /* ════════════════════════════
    태블릿 (768px ~)
 ════════════════════════════ */
 @media(min-width:768px){
-  body{font-size:15px;}
-
-  /* 진행바 */
   .prog-bar{padding:12px 32px;}
 
   /* 전체 레이아웃 — 2열 */
@@ -299,41 +298,36 @@ body:has(.result-wrap.show){background:#FBF6EC;}
     flex-direction:column;
     gap:20px;
   }
-  .sidebar-title{font-family:var(--hand);font-size:24px;font-weight:700;color:var(--ink);margin-bottom:4px;line-height:1.2;}
-  .sidebar-sub{font-size:0.82rem;font-weight:500;color:var(--text2);line-height:1.6;}
+  .sidebar-title{font-size:var(--fs-sub);font-weight:800;color:var(--ink);margin-bottom:4px;line-height:1.3;}
+  .sidebar-sub{font-size:var(--fs-aux);font-weight:500;color:var(--text2);line-height:1.6;}
+  .sidebar-heading{font-size:var(--fs-aux);font-weight:700;color:var(--text3);margin-bottom:8px;}
   .sidebar-steps{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
-  .sidebar-step{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px 17px 13px 16px;border:2px solid transparent;transition:all 0.15s;}
-  .sidebar-step.active{background:var(--lime);border-color:var(--ink);transform:rotate(-1deg);}
+  .sidebar-step{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;border:2px solid transparent;transition:all 0.15s;}
+  .sidebar-step.active{background:var(--lime);border-color:var(--ink);}
   .sidebar-step.done{opacity:0.55;}
   .sidebar-step-dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--ink);background:#fff;flex-shrink:0;}
   .sidebar-step.active .sidebar-step-dot{background:var(--ink);}
   .sidebar-step.done .sidebar-step-dot{background:var(--ink);}
-  .sidebar-step-label{font-size:0.86rem;font-weight:600;color:var(--text2);}
-  .sidebar-step.active .sidebar-step-label{color:var(--ink);font-weight:800;}
-  .sidebar-pet-info{background:#fff;border:2px solid var(--ink);border-radius:20px 24px 18px 22px;padding:16px 14px;margin-top:auto;transform:rotate(1deg);}
-  .sidebar-pet-icon{width:64px;height:56px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:2rem;background:var(--lime);border:2px solid var(--ink);border-radius:48% 52% 46% 54%;}
-  .sidebar-pet-name{font-size:0.95rem;font-weight:800;color:var(--ink);text-align:center;}
-  .sidebar-pet-meta{font-size:0.76rem;font-weight:500;color:var(--text3);text-align:center;margin-top:2px;}
+  .sidebar-step-label{font-size:var(--fs-aux);font-weight:500;color:var(--text2);}
+  .sidebar-step.active .sidebar-step-label{color:var(--ink);font-weight:700;}
+  .sidebar-pet-info{background:#fff;border:2px solid var(--ink);border-radius:20px;padding:16px 14px;margin-top:auto;}
+  .sidebar-pet-icon{width:72px;height:64px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;background:var(--lime);border:2px solid var(--ink);border-radius:48% 52% 46% 54%;}
+  .sidebar-pet-icon .face{width:56px;height:52px;}
+  .sidebar-pet-name{font-size:var(--fs-body);font-weight:700;color:var(--ink);text-align:center;}
+  .sidebar-pet-meta{font-size:var(--fs-aux);font-weight:500;color:var(--text3);text-align:center;margin-top:2px;}
 
   /* 메인 콘텐츠 */
   .main-content{padding:32px 36px 120px;}
 
   /* 선택지 — 태블릿에서 넓게 */
-  .opts{grid-template-columns:1fr 1fr;gap:8px;}
+  .opts{grid-template-columns:1fr 1fr;gap:10px;}
   .opts.col1{grid-template-columns:1fr;}
-  .opt{padding:13px 14px;font-size:0.95rem;min-height:58px;}
-
-  /* 나이 칩 */
-  .age-chip{padding:10px 16px;font-size:0.9rem;}
-
-  /* 섹션 제목 */
-  .s-title{font-size:1.65rem;margin-bottom:20px;}
+  .opt{min-height:58px;}
 
   /* 펫 타입 */
-  .pet-types{grid-template-columns:1fr 1fr;gap:12px;}
   .pet-btn{padding:20px 14px 16px;}
-  .pet-icon{width:80px;height:70px;font-size:2.5rem;}
-  .pet-name{font-size:1.05rem;}
+  .pet-icon{width:96px;height:84px;}
+  .pet-icon .face{width:76px;height:70px;}
 
   /* nav — 사이드바 옆에 있으므로 위치 조정 */
   .nav{
@@ -341,14 +335,12 @@ body:has(.result-wrap.show){background:#FBF6EC;}
     padding:12px 32px;
     padding-bottom:calc(12px + env(safe-area-inset-bottom));
   }
-
 }
 
 /* ════════════════════════════
    PC (1024px ~)
 ════════════════════════════ */
 @media(min-width:1024px){
-  body{font-size:15px;}
   .prog-bar{padding:14px 40px;}
 
   /* 3단 레이아웃 */
@@ -359,7 +351,6 @@ body:has(.result-wrap.show){background:#FBF6EC;}
 
   /* 왼쪽 사이드바 넓어짐 */
   .sidebar{padding:32px 24px;}
-  .sidebar-title{font-size:1.1rem;}
 
   /* 오른쪽 패널 */
   .right-panel{
@@ -374,23 +365,17 @@ body:has(.result-wrap.show){background:#FBF6EC;}
     flex-direction:column;
     gap:14px;
   }
-  .right-panel-title{font-family:var(--hand);font-size:22px;font-weight:700;color:var(--ink);margin-bottom:2px;}
-  .right-tip{background:#fff;border:2px solid var(--ink);border-radius:20px 24px 18px 22px;padding:14px;transform:rotate(-1deg);}
-  .right-tip:nth-of-type(even){border-radius:22px 18px 24px 20px;transform:rotate(1deg);}
-  #rightTip{background:var(--pink-lt);}
-  .right-tip-icon{font-size:1.4rem;margin-bottom:6px;display:block;}
-  .right-tip-text{font-size:0.82rem;color:var(--text2);line-height:1.7;}
-  .right-tip-text strong{color:var(--ink);font-weight:800;}
-  .right-notice{font-size:0.72rem;color:var(--text3);line-height:1.7;padding:10px 12px;background:transparent;border-radius:12px;border:2px dashed var(--ink);}
+  .right-panel-title{font-size:var(--fs-sub);font-weight:700;color:var(--ink);margin-bottom:2px;}
+  .right-tip{background:#fff;border:2px solid var(--ink);border-radius:20px;padding:14px;}
+  .right-tip-text{font-size:var(--fs-aux);font-weight:500;color:var(--text2);line-height:1.7;}
+  .right-tip-text strong{color:var(--ink);font-weight:700;}
+  .right-notice{font-size:var(--fs-aux);font-weight:500;color:var(--text3);line-height:1.7;padding:10px 12px;background:transparent;border-radius:12px;border:2px dashed var(--ink);}
 
   /* 메인 콘텐츠 */
   .main-content{padding:36px 44px 120px;max-width:600px;}
 
   /* nav */
   .nav{left:300px;right:280px;padding:14px 40px;}
-
-  /* 선택지 더 크게 */
-  .opt{padding:14px 16px;font-size:0.98rem;}
 
   /* 섹션 배너 — PC에서 중앙 팝업 */
   .sec-banner{background:rgba(251,246,236,0.94);backdrop-filter:blur(12px);}
@@ -409,12 +394,12 @@ body:has(.result-wrap.show){background:#FBF6EC;}
 
 <!-- 섹션 전환 배너 -->
 <div class="sec-banner" id="secBanner">
-  <div class="sec-banner-icon" id="bannerIcon">🐾</div>
+  <div class="sec-banner-icon" id="bannerIcon"></div>
   <div class="sec-banner-tag" id="bannerTag"></div>
   <div class="sec-banner-title" id="bannerTitle"></div>
   <div class="sec-banner-desc" id="bannerDesc"></div>
   <div class="sec-banner-qcount" id="bannerCount"></div>
-  <button class="sec-banner-btn" onclick="closeBanner()">시작할게요 →</button>
+  <button class="sec-banner-btn" onclick="closeBanner()">시작할게요</button>
 </div>
 
 <!-- 태블릿·PC용 레이아웃 wrapper -->
@@ -423,39 +408,39 @@ body:has(.result-wrap.show){background:#FBF6EC;}
 <!-- ── 왼쪽 사이드바 (태블릿·PC에서만 표시) ── -->
 <div class="sidebar" id="sidebar">
   <div>
-    <div class="sidebar-title">🐾 우리 아이 성격 분석</div>
+    <div class="sidebar-title">우리 아이 성격 분석</div>
     <div class="sidebar-sub">12가지 질문으로<br>반려동물의 기질을 분석해요</div>
-  </div>
+ </div>
   <div>
-    <div class="sidebar-step-label" style="font-family:var(--hand);font-size:19px;font-weight:700;color:var(--ink);margin-bottom:8px;">진행 섹션</div>
+    <div class="sidebar-heading">진행 섹션</div>
     <div class="sidebar-steps">
       <div class="sidebar-step active" id="ss_0">
         <div class="sidebar-step-dot"></div>
         <span class="sidebar-step-label">기본 정보</span>
-      </div>
+     </div>
       <div class="sidebar-step" id="ss_1">
         <div class="sidebar-step-dot"></div>
-        <span class="sidebar-step-label">⚡ 성격·에너지</span>
-      </div>
+        <span class="sidebar-step-label">성격·에너지</span>
+     </div>
       <div class="sidebar-step" id="ss_2">
         <div class="sidebar-step-dot"></div>
-        <span class="sidebar-step-label">🤝 사회성·관계</span>
-      </div>
+        <span class="sidebar-step-label">사회성·관계</span>
+     </div>
       <div class="sidebar-step" id="ss_3">
         <div class="sidebar-step-dot"></div>
-        <span class="sidebar-step-label">🏠 생활·습관</span>
-      </div>
+        <span class="sidebar-step-label">생활·습관</span>
+     </div>
       <div class="sidebar-step" id="ss_4">
         <div class="sidebar-step-dot"></div>
-        <span class="sidebar-step-label">🔬 건강·특성</span>
-      </div>
-    </div>
-  </div>
+        <span class="sidebar-step-label">건강·특성</span>
+     </div>
+   </div>
+ </div>
   <div class="sidebar-pet-info" id="sidebarPetInfo" style="display:none;">
-    <span class="sidebar-pet-icon" id="sidebarIcon">🐾</span>
+    <span class="sidebar-pet-icon" id="sidebarIcon"></span>
     <div class="sidebar-pet-name" id="sidebarName">—</div>
     <div class="sidebar-pet-meta" id="sidebarMeta">—</div>
-  </div>
+ </div>
 </div>
 
 <!-- ── 메인 콘텐츠 ── -->
@@ -470,287 +455,284 @@ body:has(.result-wrap.show){background:#FBF6EC;}
     <!-- 동물 유형 -->
     <div class="pet-types" id="petTypeOpts">
       <div class="pet-btn" onclick="selPetType(this,'dog')">
-        <span class="pet-icon">🐶</span>
+        <span class="pet-icon" data-face="dog:lazy"></span>
         <div class="pet-name">강아지</div>
         <div class="pet-desc">댕댕이</div>
-      </div>
+     </div>
       <div class="pet-btn" onclick="selPetType(this,'cat')">
-        <span class="pet-icon">🐱</span>
+        <span class="pet-icon" data-face="cat:lazy"></span>
         <div class="pet-name">고양이</div>
         <div class="pet-desc">냥냥이</div>
-      </div>
+     </div>
       <div class="pet-btn" onclick="selPetType(this,'rabbit')">
-        <span class="pet-icon">🐰</span>
+        <span class="pet-icon" data-face="rabbit:lazy"></span>
         <div class="pet-name">토끼</div>
         <div class="pet-desc">폴짝폴짝</div>
-      </div>
+     </div>
       <div class="pet-btn" onclick="selPetType(this,'other')">
-        <span class="pet-icon">🐹</span>
+        <span class="pet-icon" data-face="other:lazy"></span>
         <div class="pet-name">기타</div>
         <div class="pet-desc">직접 입력</div>
-      </div>
-    </div>
+     </div>
+   </div>
     <input type="hidden" id="q_pet_type">
 
     <!-- 강아지 세분화 -->
     <div id="dogSizeWrap" style="display:none;margin-bottom:14px;">
-      <div class="s-label" style="margin-bottom:6px;">크기</div>
+      <div class="field-label">크기</div>
       <div class="chip-row" id="dogSizeChips">
-        <div class="chip" onclick="selChip(this,'dogSize','소형견')">🐩 소형견 (7kg 미만)</div>
-        <div class="chip" onclick="selChip(this,'dogSize','중형견')">🐕 중형견 (7~25kg)</div>
-        <div class="chip" onclick="selChip(this,'dogSize','대형견')">🦮 대형견 (25kg 이상)</div>
-      </div>
+        <div class="chip" onclick="selChip(this,'dogSize','소형견')">소형견 (7kg 미만)</div>
+        <div class="chip" onclick="selChip(this,'dogSize','중형견')">중형견 (7~25kg)</div>
+        <div class="chip" onclick="selChip(this,'dogSize','대형견')">대형견 (25kg 이상)</div>
+     </div>
       <input type="hidden" id="q_dog_size">
-    </div>
+   </div>
 
     <!-- 고양이 세분화 -->
     <div id="catTypeWrap" style="display:none;margin-bottom:14px;">
-      <div class="s-label" style="margin-bottom:6px;">생활 환경</div>
+      <div class="field-label">생활 환경</div>
       <div class="chip-row" id="catTypeChips">
-        <div class="chip" onclick="selChip(this,'catType','완전실내')">🏠 완전 실내</div>
-        <div class="chip" onclick="selChip(this,'catType','실내외겸용')">🌿 실내외 겸용</div>
-        <div class="chip" onclick="selChip(this,'catType','다묘가정')">🐱🐱 다묘 가정</div>
-      </div>
+        <div class="chip" onclick="selChip(this,'catType','완전실내')">완전 실내</div>
+        <div class="chip" onclick="selChip(this,'catType','실내외겸용')">실내외 겸용</div>
+        <div class="chip" onclick="selChip(this,'catType','다묘가정')">다묘 가정</div>
+     </div>
       <input type="hidden" id="q_cat_type">
-    </div>
+   </div>
 
     <!-- 기타 동물 주관식 -->
     <div id="otherAnimalWrap" style="display:none;margin-bottom:14px;">
-      <div class="s-label" style="margin-bottom:6px;">어떤 동물인가요?</div>
+      <div class="field-label">어떤 동물인가요?</div>
       <input type="text" id="q_other_animal" placeholder="예: 햄스터, 앵무새, 고슴도치, 페럿" maxlength="20">
-    </div>
+   </div>
 
     <!-- 이름 -->
     <div style="margin-bottom:14px;">
-      <div class="s-label" style="margin-bottom:6px;">이름</div>
+      <div class="field-label">이름</div>
       <input type="text" id="q_pet_name" placeholder="예: 콩이, 모카, 나비" maxlength="10">
-    </div>
+   </div>
 
     <!-- 나이 -->
     <div style="margin-bottom:14px;">
-      <div class="s-label" style="margin-bottom:6px;">나이</div>
+      <div class="field-label">나이</div>
       <div class="chip-row" id="ageChips">
         <div class="chip" onclick="selChip(this,'age','1세 미만')">1세 미만</div>
         <div class="chip" onclick="selChip(this,'age','1~3세')">1~3세</div>
         <div class="chip" onclick="selChip(this,'age','4~7세')">4~7세</div>
         <div class="chip" onclick="selChip(this,'age','8세 이상')">8세 이상</div>
-      </div>
+     </div>
       <input type="hidden" id="q_age">
-    </div>
+   </div>
 
     <!-- 성별 -->
     <div>
-      <div class="s-label" style="margin-bottom:6px;">성별</div>
+      <div class="field-label">성별</div>
       <div class="chip-row" id="genderChips">
-        <div class="chip" onclick="selChip(this,'gender','남아')">🐾 남아</div>
-        <div class="chip" onclick="selChip(this,'gender','여아')">🌸 여아</div>
-      </div>
+        <div class="chip" onclick="selChip(this,'gender','남아')">남아</div>
+        <div class="chip" onclick="selChip(this,'gender','여아')">여아</div>
+     </div>
       <input type="hidden" id="q_gender">
-    </div>
+   </div>
 
     <!-- 간식 취향 -->
     <div style="margin-top:14px;margin-bottom:14px;">
-      <div class="s-label" style="margin-bottom:6px;">좋아하는 간식</div>
+      <div class="field-label">좋아하는 간식</div>
       <div class="chip-row" id="treatChips">
-        <div class="chip" onclick="selChip(this,'treatPref','고구마')">🍠 고구마</div>
-        <div class="chip" onclick="selChip(this,'treatPref','사과')">🍎 사과</div>
-        <div class="chip" onclick="selChip(this,'treatPref','닭가슴살')">🍗 닭가슴살</div>
-        <div class="chip" onclick="selChip(this,'treatPref','고기 말린거')">🥩 고기 말린거</div>
-      </div>
+        <div class="chip" onclick="selChip(this,'treatPref','고구마')">고구마</div>
+        <div class="chip" onclick="selChip(this,'treatPref','사과')">사과</div>
+        <div class="chip" onclick="selChip(this,'treatPref','닭가슴살')">닭가슴살</div>
+        <div class="chip" onclick="selChip(this,'treatPref','고기 말린거')">고기 말린거</div>
+     </div>
       <input type="hidden" id="q_treat_pref">
-    </div>
+   </div>
 
     <!-- 알러지 -->
     <div>
-      <div class="s-label" style="margin-bottom:6px;">피해야 할 재료·알러지</div>
+      <div class="field-label">피해야 할 재료·알러지</div>
       <input type="text" id="q_allergy" placeholder="예: 닭, 닭가슴살, 곡물 (없으면 비워두기)" maxlength="30">
-    </div>
-  </div>
+   </div>
+ </div>
 
   <!-- ══ 섹션 1: 성격·에너지 ══ -->
   <div class="screen" id="s1">
     <div class="s-label">성격·에너지 · 1 / 3</div>
     <div class="s-title" id="q1t">평소 에너지 레벨이 어때요?</div>
     <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q1','넘쳐흘러요')">⚡ 넘쳐흘러요</div>
-      <div class="opt" onclick="selOpt(this,'q1','활발한 편')">🏃 활발해요</div>
-      <div class="opt" onclick="selOpt(this,'q1','보통이에요')">😊 보통이에요</div>
-      <div class="opt" onclick="selOpt(this,'q1','조용해요')">😴 조용해요</div>
-    </div>
+      <div class="opt" onclick="selOpt(this,'q1','넘쳐흘러요')">넘쳐흘러요</div>
+      <div class="opt" onclick="selOpt(this,'q1','활발한 편')">활발해요</div>
+      <div class="opt" onclick="selOpt(this,'q1','보통이에요')">보통이에요</div>
+      <div class="opt" onclick="selOpt(this,'q1','조용해요')">조용해요</div>
+   </div>
     <input type="hidden" id="q1">
-  </div>
+ </div>
 
   <div class="screen" id="s2">
     <div class="s-label">성격·에너지 · 2 / 3</div>
     <div class="s-title" id="q2t">고집이 있는 편인가요?</div>
     <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q2','매우 고집 있어요')">👑 내 마음대로</div>
-      <div class="opt" onclick="selOpt(this,'q2','조금 고집 있어요')">😏 가끔 고집</div>
-      <div class="opt" onclick="selOpt(this,'q2','순한 편이에요')">😇 순해요</div>
-      <div class="opt" onclick="selOpt(this,'q2','매우 순해요')">🕊️ 매우 순해요</div>
-    </div>
+      <div class="opt" onclick="selOpt(this,'q2','매우 고집 있어요')">내 마음대로</div>
+      <div class="opt" onclick="selOpt(this,'q2','조금 고집 있어요')">가끔 고집</div>
+      <div class="opt" onclick="selOpt(this,'q2','순한 편이에요')">순해요</div>
+      <div class="opt" onclick="selOpt(this,'q2','매우 순해요')">매우 순해요</div>
+   </div>
     <input type="hidden" id="q2">
-  </div>
+ </div>
 
   <div class="screen" id="s3">
     <div class="s-label">성격·에너지 · 3 / 3</div>
     <div class="s-title" id="q3t">호기심이 많은 편인가요?</div>
     <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q3','탐험가 타입')">🔍 탐험가예요</div>
-      <div class="opt" onclick="selOpt(this,'q3','관심 있는 것만')">👀 선택적으로</div>
-      <div class="opt" onclick="selOpt(this,'q3','별로 없어요')">😑 별로 없어요</div>
-      <div class="opt" onclick="selOpt(this,'q3','겁이 많아요')">😨 겁쟁이예요</div>
-    </div>
+      <div class="opt" onclick="selOpt(this,'q3','탐험가 타입')">탐험가예요</div>
+      <div class="opt" onclick="selOpt(this,'q3','관심 있는 것만')">선택적으로</div>
+      <div class="opt" onclick="selOpt(this,'q3','별로 없어요')">별로 없어요</div>
+      <div class="opt" onclick="selOpt(this,'q3','겁이 많아요')">겁쟁이예요</div>
+   </div>
     <input type="hidden" id="q3">
-  </div>
+ </div>
 
   <!-- ══ 섹션 2: 사회성·관계 ══ -->
   <div class="screen" id="s4">
     <div class="s-label">사회성·관계 · 1 / 3</div>
     <div class="s-title" id="q4t">낯선 사람을 만나면?</div>
     <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q4','먼저 다가가요')">🤝 먼저 가요</div>
-      <div class="opt" onclick="selOpt(this,'q4','살펴보다 친해져요')">👀 살펴봐요</div>
-      <div class="opt" onclick="selOpt(this,'q4','뒤에 숨어요')">🙈 숨어요</div>
-      <div class="opt" onclick="selOpt(this,'q4','짖거나 경계해요')">⚠️ 경계해요</div>
-    </div>
+      <div class="opt" onclick="selOpt(this,'q4','먼저 다가가요')">먼저 가요</div>
+      <div class="opt" onclick="selOpt(this,'q4','살펴보다 친해져요')">살펴봐요</div>
+      <div class="opt" onclick="selOpt(this,'q4','뒤에 숨어요')">숨어요</div>
+      <div class="opt" onclick="selOpt(this,'q4','짖거나 경계해요')">경계해요</div>
+   </div>
     <input type="hidden" id="q4">
-  </div>
+ </div>
 
   <div class="screen" id="s5">
     <div class="s-label">사회성·관계 · 2 / 3</div>
     <div class="s-title" id="q5t">보호자와 떨어지면?</div>
     <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q5','심하게 불안해해요')">😰 많이 불안</div>
-      <div class="opt" onclick="selOpt(this,'q5','조금 기다려요')">🕐 조금 기다려</div>
-      <div class="opt" onclick="selOpt(this,'q5','혼자 잘 놀아요')">🎮 혼자 잘 놀아</div>
-      <div class="opt" onclick="selOpt(this,'q5','더 자유로워해요')">🦅 자유로워요</div>
-    </div>
+      <div class="opt" onclick="selOpt(this,'q5','심하게 불안해해요')">많이 불안</div>
+      <div class="opt" onclick="selOpt(this,'q5','조금 기다려요')">조금 기다려</div>
+      <div class="opt" onclick="selOpt(this,'q5','혼자 잘 놀아요')">혼자 잘 놀아</div>
+      <div class="opt" onclick="selOpt(this,'q5','더 자유로워해요')">자유로워요</div>
+   </div>
     <input type="hidden" id="q5">
-  </div>
+ </div>
 
   <div class="screen" id="s6">
     <div class="s-label">사회성·관계 · 3 / 3</div>
     <div class="s-title" id="q6t">스킨십을 얼마나 좋아하나요?</div>
     <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q6','껌딱지예요')">🫂 껌딱지</div>
-      <div class="opt" onclick="selOpt(this,'q6','좋아해요')">💛 좋아해요</div>
-      <div class="opt" onclick="selOpt(this,'q6','가끔 허락해요')">🤏 가끔만</div>
-      <div class="opt" onclick="selOpt(this,'q6','건드리지 마세요')">✋ 싫어요</div>
-    </div>
+      <div class="opt" onclick="selOpt(this,'q6','껌딱지예요')">껌딱지</div>
+      <div class="opt" onclick="selOpt(this,'q6','좋아해요')">좋아해요</div>
+      <div class="opt" onclick="selOpt(this,'q6','가끔 허락해요')">가끔만</div>
+      <div class="opt" onclick="selOpt(this,'q6','건드리지 마세요')">싫어요</div>
+   </div>
     <input type="hidden" id="q6">
-  </div>
+ </div>
 
   <!-- ══ 섹션 3: 생활·습관 ══ -->
   <div class="screen" id="s7">
     <div class="s-label">생활·습관 · 1 / 3</div>
     <div class="s-title" id="q7t">밥은 잘 먹나요?</div>
     <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q7','뭐든 잘 먹어요')">😋 뭐든 잘 먹어요</div>
-      <div class="opt" onclick="selOpt(this,'q7','편식이 있어요')">🙅 편식해요</div>
-      <div class="opt" onclick="selOpt(this,'q7','식욕이 없어요')">😐 별로 안 먹어요</div>
-      <div class="opt" onclick="selOpt(this,'q7','과식하는 편')">🐷 너무 많이 먹어요</div>
-    </div>
+      <div class="opt" onclick="selOpt(this,'q7','뭐든 잘 먹어요')">뭐든 잘 먹어요</div>
+      <div class="opt" onclick="selOpt(this,'q7','편식이 있어요')">편식해요</div>
+      <div class="opt" onclick="selOpt(this,'q7','식욕이 없어요')">별로 안 먹어요</div>
+      <div class="opt" onclick="selOpt(this,'q7','과식하는 편')">너무 많이 먹어요</div>
+   </div>
     <input type="hidden" id="q7">
-  </div>
+ </div>
 
   <div class="screen" id="s8">
     <div class="s-label">생활·습관 · 2 / 3</div>
     <div class="s-title" id="q8t">잠은 어떻게 자나요?</div>
     <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q8','어디서든 잘 자요')">😴 어디든 잘 자요</div>
-      <div class="opt" onclick="selOpt(this,'q8','보호자 곁에서만')">🛌 곁에서만 자요</div>
-      <div class="opt" onclick="selOpt(this,'q8','잘 못 자요')">😟 잘 못 자요</div>
-      <div class="opt" onclick="selOpt(this,'q8','하루종일 자요')">💤 너무 많이 자요</div>
-    </div>
+      <div class="opt" onclick="selOpt(this,'q8','어디서든 잘 자요')">어디든 잘 자요</div>
+      <div class="opt" onclick="selOpt(this,'q8','보호자 곁에서만')">곁에서만 자요</div>
+      <div class="opt" onclick="selOpt(this,'q8','잘 못 자요')">잘 못 자요</div>
+      <div class="opt" onclick="selOpt(this,'q8','하루종일 자요')">너무 많이 자요</div>
+   </div>
     <input type="hidden" id="q8">
-  </div>
+ </div>
 
   <div class="screen" id="s9">
     <div class="s-label">생활·습관 · 3 / 3</div>
     <div class="s-title" id="q9t">훈련·규칙을 잘 따르나요?</div>
     <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q9','천재예요')">🧠 금방 배워요</div>
-      <div class="opt" onclick="selOpt(this,'q9','노력하면 돼요')">👍 노력하면</div>
-      <div class="opt" onclick="selOpt(this,'q9','기분에 따라')">😏 기분 따라요</div>
-      <div class="opt" onclick="selOpt(this,'q9','내 마음대로')">👑 내 맘대로</div>
-    </div>
+      <div class="opt" onclick="selOpt(this,'q9','천재예요')">금방 배워요</div>
+      <div class="opt" onclick="selOpt(this,'q9','노력하면 돼요')">노력하면</div>
+      <div class="opt" onclick="selOpt(this,'q9','기분에 따라')">기분 따라요</div>
+      <div class="opt" onclick="selOpt(this,'q9','내 마음대로')">내 맘대로</div>
+   </div>
     <input type="hidden" id="q9">
-  </div>
+ </div>
 
   <!-- ══ 섹션 4: 건강·특성 ══ -->
   <div class="screen" id="s10">
     <div class="s-label">건강·특성 · 1 / 3</div>
     <div class="s-title" id="q10t">소리·환경 변화에 예민한가요?</div>
     <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q10','매우 예민해요')">😱 매우 예민</div>
-      <div class="opt" onclick="selOpt(this,'q10','조금 예민해요')">😟 조금 예민</div>
-      <div class="opt" onclick="selOpt(this,'q10','보통이에요')">😌 보통이에요</div>
-      <div class="opt" onclick="selOpt(this,'q10','둔감해요')">🪨 둔감해요</div>
-    </div>
+      <div class="opt" onclick="selOpt(this,'q10','매우 예민해요')">매우 예민</div>
+      <div class="opt" onclick="selOpt(this,'q10','조금 예민해요')">조금 예민</div>
+      <div class="opt" onclick="selOpt(this,'q10','보통이에요')">보통이에요</div>
+      <div class="opt" onclick="selOpt(this,'q10','둔감해요')">둔감해요</div>
+   </div>
     <input type="hidden" id="q10">
-  </div>
+ </div>
 
   <div class="screen" id="s11">
     <div class="s-label">건강·특성 · 2 / 3</div>
     <div class="s-title" id="q11t">장난감·놀이를 좋아하나요?</div>
     <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q11','장난감 없으면 못 살아요')">🎯 장난감 덕후</div>
-      <div class="opt" onclick="selOpt(this,'q11','좋아하는 편')">😄 좋아해요</div>
-      <div class="opt" onclick="selOpt(this,'q11','가끔 관심')">🤔 가끔 해요</div>
-      <div class="opt" onclick="selOpt(this,'q11','별로 안 좋아해요')">😑 관심 없어요</div>
-    </div>
+      <div class="opt" onclick="selOpt(this,'q11','장난감 없으면 못 살아요')">장난감 덕후</div>
+      <div class="opt" onclick="selOpt(this,'q11','좋아하는 편')">좋아해요</div>
+      <div class="opt" onclick="selOpt(this,'q11','가끔 관심')">가끔 해요</div>
+      <div class="opt" onclick="selOpt(this,'q11','별로 안 좋아해요')">관심 없어요</div>
+   </div>
     <input type="hidden" id="q11">
-  </div>
+ </div>
 
   <div class="screen" id="s12">
     <div class="s-label">건강·특성 · 3 / 3</div>
     <div class="s-title" id="q12t">문제 행동이 있나요?</div>
     <div class="opts col1">
-      <div class="opt" onclick="selOpt(this,'q12','없어요 — 모범생')">😇 없어요 — 모범생이에요</div>
-      <div class="opt" onclick="selOpt(this,'q12','짖음이 심해요')">📢 짖음이 심해요</div>
-      <div class="opt" onclick="selOpt(this,'q12','물건을 부숴요')">💥 물건을 부숴요</div>
-      <div class="opt" onclick="selOpt(this,'q12','분리불안이 있어요')">😰 분리불안이 있어요</div>
-    </div>
+      <div class="opt" onclick="selOpt(this,'q12','없어요 — 모범생')">없어요 — 모범생이에요</div>
+      <div class="opt" onclick="selOpt(this,'q12','짖음이 심해요')">짖음이 심해요</div>
+      <div class="opt" onclick="selOpt(this,'q12','물건을 부숴요')">물건을 부숴요</div>
+      <div class="opt" onclick="selOpt(this,'q12','분리불안이 있어요')">분리불안이 있어요</div>
+   </div>
     <input type="hidden" id="q12">
-  </div>
+ </div>
 
 </div><!-- /wrap formWrap -->
 
 <!-- 통합 nav (모든 스크린이 공유) -->
 <div class="nav" id="mainNav">
-  <div class="err" id="err0">⚠️ 필수 정보와 간식 취향을 입력해 주세요</div>
+  <div class="err" id="err0">필수 정보와 간식 취향을 입력해 주세요</div>
   <div class="nav-btns" id="navBtns">
-    <button class="btn-next" onclick="startSection(1)" style="flex:1">다음 →</button>
-  </div>
+    <button class="btn-next" onclick="startSection(1)" style="flex:1">다음</button>
+ </div>
 </div>
 </div><!-- /main-content -->
 
 <!-- ── 오른쪽 패널 (PC에서만 표시) ── -->
 <div class="right-panel" id="rightPanel">
-  <div class="right-panel-title">💡 알아두면 좋아요</div>
+  <div class="right-panel-title">알아두면 좋아요</div>
   <div class="right-tip" id="rightTip">
-    <span class="right-tip-icon">🐾</span>
-    <div class="right-tip-text">반려동물의 성격은 <strong>유전·환경·경험</strong>이 함께 만들어가요. 타고난 기질을 이해하면 더 행복한 관계가 시작돼요.</div>
-  </div>
+        <div class="right-tip-text">반려동물의 성격은 <strong>유전·환경·경험</strong>이 함께 만들어가요. 타고난 기질을 이해하면 더 행복한 관계가 시작돼요.</div>
+ </div>
   <div class="right-tip">
-    <span class="right-tip-icon">⚡</span>
-    <div class="right-tip-text"><strong>에너지가 높은 아이</strong>일수록 충분한 운동과 두뇌 자극이 필요해요. 하루 2회 이상 산책을 권장해요.</div>
-  </div>
+        <div class="right-tip-text"><strong>에너지가 높은 아이</strong>일수록 충분한 운동과 두뇌 자극이 필요해요. 하루 2회 이상 산책을 권장해요.</div>
+ </div>
   <div class="right-tip">
-    <span class="right-tip-icon">🌿</span>
-    <div class="right-tip-text"><strong>불안이 많은 아이</strong>는 일관된 루틴이 가장 중요해요. 같은 시간에 밥·산책·취침을 반복해주세요.</div>
-  </div>
+        <div class="right-tip-text"><strong>불안이 많은 아이</strong>는 일관된 루틴이 가장 중요해요. 같은 시간에 밥·산책·취침을 반복해주세요.</div>
+ </div>
   <div class="right-notice">
     이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
-  </div>
+ </div>
 </div>
 
 </div><!-- /tablet-layout -->
 
 <!-- 로딩 -->
 <div class="loading-wrap" id="loadingWrap">
-  <div class="l-icon" id="lIcon">🐾</div>
+  <div class="l-icon" id="lIcon"></div>
   <div class="l-title" id="lTitle">성격 분석 중...</div>
   <div class="l-sub">12가지 항목을 종합 분석하고 있어요</div>
   <div class="l-steps">
@@ -758,7 +740,7 @@ body:has(.result-wrap.show){background:#FBF6EC;}
     <div class="lstep" id="ls1"><div class="ldot"></div><span class="ltext">성격 유형 분석 중</span></div>
     <div class="lstep" id="ls2"><div class="ldot"></div><span class="ltext">맞춤 케어 팁 생성 중</span></div>
     <div class="lstep" id="ls3"><div class="ldot"></div><span class="ltext">추천 용품 매칭 중</span></div>
-  </div>
+ </div>
   <div class="lprog-bg"><div class="lprog-fill" id="lprogFill"></div></div>
 </div>
 
@@ -768,7 +750,7 @@ body:has(.result-wrap.show){background:#FBF6EC;}
   <div class="r-top">
     <div class="r-top-title">반려동물 성격 테스트</div>
     <div class="r-sticker">결과 나왔다!</div>
-  </div>
+ </div>
   <div class="r-hero">
     <svg class="r-spark s1" width="34" height="34" viewBox="0 0 40 40" fill="none" stroke="#1C1B18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4 L23 16 L35 19 L23 23 L20 36 L17 23 L5 20 L17 16 Z"></path></svg>
     <svg class="r-spark s2" width="20" height="20" viewBox="0 0 40 40" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 L22 17 L33 20 L22 23 L20 34 L18 23 L7 20 L18 17 Z"></path></svg>
@@ -777,24 +759,24 @@ body:has(.result-wrap.show){background:#FBF6EC;}
     <div class="r-type" id="rBadge"></div>
     <svg class="r-scribble" width="210" height="16" viewBox="0 0 210 16" fill="none" aria-hidden="true"><path d="M4 10 C 40 3, 80 14, 120 7 C 150 2, 180 12, 206 6" stroke="#FF4FA3" stroke-width="5" stroke-linecap="round"></path></svg>
     <div class="r-desc" id="rDesc"></div>
-  </div>
+ </div>
   <div class="r-tags" id="rTags"></div>
   <div class="r-quick-share">
-    <button class="share-btn kakao-result icon" type="button" onclick="shareResultKakao()">💬 카톡으로 결과 공유</button>
-  </div>
+    <button class="share-btn kakao-result icon" type="button" onclick="shareResultKakao()" data-icon="talk">카톡으로 결과 공유</button>
+ </div>
   <div class="r-body">
     <div class="r-card">
       <div class="r-card-title">성격 특성 분석</div>
       <div class="trait-list" id="traitList"></div>
-    </div>
+   </div>
     <div class="r-card">
       <div class="r-card-title">종합 분석</div>
       <div class="r-summary" id="summaryText"></div>
-    </div>
+   </div>
     <div class="r-card pink">
       <div class="r-card-title">맞춤 케어 팁</div>
       <div class="tip-list" id="tipList"></div>
-    </div>
+   </div>
     <div class="r-card">
       <div class="r-card-title">맞춤 추천 용품</div>
       <div class="prod-section-title" id="prodSubtitle"></div>
@@ -802,35 +784,35 @@ body:has(.result-wrap.show){background:#FBF6EC;}
       <div class="coupang-notice">
         이 포스팅은 쿠팡 파트너스 활동의 일환으로<br>
         일정액의 수수료를 제공받을 수 있습니다.
-      </div>
-    </div>
-  </div>
-  <div class="disclaimer">이 결과는 재미로 보는 성격 참고 분석이에요 😊</div>
-  <div class="share-area">
-    <button class="share-btn save-img icon" type="button" onclick="saveResultImage()">📸 이미지 저장</button>
-    <button class="share-btn kakao-result icon" type="button" onclick="shareResultKakao()">🎉 카톡 — 결과 공유</button>
-    <div class="share-grid">
-      <button class="share-btn kakao icon" type="button" onclick="shareTestKakao()">💬 카톡 테스트 공유</button>
-      <button class="share-btn copy icon" type="button" onclick="copyShareLink()">🔗 링크 복사</button>
-    </div>
-    <button class="restart-btn" type="button" onclick="restart()">다시 테스트하기</button>
-    <a class="dev-link" href="https://x.com/Jamespaakstore" target="_blank" rel="noopener noreferrer">🐾 개발자 X → @Jamespaakstore</a>
-    <a class="privacy-link" href="https://superstarkzal.com/privacy.html" target="_blank" rel="noopener">개인정보처리방침</a>
-  </div>
+     </div>
+   </div>
  </div>
+  <div class="disclaimer">이 결과는 재미로 보는 성격 참고 분석이에요</div>
+  <div class="share-area">
+    <button class="share-btn save-img icon" type="button" onclick="saveResultImage()" data-icon="save">이미지 저장</button>
+    <button class="share-btn kakao-result icon" type="button" onclick="shareResultKakao()" data-icon="talk">카톡 — 결과 공유</button>
+    <div class="share-grid">
+      <button class="share-btn kakao icon" type="button" onclick="shareTestKakao()" data-icon="talk">카톡 테스트 공유</button>
+      <button class="share-btn copy icon" type="button" onclick="copyShareLink()" data-icon="link">링크 복사</button>
+   </div>
+    <button class="restart-btn" type="button" onclick="restart()" data-icon="retry"><span>다시 테스트하기</span></button>
+    <a class="dev-link" href="https://x.com/Jamespaakstore" target="_blank" rel="noopener noreferrer">개발자 X · @Jamespaakstore</a>
+    <a class="privacy-link" href="https://superstarkzal.com/privacy.html" target="_blank" rel="noopener">개인정보처리방침</a>
+ </div>
+</div>
 </div>
 <div class="toast" id="shareToast"></div>
 
 <!-- 첫 화면 개인정보 안내 팝업 -->
 <div class="intro-modal" id="introModal" onclick="if(event.target===this)closeIntroModal()">
   <div class="intro-box" role="dialog" aria-modal="true" aria-labelledby="introTitle">
-    <div class="intro-emoji">🔒</div>
+    <div class="intro-emoji" data-face="cat:lazy"></div>
     <div class="intro-title" id="introTitle">결과는 절대 저장되지 않아요</div>
-    <div class="intro-desc">입력하신 정보와 테스트 결과는 서버에 저장되지 않고, 모든 분석은 내 기기 안에서만 이뤄져요 😊</div>
-    <a class="intro-dev" href="https://x.com/Jamespaakstore" target="_blank" rel="noopener noreferrer">🐾 만든 사람 · <b>@Jamespaakstore</b></a>
-    <button class="intro-btn" type="button" onclick="closeIntroModal()">테스트 시작하기 →</button>
+    <div class="intro-desc">입력하신 정보와 테스트 결과는 서버에 저장되지 않고, 모든 분석은 내 기기 안에서만 이뤄져요</div>
+    <a class="intro-dev" href="https://x.com/Jamespaakstore" target="_blank" rel="noopener noreferrer">만든 사람 · <b>@Jamespaakstore</b></a>
+    <button class="intro-btn" type="button" onclick="closeIntroModal()">테스트 시작하기</button>
     <a class="privacy-link" href="https://superstarkzal.com/privacy.html" target="_blank" rel="noopener">개인정보처리방침</a>
-  </div>
+ </div>
 </div>
 
 <script>
@@ -1016,7 +998,7 @@ function updateSidebar(n){
   }
   if(petName&&petType){
     document.getElementById('sidebarPetInfo').style.display='block';
-    document.getElementById('sidebarIcon').textContent=petIcons[petType]||'🐾';
+    document.getElementById('sidebarIcon').innerHTML=petFaceHTML();
     document.getElementById('sidebarName').textContent=nm(petName);
     document.getElementById('sidebarMeta').textContent=`${petAge||'?'} · ${petGender||'?'}`;
   }
@@ -1029,7 +1011,7 @@ function updateSidebar(n){
   ];
   const t=tips[secIdx]||tips[0];
   const el=document.getElementById('rightTip');
-  if(el) el.innerHTML=`<span class="right-tip-icon">${t.icon}</span><div class="right-tip-text">${t.text}</div>`;
+  if(el) el.innerHTML=`<div class="right-tip-text">${t.text}</div>`;
 }
 
 // 섹션 정의
@@ -1066,7 +1048,7 @@ function startSection(n){
   }
   // 배너 표시
   const s=SECTIONS[n];
-  document.getElementById('bannerIcon').textContent=s.icon;
+  document.getElementById('bannerIcon').innerHTML=petFaceHTML();
   document.getElementById('bannerTag').textContent=s.tag;
   document.getElementById('bannerTag').style.borderColor=s.color;
   document.getElementById('bannerTag').style.color=s.tc;
@@ -1170,12 +1152,12 @@ function updateNav(n){
   const btns=document.getElementById('navBtns');
   if(!btns) return;
   if(n===0){
-    btns.innerHTML='<button class="btn-next" onclick="startSection(1)" style="flex:1">다음 →</button>';
+    btns.innerHTML='<button class="btn-next" onclick="startSection(1)" style="flex:1">다음</button>';
   } else if(n===12){
-    btns.innerHTML='<button class="btn-back" onclick="goStep(11)">← 이전</button>'
-      +'<button class="btn-next final" onclick="submitTest()">결과 보기 →</button>';
+    btns.innerHTML='<button class="btn-back" onclick="goStep(11)">이전</button>'
+      +'<button class="btn-next final" onclick="submitTest()">결과 보기</button>';
   } else {
-    btns.innerHTML=`<button class="btn-back" onclick="goStep(${n-1})">← 이전</button>`;
+    btns.innerHTML=`<button class="btn-back" onclick="goStep(${n-1})">이전</button>`;
   }
   if(n!==0) document.getElementById('err0')?.classList.remove('show');
 }
@@ -1189,7 +1171,7 @@ function submitTest(){
   document.getElementById('progBar').style.display='none';
   const lw=document.getElementById('loadingWrap');
   lw.classList.add('show');
-  document.getElementById('lIcon').textContent=petIcons[petType]||'🐾';
+  document.getElementById('lIcon').innerHTML=petFaceHTML();
   document.getElementById('lTitle').textContent=`${nm(petName)} 성격 분석 중...`;
 
   const t=[0,800,1700,2600],p=[15,40,70,90];
@@ -1588,68 +1570,103 @@ function renderCoupangProducts(products){
     const cat=escapeHTML(p.category||'');
     const price=p.price?Number(p.price).toLocaleString()+'원':'';
     const badges=[];
-    if(p.isRocket) badges.push('🚀 로켓');
+    if(p.isRocket) badges.push('로켓배송');
     if(p.isFreeShipping) badges.push('무료배송');
     const why=[price,...badges].filter(Boolean).join(' · ');
     const cls=i===0?' highlight':'';
     return `<a class="prod-item${cls}" href="${url}" target="_blank" rel="noopener" onclick="trackClick(${jsStringAttr(p.name)})">
-      <div class="prod-img" style="overflow:hidden;padding:0;">${img?`<img src="${img}" alt="" loading="lazy" referrerpolicy="no-referrer" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="var p=this.parentNode;if(p){p.textContent='🛒';}">`:'🛒'}</div>
+      <div class="prod-img">${iconSVG('cart')}${img?`<img src="${img}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:''}</div>
       <div class="prod-info">
         <div class="prod-name" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${name}</div>
         <div class="prod-why">${why}</div>
         <div class="prod-tag">${cat}</div>
       </div>
-      <div class="prod-cta">쿠팡<br>보기 →</div>
+      <div class="prod-cta">${iconSVG('cart')}쿠팡 보기</div>
     </a>`;
   }).join('');
 }
 
-// ── 결과 화면 얼굴 · 포인트 색 (design-ref/petcard 시안) ──
+// ── 얼굴 · 아이콘 (design-ref/petcard/Face.dc.html · Rules.dc.html) ──
+// 얼굴 = 머리(동물별) + 표정(성격별) 두 겹. viewBox 0 0 120 110
 const RESULT_LOOKS={
   '활발한 사랑꾼':{mood:'sweet',accent:'#FFB38A'},
   '집사 바라기':{mood:'lazy',accent:'#C8F169'},
   '자유로운 영혼':{mood:'boss',accent:'#8FD3FF'},
   '섬세한 감수성파':{mood:'shy',accent:'#FF8FC5'},
   '장난꾸러기 탐험가':{mood:'explorer',accent:'#FFD24A'},
-  '모범생 우등생':{mood:'sweet',accent:'#9FE8C9'},
+  '모범생 우등생':{mood:'smart',accent:'#9FE8C9'},
   '나만의 법칙 보스':{mood:'grumpy',accent:'#C9B8FF'},
-  '유니크한 개성파':{mood:'explorer',accent:'#FF8A7A'},
+  '유니크한 개성파':{mood:'unique',accent:'#FF8A7A'},
 };
 const RESULT_LOOK_DEFAULT={mood:'lazy',accent:'#C8F169'};
-const FACE_CAT_HEAD='<path d="M22 44 L18 12 L44 30"/><path d="M98 44 L103 11 L76 30"/><path d="M22 44 C 14 70, 30 98, 60 99 C 92 100, 108 72, 98 44 C 90 28, 32 26, 22 44 Z" fill="#FBF6EC"/>';
-const FACE_CAT={
-  lazy:'<path d="M40 59 L54 59"/><path d="M42 59 C 43 64, 51 64, 52 59"/><path d="M66 59 L80 59"/><path d="M68 59 C 69 64, 77 64, 78 59"/><path d="M57 70 L60 74 L63 70"/><path d="M60 74 C 58 80, 52 80, 50 77"/><path d="M60 74 C 62 80, 68 80, 70 77"/><path d="M34 72 L12 68"/><path d="M34 77 L13 80"/><path d="M86 72 L108 68"/><path d="M86 77 L107 80"/>',
-  explorer:'<circle cx="46" cy="58" r="7" fill="#1C1B18"/><circle cx="74" cy="58" r="7" fill="#1C1B18"/><circle cx="48.5" cy="55.5" r="2.4" fill="#FFFFFF" stroke="none"/><circle cx="76.5" cy="55.5" r="2.4" fill="#FFFFFF" stroke="none"/><path d="M57 69 L60 72 L63 69"/><path d="M51 76 C 51 89, 69 89, 69 76 Z" fill="#1C1B18"/><path d="M55 83 C 57 80, 63 80, 65 83" stroke="#FF4FA3" stroke-width="3"/><path d="M34 72 L12 68"/><path d="M34 77 L13 80"/><path d="M86 72 L108 68"/><path d="M86 77 L107 80"/>',
-  shy:'<circle cx="43" cy="60" r="3.8" fill="#1C1B18"/><circle cx="69" cy="60" r="3.8" fill="#1C1B18"/><ellipse cx="38" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"/><ellipse cx="82" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"/><path d="M57 69 L60 73 L63 69"/><path d="M53 80 C 55 77, 57 82, 60 79 C 63 77, 65 82, 67 80"/><path d="M30 76 L12 74"/><path d="M90 76 L108 74"/>',
-  boss:'<path d="M40 58 L54 58"/><path d="M41 58 C 42 65, 53 65, 54 58 Z" fill="#1C1B18"/><path d="M66 58 L80 58"/><path d="M66 58 C 67 65, 78 65, 79 58 Z" fill="#1C1B18"/><path d="M57 70 L60 74 L63 70"/><path d="M56 80 C 60 82, 65 81, 69 76"/><path d="M34 72 L12 68"/><path d="M34 77 L13 80"/><path d="M86 72 L108 68"/><path d="M86 77 L107 80"/>',
-  sweet:'<path d="M41 54 L50 59 L41 64"/><path d="M79 54 L70 59 L79 64"/><ellipse cx="38" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"/><ellipse cx="82" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"/><path d="M57 69 L60 73 L63 69"/><path d="M60 73 C 58 79, 52 79, 50 76"/><path d="M60 73 C 62 79, 68 79, 70 76"/><path d="M34 77 L13 80"/><path d="M86 77 L107 80"/>',
-  grumpy:'<path d="M39 49 L54 55" stroke-width="3.6"/><path d="M81 49 L66 55" stroke-width="3.6"/><ellipse cx="47" cy="61" rx="5.5" ry="2.8" fill="#1C1B18"/><ellipse cx="73" cy="61" rx="5.5" ry="2.8" fill="#1C1B18"/><path d="M57 70 L60 74 L63 70"/><path d="M52 84 C 56 78, 64 78, 68 84"/><path d="M34 72 L12 66"/><path d="M34 77 L13 78"/><path d="M86 72 L108 66"/><path d="M86 77 L107 78"/>',
+const FACE_HEAD={
+  cat:'<path d="M22 44 L18 12 L44 30" fill="#FBF6EC"/><path d="M98 44 L103 11 L76 30" fill="#FBF6EC"/><path d="M22 44 C 14 70, 30 98, 60 99 C 92 100, 108 72, 98 44 C 90 28, 32 26, 22 44 Z" fill="#FBF6EC"/><path d="M57 70 L60 74 L63 70"/><path d="M60 74 L60 76"/><path d="M32 73 L12 69"/><path d="M32 78 L13 81"/><path d="M88 73 L108 69"/><path d="M88 78 L107 81"/>',
+  rabbit:'<path d="M45 40 C 37 24, 35 5, 45 4 C 55 3, 56 22, 53 38" fill="#FBF6EC"/><path d="M45 30 C 42 20, 42 11, 45 10 C 49 10, 50 20, 49 30 Z" fill="#FFC9DE" stroke="none"/><path d="M75 40 C 85 26, 98 14, 104 21 C 110 28, 96 38, 83 44" fill="#FBF6EC"/><path d="M82 37 C 89 29, 97 22, 100 25 C 103 28, 95 35, 86 40 Z" fill="#FFC9DE" stroke="none"/><path d="M60 33 C 86 33, 100 51, 98 71 C 96 92, 80 100, 60 100 C 40 100, 24 92, 22 71 C 20 51, 34 33, 60 33 Z" fill="#FBF6EC"/><path d="M56 70 L64 70 L60 74 Z" fill="#FF8FC5"/><path d="M60 74 L60 76"/>',
+  hamster:'<path d="M30 40 C 20 32, 22 17, 33 18 C 42 19, 44 28, 42 34" fill="#F4C9A0"/><path d="M90 40 C 100 32, 98 17, 87 18 C 78 19, 76 28, 78 34" fill="#F4C9A0"/><path d="M60 29 C 89 29, 107 47, 107 70 C 107 91, 87 102, 60 102 C 33 102, 13 91, 13 70 C 13 47, 31 29, 60 29 Z" fill="#FBF6EC"/><path d="M22 50 C 30 37, 45 31, 60 31 C 75 31, 90 37, 98 50 C 86 45, 74 48, 60 43 C 46 48, 34 45, 22 50 Z" fill="#F4C9A0" stroke="none"/><path d="M57 70 C 57 67, 63 67, 63 70 C 63 72, 57 72, 57 70 Z" fill="#FF8FC5"/><path d="M60 72 L60 76"/>',
 };
-// 강아지: 크기별 머리 틀(귀·얼굴형) 위에 표정 층을 얹는다
+// 강아지: 크기별 머리 틀(귀·얼굴형) 유지, 코와 표정 층은 g 변환으로 얼굴형에 맞춘다
 const FACE_DOG_HEAD={
   '소형견':{g:'translate(60 64) scale(1.12 1.0) translate(-60 -62)',head:'<path d="M28 54 C 25 27, 95 27, 92 54 C 97 79, 84 98, 60 98 C 36 98, 23 79, 28 54 Z" fill="#FBF6EC"/><path d="M50 30 C 51 24, 56 23, 58 27 C 59 22, 64 22, 65 27 C 67 23, 71 25, 70 30"/><path d="M37 33 C 27 28, 17 34, 18 43 C 12 47, 13 56, 19 58 C 17 66, 25 70, 31 65 C 36 59, 37 45, 37 33 Z" fill="#F6E1C8"/><path d="M83 33 C 93 28, 103 34, 102 43 C 108 47, 107 56, 101 58 C 103 66, 95 70, 89 65 C 84 59, 83 45, 83 33 Z" fill="#F6E1C8"/>'},
-  '중형견':{g:'',head:'<path d="M30 40 C 30 18, 90 18, 90 40 C 97 62, 90 97, 60 98 C 30 97, 23 62, 30 40 Z" fill="#FBF6EC"/><path d="M70 43 C 84 40, 89 57, 81 64 C 73 67, 65 54, 70 43 Z" fill="#E8D5B0" stroke="none"/><path d="M34 28 C 20 22, 11 38, 15 56 C 17 64, 26 62, 28 52 C 30 44, 31 36, 34 28 Z" fill="#E8D5B0"/><path d="M86 28 C 100 22, 109 38, 105 56 C 103 64, 94 62, 92 52 C 90 44, 89 36, 86 28 Z" fill="#E8D5B0"/>'},
+  '중형견':{g:'',head:'<path d="M30 40 C 30 18, 90 18, 90 40 C 97 62, 90 97, 60 98 C 30 97, 23 62, 30 40 Z" fill="#FBF6EC"/><path d="M70 45 C 84 42, 89 59, 81 66 C 73 69, 65 56, 70 45 Z" fill="#E8D5B0" stroke="none"/><path d="M34 28 C 20 22, 11 38, 15 56 C 17 64, 26 62, 28 52 C 30 44, 31 36, 34 28 Z" fill="#E8D5B0"/><path d="M86 28 C 100 22, 109 38, 105 56 C 103 64, 94 62, 92 52 C 90 44, 89 36, 86 28 Z" fill="#E8D5B0"/>'},
   '대형견':{g:'translate(60 60) scale(0.96) translate(-60 -58)',head:'<path d="M26 40 C 26 14, 94 14, 94 40 C 101 60, 98 84, 86 95 C 77 104, 43 104, 34 95 C 22 84, 19 60, 26 40 Z" fill="#FBF6EC"/><path d="M40 72 C 36 94, 84 94, 80 72" fill="#FFFFFF" stroke-width="2.4"/><path d="M31 24 C 12 20, 1 50, 5 84 C 7 97, 22 95, 26 78 C 29 62, 28 42, 31 24 Z" fill="#E8C28E"/><path d="M89 24 C 108 20, 119 50, 115 84 C 113 97, 98 95, 94 78 C 91 62, 92 42, 89 24 Z" fill="#E8C28E"/>'},
 };
-const FACE_DOG_NOSE='<path d="M52 70 C 52 65, 68 65, 68 70 C 68 75, 52 75, 52 70 Z" fill="#1C1B18"/><path d="M60 75 L60 79"/>';
-const FACE_DOG={
-  lazy:'<path d="M40 56 L54 56"/><path d="M42 56 C 43 61, 51 61, 52 56"/><path d="M66 56 L80 56"/><path d="M68 56 C 69 61, 77 61, 78 56"/>'+FACE_DOG_NOSE+'<path d="M60 79 C 57 83, 52 83, 50 80"/><path d="M60 79 C 63 83, 68 83, 70 80"/>',
-  explorer:'<circle cx="46" cy="55" r="7" fill="#1C1B18"/><circle cx="74" cy="55" r="7" fill="#1C1B18"/><circle cx="48.5" cy="52.5" r="2.4" fill="#FFFFFF" stroke="none"/><circle cx="76.5" cy="52.5" r="2.4" fill="#FFFFFF" stroke="none"/>'+FACE_DOG_NOSE+'<path d="M46 80 C 50 88, 70 88, 74 80"/><path d="M54 84 C 54 96, 66 96, 66 84" fill="#FF8FC5"/><path d="M60 85 L60 91"/>',
-  shy:'<circle cx="43" cy="57" r="3.8" fill="#1C1B18"/><circle cx="69" cy="57" r="3.8" fill="#1C1B18"/><ellipse cx="38" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"/><ellipse cx="82" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"/>'+FACE_DOG_NOSE+'<path d="M54 83 C 56 80, 58 85, 60 82 C 62 80, 64 85, 66 83"/>',
-  boss:'<path d="M40 55 L54 55"/><path d="M41 55 C 42 62, 53 62, 54 55 Z" fill="#1C1B18"/><path d="M66 55 L80 55"/><path d="M66 55 C 67 62, 78 62, 79 55 Z" fill="#1C1B18"/>'+FACE_DOG_NOSE+'<path d="M60 79 C 63 82, 68 82, 71 77"/>',
-  sweet:'<path d="M41 51 L50 56 L41 61"/><path d="M79 51 L70 56 L79 61"/><ellipse cx="38" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"/><ellipse cx="82" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"/>'+FACE_DOG_NOSE+'<path d="M60 79 C 57 83, 52 83, 50 80"/><path d="M60 79 C 63 83, 68 83, 70 80"/><path d="M62 81 C 62 89, 70 89, 70 81" fill="#FF8FC5"/>',
-  grumpy:'<path d="M39 46 L54 52" stroke-width="3.6"/><path d="M81 46 L66 52" stroke-width="3.6"/><ellipse cx="47" cy="58" rx="5.5" ry="2.8" fill="#1C1B18"/><ellipse cx="73" cy="58" rx="5.5" ry="2.8" fill="#1C1B18"/>'+FACE_DOG_NOSE+'<path d="M51 86 C 55 80, 65 80, 69 86"/>',
+const FACE_DOG_NOSE='<path d="M53 70 C 53 66, 67 66, 67 70 C 67 74, 53 74, 53 70 Z" fill="#1C1B18"/><path d="M60 74 L60 76"/>';
+const FACE_MOOD={
+  lazy:'<path d="M40 58 L54 58"/><path d="M42 58 C 43 63, 51 63, 52 58"/><path d="M66 58 L80 58"/><path d="M68 58 C 69 63, 77 63, 78 58"/><path d="M60 76 C 58 81, 52 81, 50 78"/><path d="M60 76 C 62 81, 68 81, 70 78"/>',
+  explorer:'<circle cx="46" cy="58" r="7" fill="#1C1B18"/><circle cx="74" cy="58" r="7" fill="#1C1B18"/><circle cx="48.5" cy="55.5" r="2.4" fill="#FFFFFF" stroke="none"/><circle cx="76.5" cy="55.5" r="2.4" fill="#FFFFFF" stroke="none"/><path d="M51 78 C 51 91, 69 91, 69 78 Z" fill="#1C1B18"/><path d="M55 85 C 57 82, 63 82, 65 85" stroke="#FF8FC5"/>',
+  shy:'<circle cx="43" cy="60" r="3.8" fill="#1C1B18"/><circle cx="69" cy="60" r="3.8" fill="#1C1B18"/><ellipse cx="36" cy="70" rx="7" ry="4" fill="#FF8FC5" stroke="none"/><ellipse cx="84" cy="70" rx="7" ry="4" fill="#FF8FC5" stroke="none"/><path d="M53 81 C 55 78, 57 83, 60 80 C 63 78, 65 83, 67 81"/>',
+  boss:'<path d="M40 58 L54 58"/><path d="M41 58 C 42 65, 53 65, 54 58 Z" fill="#1C1B18"/><path d="M66 58 L80 58"/><path d="M66 58 C 67 65, 78 65, 79 58 Z" fill="#1C1B18"/><path d="M57 81 C 61 83, 66 82, 70 77"/>',
+  sweet:'<path d="M41 53 L50 58 L41 63"/><path d="M79 53 L70 58 L79 63"/><ellipse cx="36" cy="70" rx="7" ry="4" fill="#FF8FC5" stroke="none"/><ellipse cx="84" cy="70" rx="7" ry="4" fill="#FF8FC5" stroke="none"/><path d="M60 76 C 58 81, 52 81, 50 78"/><path d="M60 76 C 62 81, 68 81, 70 78"/><path d="M62 79 C 62 87, 70 87, 70 79" fill="#FF8FC5"/>',
+  grumpy:'<path d="M39 48 L54 54" stroke-width="3.6"/><path d="M81 48 L66 54" stroke-width="3.6"/><ellipse cx="47" cy="60" rx="5.5" ry="2.8" fill="#1C1B18"/><ellipse cx="73" cy="60" rx="5.5" ry="2.8" fill="#1C1B18"/><path d="M51 87 C 55 81, 65 81, 69 87"/>',
+  smart:'<circle cx="46" cy="58" r="10" fill="#FFFFFF"/><circle cx="74" cy="58" r="10" fill="#FFFFFF"/><path d="M56 57 C 58 54, 62 54, 64 57"/><circle cx="46" cy="59" r="3.4" fill="#1C1B18" stroke="none"/><circle cx="74" cy="59" r="3.4" fill="#1C1B18" stroke="none"/><path d="M53 80 C 56 84, 64 84, 67 80"/>',
+  unique:'<path d="M39 60 C 42 53, 50 53, 53 60"/><circle cx="74" cy="58" r="7" fill="#1C1B18"/><circle cx="76.5" cy="55.5" r="2.4" fill="#FFFFFF" stroke="none"/><path d="M49 79 C 55 85, 65 85, 72 77"/><path d="M62 83 C 62 92, 71 92, 70 82" fill="#FF8FC5"/>',
 };
-function resultFaceHTML(mood){
-  let inner='';
-  if(petType==='cat') inner=FACE_CAT_HEAD+(FACE_CAT[mood]||FACE_CAT.lazy);
-  else if(petType==='dog'){
-    const h=FACE_DOG_HEAD[dogSize]||FACE_DOG_HEAD['중형견'];
-    inner=h.head+`<g${h.g?` transform="${h.g}"`:''}>${FACE_DOG[mood]||FACE_DOG.lazy}</g>`;
-  }
-  else return `<span class="r-face-emoji">${petIcons[petType]||'🐾'}</span>`;
-  return `<svg viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="성향 얼굴">${inner}</svg>`;
+const FACE_SPECIES={dog:'dog',cat:'cat',rabbit:'rabbit',other:'hamster'};
+function faceSVG(pet,mood,size){
+  const sp=FACE_SPECIES[pet]||'cat';
+  const m=FACE_MOOD[mood]||FACE_MOOD.lazy;
+  let inner;
+  if(sp==='dog'){
+    const h=FACE_DOG_HEAD[size]||FACE_DOG_HEAD['중형견'];
+    inner=h.head+`<g${h.g?` transform="${h.g}"`:''}>${FACE_DOG_NOSE}${m}</g>`;
+  } else inner=FACE_HEAD[sp]+m;
+  return `<svg class="face" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${inner}</svg>`;
 }
+function resultFaceHTML(mood){return faceSVG(petType,mood,dogSize);}
+// 이모지 대신 쓰는 아이콘: viewBox 32, 선은 currentColor(기본 검정), 포인트 색 채움 1개
+const ICONS={
+  energy:'<path d="M18 3 L7 18 L15 18 L13 29 L25 13 L17 13 Z" fill="#FFD24A"/>',
+  social:'<circle cx="11" cy="11" r="4.5" fill="#FFB38A"/><circle cx="22" cy="12" r="4"/><path d="M3 27 C 4 19, 18 19, 19 27"/><path d="M16 26 C 17 20, 28 20, 29 26"/>',
+  indep:'<path d="M8 29 L8 4"/><path d="M8 5 C 14 2, 18 8, 26 5 L26 17 C 18 20, 14 14, 8 17" fill="#8FD3FF"/>',
+  play:'<circle cx="16" cy="16" r="12" fill="#FFD24A"/><path d="M6 10 C 12 14, 20 14, 26 10"/><path d="M6 22 C 12 18, 20 18, 26 22"/>',
+  train:'<path d="M11 3 L16 12 L21 3"/><circle cx="16" cy="20" r="8" fill="#9FE8C9"/><path d="M12.5 20 L15 22.5 L19.5 17.5"/>',
+  love:'<path d="M16 27 C 6 20, 3 14, 6 9 C 9 4, 15 5, 16 10 C 17 5, 23 4, 26 9 C 29 14, 26 20, 16 27 Z" fill="#FF8FC5"/>',
+  sense:'<circle cx="16" cy="16" r="12" fill="#C9B8FF"/><path d="M8 16 C 10 11, 12 21, 14 16 C 16 11, 18 21, 20 16 C 22 11, 24 19, 25 16"/>',
+  stub:'<path d="M5 24 L5 10 L11 16 L16 7 L21 16 L27 10 L27 24 Z" fill="#FF8A7A"/>',
+  talk:'<path d="M16 5 C 24 5, 29 9, 29 15 C 29 21, 24 24, 16 24 C 14 24, 12 24, 10 23 L 5 27 L 6 21 C 4 19, 3 17, 3 15 C 3 9, 8 5, 16 5 Z" fill="#FEE500"/>',
+  save:'<path d="M16 4 L16 19"/><path d="M10 13 L16 19 L22 13"/><path d="M5 22 L5 27 L27 27 L27 22"/>',
+  link:'<path d="M13 19 L19 13"/><path d="M14 9 L17 6 C 20 3, 26 3, 26 9 C 27 12, 25 14, 23 15 L 21 17"/><path d="M18 23 L15 26 C 12 29, 6 29, 6 23 C 5 20, 7 18, 9 17 L 11 15"/>',
+  retry:'<path d="M26 16 C 26 22, 21 27, 15 27 C 9 27, 5 22, 5 16 C 5 10, 10 5, 16 5 C 20 5, 23 7, 25 10"/><path d="M26 4 L25 10 L19 9"/>',
+  cart:'<path d="M3 5 L7 5 L10 20 L25 20 L28 9 L8 9"/><circle cx="12" cy="26" r="2" fill="currentColor"/><circle cx="23" cy="26" r="2" fill="currentColor"/>',
+};
+function iconSVG(name){
+  return `<svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]||''}</svg>`;
+}
+const TRAIT_ICONS={'에너지':'energy','사교성':'social','독립성':'indep','장난기':'play','훈련성':'train','애정도':'love','예민도':'sense','고집':'stub'};
+// 화면 표시용: 문자열 속 이모지·장식 기호 제거 (원본 데이터는 공유·저장 카드에 그대로 쓰임)
+const EMOJI_RE=/(?:[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{2300}-\u{23FF}]️?(?:‍[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}]️?)*)/gu;
+function stripEmoji(str){return String(str||'').replace(EMOJI_RE,'').replace(/[ \t]{2,}/g,' ').replace(/ ([.,!?…])/g,'$1').trim();}
+// 고정 마크업의 얼굴·아이콘 자리 채우기
+function fillStaticFaces(){
+  document.querySelectorAll('[data-face]').forEach(el=>{
+    const [pet,mood]=el.dataset.face.split(':');
+    el.innerHTML=faceSVG(pet,mood||'lazy');
+  });
+  document.querySelectorAll('[data-icon]').forEach(el=>{
+    el.insertAdjacentHTML('afterbegin',iconSVG(el.dataset.icon));
+  });
+}
+function petFaceHTML(){return petType?faceSVG(petType,'lazy',dogSize):faceSVG('cat','lazy');}
 
 function showResult(){
   const r=calcPersonality();
@@ -1665,27 +1682,27 @@ function showResult(){
   document.getElementById('rDesc').textContent=r.desc;
   document.getElementById('rTags').innerHTML=r.traits.slice().sort((a,b)=>b.val-a.val).slice(0,3)
     .map(t=>`<span class="r-tag">#${escapeHTML(cleanType(t.label))} ${t.val}</span>`).join('');
-  document.getElementById('summaryText').innerHTML=r.summary;
+  document.getElementById('summaryText').innerHTML=stripEmoji(r.summary);
   document.getElementById('traitList').innerHTML=r.traits.map(t=>`
     <div class="trait-item">
-      <span class="trait-label">${t.label}</span>
+      <span class="trait-label">${iconSVG(TRAIT_ICONS[cleanType(t.label)])}${escapeHTML(cleanType(t.label))}</span>
       <div class="trait-bar-bg"><div class="trait-bar-fill" style="width:${t.val}%"></div></div>
       <span class="trait-num">${t.val}</span>
     </div>`).join('');
   document.getElementById('tipList').innerHTML=r.tips.map(t=>`
-    <div class="tip-item"><span class="tip-icon">${t.i}</span><span class="tip-text">${t.t}</span></div>`).join('');
+    <div class="tip-item"><span class="tip-text">${stripEmoji(t.t)}</span></div>`).join('');
 
   // 쿠팡 파트너스 상품 렌더링
-  document.getElementById('prodSubtitle').textContent=`${nm(petName)}의 성격에 맞게 골라드린 용품이에요 🛒`;
+  document.getElementById('prodSubtitle').textContent=`${nm(petName)}의 성격에 맞게 골라드린 용품이에요`;
   document.getElementById('prodList').innerHTML=r.prods.map(p=>`
     <a class="prod-item${p.highlight?' highlight':''}" href="${escapeHTML(p.url)}" target="_blank" rel="noopener" onclick="trackClick(${jsStringAttr(p.name)})">
-      <div class="prod-img">${p.icon}</div>
+      <div class="prod-img">${iconSVG('cart')}</div>
       <div class="prod-info">
         <div class="prod-name">${p.name}</div>
-        <div class="prod-why">✓ ${p.why}</div>
+        <div class="prod-why">${p.why}</div>
         <div class="prod-tag">${p.tag}</div>
       </div>
-      <div class="prod-cta">쿠팡<br>보기 →</div>
+      <div class="prod-cta">${iconSVG('cart')}쿠팡 보기</div>
     </a>`).join('');
 
   // 결과가 보이는 즉시 summary와 fallback 링크를 파트너스 링크로 변환한다.
@@ -1719,7 +1736,7 @@ const TEST_SHARE_DESC='12가지 질문으로 기질 분석 + 케어 팁 🐾';
 function showToast(msg){
   const t=document.getElementById('shareToast');
   if(!t) return;
-  t.textContent=msg;
+  t.textContent=stripEmoji(msg);
   t.classList.add('show');
   clearTimeout(window.__toastTimer);
   window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2200);
@@ -2080,6 +2097,7 @@ function closeIntroModal(){
 }
 
 // 공유 결과 페이지가 아니면 첫 화면 안내 팝업 표시
+fillStaticFaces();
 if(!loadSharedResultIfPresent()) showIntroModal();
 </script>
 </body>
