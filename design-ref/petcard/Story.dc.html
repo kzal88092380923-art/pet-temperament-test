@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>반려동물 결과 스토리 카드</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #C8F169; font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; }
+  * { box-sizing: border-box; }
+</style>
+</helmet>
+
+<div style="position: relative; width: 540px; height: 960px; overflow: hidden; background: {{t.accent}}; color: #1C1B18; display: flex; flex-direction: column; align-items: center; padding: 70px 44px 56px;">
+
+  <svg width="70" height="70" viewBox="0 0 40 40" fill="none" stroke="#1C1B18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; left: 36px; top: 150px; transform: rotate(-12deg);">
+    <path d="M20 4 L23 16 L35 19 L23 23 L20 36 L17 23 L5 20 L17 16 Z"></path>
+  </svg>
+  <svg width="44" height="44" viewBox="0 0 40 40" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; right: 44px; top: 110px;">
+    <path d="M20 6 L22 17 L33 20 L22 23 L20 34 L18 23 L7 20 L18 17 Z"></path>
+  </svg>
+  <svg width="90" height="60" viewBox="0 0 90 60" fill="none" stroke="#FF4FA3" stroke-width="5" stroke-linecap="round" style="position: absolute; right: 30px; bottom: 250px;">
+    <path d="M6 40 C 20 10, 40 10, 44 30 C 48 50, 70 50, 84 18"></path>
+  </svg>
+
+  <div style="font-family: 'Gaegu', cursive; font-size: 34px; font-weight: 700; background: #FBF6EC; border: 3px solid #1C1B18; border-radius: 999px; padding: 4px 26px; transform: rotate(-4deg);">우리 아이 성격 결과</div>
+
+  <div style="margin-top: 44px; width: 100%; background: #FBF6EC; border: 3.5px solid #1C1B18; border-radius: 40px 48px 38px 46px; padding: 40px 32px 36px; transform: rotate(1.5deg); display: flex; flex-direction: column; align-items: center;">
+    <div style="width: 240px; height: 210px; border-radius: 48% 52% 46% 54%; background: {{t.accent}}; border: 3px solid #1C1B18; display: flex; align-items: center; justify-content: center;">
+      <dc-import name="Face" species="{{sp}}" mood="{{t.mood}}" size="{{faceSize}}" hint-size="170px,156px"></dc-import>
+    </div>
+
+    <div style="font-size: 44px; font-weight: 800; letter-spacing: -0.03em; margin-top: 28px; text-align: center; line-height: 1.2;">{{t.name}}</div>
+    <svg width="300" height="20" viewBox="0 0 210 16" fill="none" style="display: block; margin-top: 2px;">
+      <path d="M4 10 C 40 3, 80 14, 120 7 C 150 2, 180 12, 206 6" stroke="#FF4FA3" stroke-width="5" stroke-linecap="round"></path>
+    </svg>
+    <div style="font-size: 20px; font-weight: 600; margin-top: 14px; color: #2D2B25; text-align: center;">{{t.sub}}</div>
+
+    <div style="display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; justify-content: center;">
+      <div style="font-size: 18px; font-weight: 700; background: #FFFFFF; border: 2.5px solid #1C1B18; border-radius: 999px; padding: 7px 16px; transform: rotate(-2deg);">{{t.tag1}}</div>
+      <div style="font-size: 18px; font-weight: 700; background: #FFD6EA; border: 2.5px solid #1C1B18; border-radius: 999px; padding: 7px 16px; transform: rotate(2deg);">{{t.tag2}}</div>
+      <div style="font-size: 18px; font-weight: 700; background: #FFFFFF; border: 2.5px solid #1C1B18; border-radius: 999px; padding: 7px 16px;">{{t.tag3}}</div>
+    </div>
+  </div>
+
+  <div style="flex-grow: 1;"></div>
+
+  <div style="font-family: 'Gaegu', cursive; font-size: 28px; font-weight: 700; text-align: center;">너네 아이는 뭐 나와?</div>
+  <div style="margin-top: 8px; font-size: 17px; font-weight: 700; background: #1C1B18; color: #FBF6EC; border-radius: 999px; padding: 10px 22px;">pet.superstarkzal.com</div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{
+  "species": {"editor": "enum", "options": ["고양이", "강아지"], "default": "고양이"},
+  "type": {"editor": "enum", "options": ["소파 위의 철학자", "에너지 폭발 탐험가", "수줍은 구석 수호자", "도도한 집사 관리자", "껌딱지 애교쟁이", "예민한 경비대장"], "default": "소파 위의 철학자"},
+  "$preview": {"width": 540, "height": 960}
+}'>
+class Component extends DCLogic {
+  renderVals() {
+    const TYPES = {
+      '소파 위의 철학자': { mood: 'lazy', accent: '#C8F169', sub: '느긋한데 은근히 다 보고 있는 타입', tag1: '#낮잠장인', tag2: '#관찰력만렙', tag3: '#츤데레' },
+      '에너지 폭발 탐험가': { mood: 'explorer', accent: '#FFD24A', sub: '새로운 건 일단 가서 확인해야 직성이 풀림', tag1: '#호기심대장', tag2: '#우다다', tag3: '#겁없음' },
+      '수줍은 구석 수호자': { mood: 'shy', accent: '#FF8FC5', sub: '낯은 가리지만 내 사람한테는 진심', tag1: '#낯가림', tag2: '#구석선호', tag3: '#은근애교' },
+      '도도한 집사 관리자': { mood: 'boss', accent: '#8FD3FF', sub: '이 집의 진짜 주인은 따로 있다', tag1: '#도도함', tag2: '#자기주장', tag3: '#밥시간엄수' },
+      '껌딱지 애교쟁이': { mood: 'sweet', accent: '#FFB38A', sub: '집사 발소리만 들려도 달려오는 타입', tag1: '#껌딱지', tag2: '#골골송', tag3: '#무한애교' },
+      '예민한 경비대장': { mood: 'grumpy', accent: '#C9B8FF', sub: '작은 변화도 절대 그냥 넘기지 않음', tag1: '#예민보스', tag2: '#경계태세', tag3: '#촉좋음' },
+    };
+    const name = this.props.type ?? '소파 위의 철학자';
+    const t = { name, ...(TYPES[name] || TYPES['소파 위의 철학자']) };
+    const sp = (this.props.species ?? '고양이') === '강아지' ? 'dog' : 'cat';
+    return { t, sp, faceSize: 170 };
+  }
+}
+</script>
+</body>
+</html>

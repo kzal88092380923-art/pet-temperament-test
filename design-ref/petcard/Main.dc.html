@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>반려동물 테스트 결과</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #FBF6EC; font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; }
+  * { box-sizing: border-box; }
+  ::-webkit-scrollbar { display: none; }
+  button { font-family: inherit; }
+</style>
+</helmet>
+
+<div style="width: 390px; height: 844px; overflow-y: auto; background: #FBF6EC; color: #1C1B18; display: flex; flex-direction: column;">
+
+  <!-- Top -->
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 18px 20px 6px;">
+    <div style="font-size: 13px; font-weight: 700;">반려동물 성격 테스트</div>
+    <div style="font-family: 'Gaegu', cursive; font-size: 18px; font-weight: 700; background: {{t.accent}}; padding: 0 10px; border-radius: 999px; transform: rotate(-3deg);">결과 나왔다!</div>
+  </div>
+
+  <!-- Hero -->
+  <div style="position: relative; margin: 10px 20px 0; background: {{t.accent}}; border: 2.5px solid #1C1B18; border-radius: 28px 34px 26px 32px; padding: 22px 20px 20px; overflow: hidden;">
+    <svg width="34" height="34" viewBox="0 0 40 40" fill="none" stroke="#1C1B18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; right: 18px; top: 16px;">
+      <path d="M20 4 L23 16 L35 19 L23 23 L20 36 L17 23 L5 20 L17 16 Z"></path>
+    </svg>
+    <svg width="20" height="20" viewBox="0 0 40 40" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; right: 60px; top: 58px;">
+      <path d="M20 6 L22 17 L33 20 L22 23 L20 34 L18 23 L7 20 L18 17 Z"></path>
+    </svg>
+
+    <div style="font-family: 'Gaegu', cursive; font-size: 22px; font-weight: 700;">우리 아이는…</div>
+
+    <div style="display: flex; justify-content: center; margin: 6px 0 4px;">
+      <div style="width: 170px; height: 150px; border-radius: 48% 52% 46% 54%; background: #FBF6EC; border: 2.5px solid #1C1B18; display: flex; align-items: center; justify-content: center; transform: rotate(-2deg);">
+        <dc-import name="Face" species="{{sp}}" mood="{{t.mood}}" size="{{faceSize}}" hint-size="120px,110px"></dc-import>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 10px;">
+      <div style="font-size: 30px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.2;">{{t.name}}</div>
+      <svg width="210" height="16" viewBox="0 0 210 16" fill="none" style="display: block; margin: 2px auto 0;">
+        <path d="M4 10 C 40 3, 80 14, 120 7 C 150 2, 180 12, 206 6" stroke="#FF4FA3" stroke-width="5" stroke-linecap="round"></path>
+      </svg>
+      <div style="font-size: 14px; font-weight: 600; margin-top: 8px; color: #2D2B25;">{{t.sub}}</div>
+    </div>
+  </div>
+
+  <!-- tags -->
+  <div style="display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 20px 0; justify-content: center;">
+    <div style="font-size: 13px; font-weight: 700; background: #FFFFFF; border: 2px solid #1C1B18; border-radius: 999px; padding: 6px 12px; transform: rotate(-2deg);">{{t.tag1}}</div>
+    <div style="font-size: 13px; font-weight: 700; background: #FFD6EA; border: 2px solid #1C1B18; border-radius: 999px; padding: 6px 12px; transform: rotate(1.5deg);">{{t.tag2}}</div>
+    <div style="font-size: 13px; font-weight: 700; background: #FFFFFF; border: 2px solid #1C1B18; border-radius: 999px; padding: 6px 12px; transform: rotate(-1deg);">{{t.tag3}}</div>
+  </div>
+
+  <div style="margin: 18px 20px 0; font-size: 14.5px; line-height: 1.7; color: #2D2B25;">{{t.desc}}</div>
+
+  <!-- bento -->
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding: 18px 20px 0;">
+    <div style="background: #FFFFFF; border: 2px solid #1C1B18; border-radius: 20px 24px 18px 22px; padding: 14px;">
+      <div style="font-family: 'Gaegu', cursive; font-size: 19px; font-weight: 700;">찰떡 궁합</div>
+      <div style="font-size: 14px; font-weight: 700; margin-top: 4px;">{{t.match}}</div>
+      <div style="font-size: 12px; color: #55524A; margin-top: 4px; line-height: 1.5;">{{t.matchWhy}}</div>
+    </div>
+    <div style="background: #FFD6EA; border: 2px solid #1C1B18; border-radius: 22px 18px 24px 20px; padding: 14px;">
+      <div style="font-family: 'Gaegu', cursive; font-size: 19px; font-weight: 700;">이건 조심</div>
+      <div style="font-size: 14px; font-weight: 700; margin-top: 4px;">{{t.caution}}</div>
+      <div style="font-size: 12px; color: #4A3040; margin-top: 4px; line-height: 1.5;">{{t.cautionWhy}}</div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 10px; padding: 22px 20px 0;">
+    <button style="width: 100%; min-height: 54px; background: #1C1B18; color: #FBF6EC; border: none; border-radius: 16px; font-size: 15px; font-weight: 700; cursor: pointer;">인스타 스토리용 카드 저장</button>
+    <button style="width: 100%; min-height: 52px; background: #FEE500; color: #1C1B18; border: 2px solid #1C1B18; border-radius: 16px; font-size: 15px; font-weight: 700; cursor: pointer;">카톡으로 친구한테 보내기</button>
+    <button style="width: 100%; min-height: 44px; background: none; color: #55524A; border: none; font-size: 13.5px; font-weight: 600; cursor: pointer; text-decoration: underline;">다른 아이로 다시 하기</button>
+  </div>
+
+  <div style="height: 28px;"></div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{
+  "species": {"editor": "enum", "options": ["고양이", "강아지"], "default": "고양이"},
+  "type": {"editor": "enum", "options": ["소파 위의 철학자", "에너지 폭발 탐험가", "수줍은 구석 수호자", "도도한 집사 관리자", "껌딱지 애교쟁이", "예민한 경비대장"], "default": "소파 위의 철학자"},
+  "$preview": {"width": 390, "height": 844}
+}'>
+class Component extends DCLogic {
+  renderVals() {
+    const TYPES = {
+      '소파 위의 철학자': { mood: 'lazy', accent: '#C8F169', sub: '느긋한데 은근히 다 보고 있는 타입', tag1: '#낮잠장인', tag2: '#관찰력만렙', tag3: '#츤데레', desc: '하루 대부분을 제일 편한 자리에서 보내지만, 집 안에서 일어나는 일은 하나도 놓치지 않아요. 부르면 바로 안 오는데 모른 척하면 슬쩍 옆에 와 있는 스타일.', match: '에너지 폭발 탐험가', matchWhy: '내가 못 움직일 때 대신 신나줌', caution: '갑작스러운 소리', cautionWhy: '놀라면 한참 숨어 있어요' },
+      '에너지 폭발 탐험가': { mood: 'explorer', accent: '#FFD24A', sub: '새로운 건 일단 가서 확인해야 직성이 풀림', tag1: '#호기심대장', tag2: '#우다다', tag3: '#겁없음', desc: '새 상자, 새 소리, 새 손님까지 전부 직접 확인해야 해요. 하루에도 몇 번씩 집 안을 전력 질주하고, 놀아주기 시작하면 끝이 없어요.', match: '소파 위의 철학자', matchWhy: '옆에서 차분하게 받아줌', caution: '심심한 하루', cautionWhy: '에너지가 남으면 사고 쳐요' },
+      '수줍은 구석 수호자': { mood: 'shy', accent: '#FF8FC5', sub: '낯은 가리지만 내 사람한테는 진심', tag1: '#낯가림', tag2: '#구석선호', tag3: '#은근애교', desc: '처음 보는 사람이 오면 제일 먼저 사라져요. 대신 익숙한 사람 곁에서는 조용히 몸을 붙이고, 작은 소리로 말을 걸어요.', match: '껌딱지 애교쟁이', matchWhy: '먼저 다가와 줘서 편함', caution: '손님 많은 날', cautionWhy: '하루 종일 숨어 있을 수 있어요' },
+      '도도한 집사 관리자': { mood: 'boss', accent: '#8FD3FF', sub: '이 집의 진짜 주인은 따로 있다', tag1: '#도도함', tag2: '#자기주장', tag3: '#밥시간엄수', desc: '밥 시간, 놀이 시간, 쓰다듬는 시간까지 전부 본인이 정해요. 원하는 게 있으면 눈빛 하나로 집사를 움직이는 타입.', match: '수줍은 구석 수호자', matchWhy: '서열 싸움이 없음', caution: '규칙 바뀌는 날', cautionWhy: '루틴이 깨지면 삐져요' },
+      '껌딱지 애교쟁이': { mood: 'sweet', accent: '#FFB38A', sub: '집사 발소리만 들려도 달려오는 타입', tag1: '#껌딱지', tag2: '#골골송', tag3: '#무한애교', desc: '어디든 따라다니고, 앉으면 무릎 위로 올라와요. 혼자 있는 시간보다 같이 있는 시간이 훨씬 중요한 사랑둥이.', match: '도도한 집사 관리자', matchWhy: '서로 부족한 걸 채워줌', caution: '긴 외출', cautionWhy: '혼자 있는 시간이 길면 외로워해요' },
+      '예민한 경비대장': { mood: 'grumpy', accent: '#C9B8FF', sub: '작은 변화도 절대 그냥 넘기지 않음', tag1: '#예민보스', tag2: '#경계태세', tag3: '#촉좋음', desc: '창밖의 새, 낯선 냄새, 가구 위치 변화까지 다 알아채요. 까칠해 보여도 사실은 집을 지키느라 바쁜 거예요.', match: '소파 위의 철학자', matchWhy: '느긋함에 같이 긴장이 풀림', caution: '이사·대청소', cautionWhy: '환경 변화에 스트레스 받아요' },
+    };
+    const name = this.props.type ?? '소파 위의 철학자';
+    const t = { name, ...(TYPES[name] || TYPES['소파 위의 철학자']) };
+    const sp = (this.props.species ?? '고양이') === '강아지' ? 'dog' : 'cat';
+    return { t, sp, faceSize: 120 };
+  }
+}
+</script>
+</body>
+</html>

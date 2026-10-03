@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>반려동물 표정</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  body { margin: 0; }
+</style>
+</helmet>
+
+<div style="width: {{w}}px; height: {{h}}px; display: flex; align-items: center; justify-content: center;">
+  <sc-if value="{{catLazy}}" hint-placeholder-val="{{true}}">
+    <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 44 L18 12 L44 30"></path>
+      <path d="M98 44 L103 11 L76 30"></path>
+      <path d="M22 44 C 14 70, 30 98, 60 99 C 92 100, 108 72, 98 44 C 90 28, 32 26, 22 44 Z"></path>
+      <path d="M40 59 L54 59"></path>
+      <path d="M42 59 C 43 64, 51 64, 52 59"></path>
+      <path d="M66 59 L80 59"></path>
+      <path d="M68 59 C 69 64, 77 64, 78 59"></path>
+      <path d="M57 70 L60 74 L63 70"></path>
+      <path d="M60 74 C 58 80, 52 80, 50 77"></path>
+      <path d="M60 74 C 62 80, 68 80, 70 77"></path>
+      <path d="M34 72 L12 68"></path><path d="M34 77 L13 80"></path>
+      <path d="M86 72 L108 68"></path><path d="M86 77 L107 80"></path>
+    </svg>
+  </sc-if>
+  <sc-if value="{{catExplorer}}" hint-placeholder-val="{{false}}">
+    <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 44 L18 12 L44 30"></path>
+      <path d="M98 44 L103 11 L76 30"></path>
+      <path d="M22 44 C 14 70, 30 98, 60 99 C 92 100, 108 72, 98 44 C 90 28, 32 26, 22 44 Z"></path>
+      <circle cx="46" cy="58" r="7" fill="#1C1B18"></circle>
+      <circle cx="74" cy="58" r="7" fill="#1C1B18"></circle>
+      <circle cx="48.5" cy="55.5" r="2.4" fill="#FFFFFF" stroke="none"></circle>
+      <circle cx="76.5" cy="55.5" r="2.4" fill="#FFFFFF" stroke="none"></circle>
+      <path d="M57 69 L60 72 L63 69"></path>
+      <path d="M51 76 C 51 89, 69 89, 69 76 Z" fill="#1C1B18"></path>
+      <path d="M55 83 C 57 80, 63 80, 65 83" stroke="#FF4FA3" stroke-width="3"></path>
+      <path d="M34 72 L12 68"></path><path d="M34 77 L13 80"></path>
+      <path d="M86 72 L108 68"></path><path d="M86 77 L107 80"></path>
+    </svg>
+  </sc-if>
+  <sc-if value="{{catShy}}" hint-placeholder-val="{{false}}">
+    <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 44 L18 12 L44 30"></path>
+      <path d="M98 44 L103 11 L76 30"></path>
+      <path d="M22 44 C 14 70, 30 98, 60 99 C 92 100, 108 72, 98 44 C 90 28, 32 26, 22 44 Z"></path>
+      <circle cx="43" cy="60" r="3.8" fill="#1C1B18"></circle>
+      <circle cx="69" cy="60" r="3.8" fill="#1C1B18"></circle>
+      <ellipse cx="38" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"></ellipse>
+      <ellipse cx="82" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"></ellipse>
+      <path d="M57 69 L60 73 L63 69"></path>
+      <path d="M53 80 C 55 77, 57 82, 60 79 C 63 77, 65 82, 67 80"></path>
+      <path d="M30 76 L12 74"></path>
+      <path d="M90 76 L108 74"></path>
+    </svg>
+  </sc-if>
+  <sc-if value="{{catBoss}}" hint-placeholder-val="{{false}}">
+    <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 44 L18 12 L44 30"></path>
+      <path d="M98 44 L103 11 L76 30"></path>
+      <path d="M22 44 C 14 70, 30 98, 60 99 C 92 100, 108 72, 98 44 C 90 28, 32 26, 22 44 Z"></path>
+      <path d="M40 58 L54 58"></path>
+      <path d="M41 58 C 42 65, 53 65, 54 58 Z" fill="#1C1B18"></path>
+      <path d="M66 58 L80 58"></path>
+      <path d="M66 58 C 67 65, 78 65, 79 58 Z" fill="#1C1B18"></path>
+      <path d="M57 70 L60 74 L63 70"></path>
+      <path d="M56 80 C 60 82, 65 81, 69 76"></path>
+      <path d="M34 72 L12 68"></path><path d="M34 77 L13 80"></path>
+      <path d="M86 72 L108 68"></path><path d="M86 77 L107 80"></path>
+    </svg>
+  </sc-if>
+  <sc-if value="{{catSweet}}" hint-placeholder-val="{{false}}">
+    <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 44 L18 12 L44 30"></path>
+      <path d="M98 44 L103 11 L76 30"></path>
+      <path d="M22 44 C 14 70, 30 98, 60 99 C 92 100, 108 72, 98 44 C 90 28, 32 26, 22 44 Z"></path>
+      <path d="M41 54 L50 59 L41 64"></path>
+      <path d="M79 54 L70 59 L79 64"></path>
+      <ellipse cx="38" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"></ellipse>
+      <ellipse cx="82" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"></ellipse>
+      <path d="M57 69 L60 73 L63 69"></path>
+      <path d="M60 73 C 58 79, 52 79, 50 76"></path>
+      <path d="M60 73 C 62 79, 68 79, 70 76"></path>
+      <path d="M34 77 L13 80"></path>
+      <path d="M86 77 L107 80"></path>
+    </svg>
+  </sc-if>
+  <sc-if value="{{catGrumpy}}" hint-placeholder-val="{{false}}">
+    <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 44 L18 12 L44 30"></path>
+      <path d="M98 44 L103 11 L76 30"></path>
+      <path d="M22 44 C 14 70, 30 98, 60 99 C 92 100, 108 72, 98 44 C 90 28, 32 26, 22 44 Z"></path>
+      <path d="M39 49 L54 55" stroke-width="3.6"></path>
+      <path d="M81 49 L66 55" stroke-width="3.6"></path>
+      <ellipse cx="47" cy="61" rx="5.5" ry="2.8" fill="#1C1B18"></ellipse>
+      <ellipse cx="73" cy="61" rx="5.5" ry="2.8" fill="#1C1B18"></ellipse>
+      <path d="M57 70 L60 74 L63 70"></path>
+      <path d="M52 84 C 56 78, 64 78, 68 84"></path>
+      <path d="M34 72 L12 66"></path><path d="M34 77 L13 78"></path>
+      <path d="M86 72 L108 66"></path><path d="M86 77 L107 78"></path>
+    </svg>
+  </sc-if>
+  <sc-if value="{{dogLazy}}" hint-placeholder-val="{{false}}">
+    <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M30 40 C 30 18, 90 18, 90 40 C 97 62, 90 97, 60 98 C 30 97, 23 62, 30 40 Z"></path>
+      <path d="M70 43 C 84 40, 89 57, 81 64 C 73 67, 65 54, 70 43 Z" fill="#E8D5B0" stroke="none"></path>
+      <path d="M34 28 C 18 24, 7 44, 11 67 C 13 78, 25 76, 28 62 C 30 50, 31 38, 34 28 Z" fill="#FBF6EC"></path>
+      <path d="M86 28 C 102 24, 113 44, 109 67 C 107 78, 95 76, 92 62 C 90 50, 89 38, 86 28 Z" fill="#E8D5B0"></path>
+      <path d="M40 56 L54 56"></path>
+      <path d="M42 56 C 43 61, 51 61, 52 56"></path>
+      <path d="M66 56 L80 56"></path>
+      <path d="M68 56 C 69 61, 77 61, 78 56"></path>
+      <path d="M52 70 C 52 65, 68 65, 68 70 C 68 75, 52 75, 52 70 Z" fill="#1C1B18"></path>
+      <path d="M60 75 L60 79"></path>
+      <path d="M60 79 C 57 83, 52 83, 50 80"></path>
+      <path d="M60 79 C 63 83, 68 83, 70 80"></path>
+    </svg>
+  </sc-if>
+  <sc-if value="{{dogExplorer}}" hint-placeholder-val="{{false}}">
+    <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M30 40 C 30 18, 90 18, 90 40 C 97 62, 90 97, 60 98 C 30 97, 23 62, 30 40 Z"></path>
+      <path d="M70 43 C 84 40, 89 57, 81 64 C 73 67, 65 54, 70 43 Z" fill="#E8D5B0" stroke="none"></path>
+      <path d="M34 28 C 18 24, 7 44, 11 67 C 13 78, 25 76, 28 62 C 30 50, 31 38, 34 28 Z" fill="#FBF6EC"></path>
+      <path d="M86 28 C 102 24, 113 44, 109 67 C 107 78, 95 76, 92 62 C 90 50, 89 38, 86 28 Z" fill="#E8D5B0"></path>
+      <circle cx="46" cy="55" r="7" fill="#1C1B18"></circle>
+      <circle cx="74" cy="55" r="7" fill="#1C1B18"></circle>
+      <circle cx="48.5" cy="52.5" r="2.4" fill="#FFFFFF" stroke="none"></circle>
+      <circle cx="76.5" cy="52.5" r="2.4" fill="#FFFFFF" stroke="none"></circle>
+      <path d="M52 70 C 52 65, 68 65, 68 70 C 68 75, 52 75, 52 70 Z" fill="#1C1B18"></path>
+      <path d="M60 75 L60 79"></path>
+      <path d="M46 80 C 50 88, 70 88, 74 80"></path>
+      <path d="M54 84 C 54 96, 66 96, 66 84" fill="#FF8FC5"></path>
+      <path d="M60 85 L60 91"></path>
+    </svg>
+  </sc-if>
+  <sc-if value="{{dogShy}}" hint-placeholder-val="{{false}}">
+    <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M30 40 C 30 18, 90 18, 90 40 C 97 62, 90 97, 60 98 C 30 97, 23 62, 30 40 Z"></path>
+      <path d="M70 43 C 84 40, 89 57, 81 64 C 73 67, 65 54, 70 43 Z" fill="#E8D5B0" stroke="none"></path>
+      <path d="M34 28 C 18 24, 7 44, 11 67 C 13 78, 25 76, 28 62 C 30 50, 31 38, 34 28 Z" fill="#FBF6EC"></path>
+      <path d="M86 28 C 102 24, 113 44, 109 67 C 107 78, 95 76, 92 62 C 90 50, 89 38, 86 28 Z" fill="#E8D5B0"></path>
+      <circle cx="43" cy="57" r="3.8" fill="#1C1B18"></circle>
+      <circle cx="69" cy="57" r="3.8" fill="#1C1B18"></circle>
+      <ellipse cx="38" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"></ellipse>
+      <ellipse cx="82" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"></ellipse>
+      <path d="M52 70 C 52 65, 68 65, 68 70 C 68 75, 52 75, 52 70 Z" fill="#1C1B18"></path>
+      <path d="M60 75 L60 79"></path>
+      <path d="M54 83 C 56 80, 58 85, 60 82 C 62 80, 64 85, 66 83"></path>
+    </svg>
+  </sc-if>
+  <sc-if value="{{dogBoss}}" hint-placeholder-val="{{false}}">
+    <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M30 40 C 30 18, 90 18, 90 40 C 97 62, 90 97, 60 98 C 30 97, 23 62, 30 40 Z"></path>
+      <path d="M70 43 C 84 40, 89 57, 81 64 C 73 67, 65 54, 70 43 Z" fill="#E8D5B0" stroke="none"></path>
+      <path d="M34 28 C 18 24, 7 44, 11 67 C 13 78, 25 76, 28 62 C 30 50, 31 38, 34 28 Z" fill="#FBF6EC"></path>
+      <path d="M86 28 C 102 24, 113 44, 109 67 C 107 78, 95 76, 92 62 C 90 50, 89 38, 86 28 Z" fill="#E8D5B0"></path>
+      <path d="M40 55 L54 55"></path>
+      <path d="M41 55 C 42 62, 53 62, 54 55 Z" fill="#1C1B18"></path>
+      <path d="M66 55 L80 55"></path>
+      <path d="M66 55 C 67 62, 78 62, 79 55 Z" fill="#1C1B18"></path>
+      <path d="M52 70 C 52 65, 68 65, 68 70 C 68 75, 52 75, 52 70 Z" fill="#1C1B18"></path>
+      <path d="M60 75 L60 79"></path>
+      <path d="M60 79 C 63 82, 68 82, 71 77"></path>
+    </svg>
+  </sc-if>
+  <sc-if value="{{dogSweet}}" hint-placeholder-val="{{false}}">
+    <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M30 40 C 30 18, 90 18, 90 40 C 97 62, 90 97, 60 98 C 30 97, 23 62, 30 40 Z"></path>
+      <path d="M70 43 C 84 40, 89 57, 81 64 C 73 67, 65 54, 70 43 Z" fill="#E8D5B0" stroke="none"></path>
+      <path d="M34 28 C 18 24, 7 44, 11 67 C 13 78, 25 76, 28 62 C 30 50, 31 38, 34 28 Z" fill="#FBF6EC"></path>
+      <path d="M86 28 C 102 24, 113 44, 109 67 C 107 78, 95 76, 92 62 C 90 50, 89 38, 86 28 Z" fill="#E8D5B0"></path>
+      <path d="M41 51 L50 56 L41 61"></path>
+      <path d="M79 51 L70 56 L79 61"></path>
+      <ellipse cx="38" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"></ellipse>
+      <ellipse cx="82" cy="71" rx="7" ry="4" fill="#FF8FC5" stroke="none"></ellipse>
+      <path d="M52 70 C 52 65, 68 65, 68 70 C 68 75, 52 75, 52 70 Z" fill="#1C1B18"></path>
+      <path d="M60 75 L60 79"></path>
+      <path d="M60 79 C 57 83, 52 83, 50 80"></path>
+      <path d="M60 79 C 63 83, 68 83, 70 80"></path>
+      <path d="M62 81 C 62 89, 70 89, 70 81" fill="#FF8FC5"></path>
+    </svg>
+  </sc-if>
+  <sc-if value="{{dogGrumpy}}" hint-placeholder-val="{{false}}">
+    <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M30 40 C 30 18, 90 18, 90 40 C 97 62, 90 97, 60 98 C 30 97, 23 62, 30 40 Z"></path>
+      <path d="M70 43 C 84 40, 89 57, 81 64 C 73 67, 65 54, 70 43 Z" fill="#E8D5B0" stroke="none"></path>
+      <path d="M34 28 C 18 24, 7 44, 11 67 C 13 78, 25 76, 28 62 C 30 50, 31 38, 34 28 Z" fill="#FBF6EC"></path>
+      <path d="M86 28 C 102 24, 113 44, 109 67 C 107 78, 95 76, 92 62 C 90 50, 89 38, 86 28 Z" fill="#E8D5B0"></path>
+      <path d="M39 46 L54 52" stroke-width="3.6"></path>
+      <path d="M81 46 L66 52" stroke-width="3.6"></path>
+      <ellipse cx="47" cy="58" rx="5.5" ry="2.8" fill="#1C1B18"></ellipse>
+      <ellipse cx="73" cy="58" rx="5.5" ry="2.8" fill="#1C1B18"></ellipse>
+      <path d="M52 70 C 52 65, 68 65, 68 70 C 68 75, 52 75, 52 70 Z" fill="#1C1B18"></path>
+      <path d="M60 75 L60 79"></path>
+      <path d="M51 86 C 55 80, 65 80, 69 86"></path>
+    </svg>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{
+  "species": {"editor": "enum", "options": ["cat", "dog"], "default": "cat"},
+  "mood": {"editor": "enum", "options": ["lazy", "explorer", "shy", "boss", "sweet", "grumpy"], "default": "lazy"},
+  "size": {"editor": "int", "default": 240, "min": 60, "max": 400},
+  "$preview": {"width": 240, "height": 220}
+}'>
+class Component extends DCLogic {
+  renderVals() {
+    const sp = this.props.species ?? 'cat';
+    const mood = this.props.mood ?? 'lazy';
+    const w = this.props.size ?? 240;
+    return {
+      w,
+      h: Math.round(w * 110 / 120),
+      catLazy: sp === 'cat' && mood === 'lazy',
+      catExplorer: sp === 'cat' && mood === 'explorer',
+      catShy: sp === 'cat' && mood === 'shy',
+      catBoss: sp === 'cat' && mood === 'boss',
+      catSweet: sp === 'cat' && mood === 'sweet',
+      catGrumpy: sp === 'cat' && mood === 'grumpy',
+      dogLazy: sp === 'dog' && mood === 'lazy',
+      dogExplorer: sp === 'dog' && mood === 'explorer',
+      dogShy: sp === 'dog' && mood === 'shy',
+      dogBoss: sp === 'dog' && mood === 'boss',
+      dogSweet: sp === 'dog' && mood === 'sweet',
+      dogGrumpy: sp === 'dog' && mood === 'grumpy',
+    };
+  }
+}
+</script>
+</body>
+</html>
