@@ -74,19 +74,12 @@ body{background:var(--bg);color:var(--text);font-family:'Pretendard',-apple-syst
 .prog-bar{background:var(--cream);border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:40;padding:12px 18px;display:flex;align-items:center;gap:12px;}
 .prog-track{flex:1;height:14px;background:#fff;border:2px solid var(--ink);border-radius:50px;overflow:hidden;}
 .prog-fill{height:100%;background:var(--lime);box-shadow:inset -2px 0 0 var(--ink);border-radius:50px;transition:width 0.4s ease;}
+.prog-back{width:36px;height:36px;margin:-6px 0 -6px -8px;display:inline-flex;align-items:center;justify-content:center;border:none;background:none;color:var(--ink);border-radius:50%;cursor:pointer;flex-shrink:0;}
+.prog-back[hidden]{display:none;}
+.prog-back svg{width:22px;height:22px;}
+.prog-back:active{background:rgba(28,27,24,0.08);}
 .prog-label{font-size:var(--fs-aux);font-weight:700;color:var(--ink);white-space:nowrap;line-height:1;}
 
-/* ── 섹션 전환 배너 ── */
-.sec-banner{display:none;position:fixed;inset:0;background:var(--cream);z-index:80;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center;}
-.sec-banner.show{display:flex;animation:fadeUp 0.3s ease;}
-.sec-banner-icon{width:120px;height:106px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;background:var(--lime);border:2.5px solid var(--ink);border-radius:48% 52% 46% 54%;}
-.sec-banner-icon .face{width:92px;height:84px;}
-.sec-banner-tag{display:inline-block;padding:4px 14px;border-radius:999px;font-size:var(--fs-aux);font-weight:700;margin-bottom:12px;border:2px solid var(--ink);background:#fff;}
-.sec-banner-title{font-size:var(--fs-title);font-weight:800;color:var(--ink);margin-bottom:8px;letter-spacing:-0.03em;}
-.sec-banner-desc{font-size:var(--fs-body);color:var(--text2);line-height:1.6;font-weight:500;max-width:280px;margin-bottom:22px;word-break:keep-all;}
-.sec-banner-qcount{font-size:var(--fs-aux);font-weight:500;color:var(--text3);margin-bottom:20px;}
-.sec-banner-btn{min-height:52px;padding:14px 40px;border:2px solid var(--ink);border-radius:16px;background:var(--ink);color:var(--cream);font-family:inherit;font-size:var(--fs-body);font-weight:700;cursor:pointer;}
-.sec-banner-btn:active{transform:translateY(1px);}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
@@ -99,6 +92,10 @@ body{background:var(--bg);color:var(--text);font-family:'Pretendard',-apple-syst
 @keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
 .s-label{font-size:var(--fs-aux);font-weight:700;color:var(--text3);margin-bottom:6px;line-height:1.3;}
+.sec-tag{display:inline-block;font-size:var(--fs-aux);font-weight:700;color:var(--ink);background:#fff;border:2px solid var(--ink);border-radius:999px;padding:3px 12px;margin-bottom:10px;}
+.s-desc{font-size:var(--fs-body);font-weight:500;color:var(--text2);line-height:1.6;margin:-8px 0 20px;word-break:keep-all;}
+.s0-note{margin-top:22px;font-size:var(--fs-aux);font-weight:500;color:var(--text3);line-height:1.6;word-break:keep-all;}
+.s0-note a{color:var(--text3);text-underline-offset:2px;}
 .s-title{font-size:var(--fs-title);font-weight:800;color:var(--ink);margin-bottom:20px;line-height:1.3;letter-spacing:-0.03em;word-break:keep-all;}
 .s-title .sub{display:block;font-size:var(--fs-aux);color:var(--text2);font-weight:500;margin-top:4px;}
 .field-label{font-size:var(--fs-body);font-weight:700;color:var(--ink);margin-bottom:8px;}
@@ -135,7 +132,7 @@ input::placeholder{color:#8A867B;font-weight:500;}
 
 /* ── nav ── */
 .nav{position:fixed;bottom:0;left:0;right:0;display:flex;flex-direction:column;gap:8px;padding:12px 20px;padding-bottom:calc(12px + env(safe-area-inset-bottom));background:rgba(251,246,236,0.96);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:2px solid var(--ink);z-index:50;transition:opacity 0.12s ease,transform 0.12s ease;}
-body.nav-switching .nav,.sec-banner.show + .tablet-layout .nav{opacity:0;pointer-events:none;transform:translateY(8px);}
+body.nav-switching .nav{opacity:0;pointer-events:none;transform:translateY(8px);}
 .err{display:none;color:var(--danger);font-size:var(--fs-aux);font-weight:700;padding:8px 12px;background:#fff;border:2px solid var(--danger);border-radius:12px;}
 .err.show{display:block;}
 .nav-btns{display:flex;gap:10px;}
@@ -254,18 +251,6 @@ body:has(.result-wrap.show){background:#FBF6EC;}
 .privacy-link{display:block;text-align:center;padding:4px 8px 12px;font-size:var(--fs-aux);font-weight:500;color:var(--text3);text-decoration:underline;text-underline-offset:2px;}
 .toast{position:fixed;left:50%;bottom:90px;-webkit-transform:translateX(-50%);transform:translateX(-50%);background:var(--ink);color:var(--cream);padding:11px 18px;border-radius:30px;font-size:var(--fs-aux);font-weight:700;z-index:200;border:2px solid var(--ink);opacity:0;transition:opacity 0.2s;pointer-events:none;}
 .toast.show{opacity:1;}
-.intro-modal{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(28,27,24,0.55);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);}
-.intro-modal.show{display:flex;}
-.intro-box{background:var(--cream);border:2.5px solid var(--ink);border-radius:28px;max-width:380px;width:100%;padding:28px 24px 20px;text-align:center;animation:introPop 0.22s ease;}
-@keyframes introPop{from{opacity:0;transform:scale(0.94) translateY(8px);}to{opacity:1;transform:none;}}
-.intro-emoji{width:96px;height:84px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;background:var(--lime);border:2.5px solid var(--ink);border-radius:48% 52% 46% 54%;}
-.intro-emoji .face{width:74px;height:68px;}
-.intro-title{font-size:var(--fs-sub);font-weight:800;letter-spacing:-0.02em;color:var(--ink);margin-bottom:10px;word-break:keep-all;}
-.intro-desc{font-size:var(--fs-body);color:var(--text2);line-height:1.6;font-weight:500;margin-bottom:18px;word-break:keep-all;}
-.intro-dev{display:flex;align-items:center;justify-content:center;gap:7px;font-size:var(--fs-aux);font-weight:500;color:var(--text2);padding:11px;background:#fff;border:2px solid var(--ink);border-radius:14px;margin-bottom:12px;text-decoration:none;}
-.intro-dev b{color:var(--ink);font-weight:700;}
-.intro-btn{width:100%;min-height:52px;padding:13px;background:var(--ink);color:var(--cream);border:2px solid var(--ink);border-radius:16px;font-family:inherit;font-size:var(--fs-body);font-weight:700;cursor:pointer;}
-.intro-btn:active{transform:translateY(1px);}
 .disclaimer{margin:0 16px 16px;padding:12px 14px;background:transparent;border:2px dashed var(--ink);border-radius:14px;font-size:var(--fs-aux);color:var(--text3);line-height:1.7;text-align:center;}
 
 /* ════════════════════════════
@@ -377,9 +362,6 @@ body:has(.result-wrap.show){background:#FBF6EC;}
   /* nav */
   .nav{left:300px;right:280px;padding:14px 40px;}
 
-  /* 섹션 배너 — PC에서 중앙 팝업 */
-  .sec-banner{background:rgba(251,246,236,0.94);backdrop-filter:blur(12px);}
-  .sec-banner > *{position:relative;z-index:1;}
 }
 </style>
 
@@ -388,18 +370,9 @@ body:has(.result-wrap.show){background:#FBF6EC;}
 
 <!-- 진행바 -->
 <div class="prog-bar" id="progBar">
+  <button class="prog-back" id="progBack" type="button" onclick="goBack()" aria-label="이전 화면" hidden><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 L10 16 L20 26"/></svg></button>
   <div class="prog-track"><div class="prog-fill" id="progFill" style="width:5%"></div></div>
-  <div class="prog-label" id="progLabel">기본 정보</div>
-</div>
-
-<!-- 섹션 전환 배너 -->
-<div class="sec-banner" id="secBanner">
-  <div class="sec-banner-icon" id="bannerIcon"></div>
-  <div class="sec-banner-tag" id="bannerTag"></div>
-  <div class="sec-banner-title" id="bannerTitle"></div>
-  <div class="sec-banner-desc" id="bannerDesc"></div>
-  <div class="sec-banner-qcount" id="bannerCount"></div>
-  <button class="sec-banner-btn" onclick="closeBanner()">시작할게요</button>
+  <div class="prog-label" id="progLabel">시작</div>
 </div>
 
 <!-- 태블릿·PC용 레이아웃 wrapper -->
@@ -410,31 +383,6 @@ body:has(.result-wrap.show){background:#FBF6EC;}
   <div>
     <div class="sidebar-title">우리 아이 성격 분석</div>
     <div class="sidebar-sub">12가지 질문으로<br>반려동물의 기질을 분석해요</div>
- </div>
-  <div>
-    <div class="sidebar-heading">진행 섹션</div>
-    <div class="sidebar-steps">
-      <div class="sidebar-step active" id="ss_0">
-        <div class="sidebar-step-dot"></div>
-        <span class="sidebar-step-label">기본 정보</span>
-     </div>
-      <div class="sidebar-step" id="ss_1">
-        <div class="sidebar-step-dot"></div>
-        <span class="sidebar-step-label">성격·에너지</span>
-     </div>
-      <div class="sidebar-step" id="ss_2">
-        <div class="sidebar-step-dot"></div>
-        <span class="sidebar-step-label">사회성·관계</span>
-     </div>
-      <div class="sidebar-step" id="ss_3">
-        <div class="sidebar-step-dot"></div>
-        <span class="sidebar-step-label">생활·습관</span>
-     </div>
-      <div class="sidebar-step" id="ss_4">
-        <div class="sidebar-step-dot"></div>
-        <span class="sidebar-step-label">건강·특성</span>
-     </div>
-   </div>
  </div>
   <div class="sidebar-pet-info" id="sidebarPetInfo" style="display:none;">
     <span class="sidebar-pet-icon" id="sidebarIcon"></span>
@@ -449,7 +397,6 @@ body:has(.result-wrap.show){background:#FBF6EC;}
 
   <!-- ── Step 0: 기본 정보 ── -->
   <div class="screen active" id="s0">
-    <div class="s-label">시작</div>
     <div class="s-title">우리 아이를 소개해 주세요</div>
 
     <!-- 동물 유형 -->
@@ -477,6 +424,176 @@ body:has(.result-wrap.show){background:#FBF6EC;}
    </div>
     <input type="hidden" id="q_pet_type">
 
+    <!-- 기타 동물 주관식 -->
+    <div id="otherAnimalWrap" style="display:none;margin-bottom:14px;">
+      <div class="field-label">어떤 동물인가요?</div>
+      <input type="text" id="q_other_animal" placeholder="예: 햄스터, 앵무새, 고슴도치, 페럿" maxlength="20">
+   </div>
+
+    <!-- 이름 -->
+    <div style="margin-bottom:14px;">
+      <div class="field-label">이름</div>
+      <input type="text" id="q_pet_name" placeholder="예: 콩이, 모카, 나비" maxlength="10">
+   </div>
+
+    <p class="s0-note">결과는 저장되지 않아요. 모든 분석은 내 기기 안에서만 이뤄져요. <a href="https://superstarkzal.com/privacy.html" target="_blank" rel="noopener">개인정보처리방침</a></p>
+
+ </div>
+
+  <!-- ══ 섹션 1: 성격·에너지 ══ -->
+  <div class="screen" id="s1">
+    <div class="sec-tag">성격·에너지</div>
+    <div class="s-title" id="q1t">평소 에너지 레벨이 어때요?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q1','넘쳐흘러요')">넘쳐흘러요</div>
+      <div class="opt" onclick="selOpt(this,'q1','활발한 편')">활발해요</div>
+      <div class="opt" onclick="selOpt(this,'q1','보통이에요')">보통이에요</div>
+      <div class="opt" onclick="selOpt(this,'q1','조용해요')">조용해요</div>
+   </div>
+    <input type="hidden" id="q1">
+ </div>
+
+  <div class="screen" id="s2">
+    <div class="sec-tag">성격·에너지</div>
+    <div class="s-title" id="q2t">고집이 있는 편인가요?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q2','매우 고집 있어요')">내 마음대로</div>
+      <div class="opt" onclick="selOpt(this,'q2','조금 고집 있어요')">가끔 고집</div>
+      <div class="opt" onclick="selOpt(this,'q2','순한 편이에요')">순해요</div>
+      <div class="opt" onclick="selOpt(this,'q2','매우 순해요')">매우 순해요</div>
+   </div>
+    <input type="hidden" id="q2">
+ </div>
+
+  <div class="screen" id="s3">
+    <div class="sec-tag">성격·에너지</div>
+    <div class="s-title" id="q3t">호기심이 많은 편인가요?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q3','탐험가 타입')">탐험가예요</div>
+      <div class="opt" onclick="selOpt(this,'q3','관심 있는 것만')">선택적으로</div>
+      <div class="opt" onclick="selOpt(this,'q3','별로 없어요')">별로 없어요</div>
+      <div class="opt" onclick="selOpt(this,'q3','겁이 많아요')">겁쟁이예요</div>
+   </div>
+    <input type="hidden" id="q3">
+ </div>
+
+  <!-- ══ 섹션 2: 사회성·관계 ══ -->
+  <div class="screen" id="s4">
+    <div class="sec-tag">사회성·관계</div>
+    <div class="s-title" id="q4t">낯선 사람을 만나면?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q4','먼저 다가가요')">먼저 가요</div>
+      <div class="opt" onclick="selOpt(this,'q4','살펴보다 친해져요')">살펴봐요</div>
+      <div class="opt" onclick="selOpt(this,'q4','뒤에 숨어요')">숨어요</div>
+      <div class="opt" onclick="selOpt(this,'q4','짖거나 경계해요')">경계해요</div>
+   </div>
+    <input type="hidden" id="q4">
+ </div>
+
+  <div class="screen" id="s5">
+    <div class="sec-tag">사회성·관계</div>
+    <div class="s-title" id="q5t">보호자와 떨어지면?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q5','심하게 불안해해요')">많이 불안</div>
+      <div class="opt" onclick="selOpt(this,'q5','조금 기다려요')">조금 기다려</div>
+      <div class="opt" onclick="selOpt(this,'q5','혼자 잘 놀아요')">혼자 잘 놀아</div>
+      <div class="opt" onclick="selOpt(this,'q5','더 자유로워해요')">자유로워요</div>
+   </div>
+    <input type="hidden" id="q5">
+ </div>
+
+  <div class="screen" id="s6">
+    <div class="sec-tag">사회성·관계</div>
+    <div class="s-title" id="q6t">스킨십을 얼마나 좋아하나요?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q6','껌딱지예요')">껌딱지</div>
+      <div class="opt" onclick="selOpt(this,'q6','좋아해요')">좋아해요</div>
+      <div class="opt" onclick="selOpt(this,'q6','가끔 허락해요')">가끔만</div>
+      <div class="opt" onclick="selOpt(this,'q6','건드리지 마세요')">싫어요</div>
+   </div>
+    <input type="hidden" id="q6">
+ </div>
+
+  <!-- ══ 섹션 3: 생활·습관 ══ -->
+  <div class="screen" id="s7">
+    <div class="sec-tag">생활·습관</div>
+    <div class="s-title" id="q7t">밥은 잘 먹나요?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q7','뭐든 잘 먹어요')">뭐든 잘 먹어요</div>
+      <div class="opt" onclick="selOpt(this,'q7','편식이 있어요')">편식해요</div>
+      <div class="opt" onclick="selOpt(this,'q7','식욕이 없어요')">별로 안 먹어요</div>
+      <div class="opt" onclick="selOpt(this,'q7','과식하는 편')">너무 많이 먹어요</div>
+   </div>
+    <input type="hidden" id="q7">
+ </div>
+
+  <div class="screen" id="s8">
+    <div class="sec-tag">생활·습관</div>
+    <div class="s-title" id="q8t">잠은 어떻게 자나요?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q8','어디서든 잘 자요')">어디든 잘 자요</div>
+      <div class="opt" onclick="selOpt(this,'q8','보호자 곁에서만')">곁에서만 자요</div>
+      <div class="opt" onclick="selOpt(this,'q8','잘 못 자요')">잘 못 자요</div>
+      <div class="opt" onclick="selOpt(this,'q8','하루종일 자요')">너무 많이 자요</div>
+   </div>
+    <input type="hidden" id="q8">
+ </div>
+
+  <div class="screen" id="s9">
+    <div class="sec-tag">생활·습관</div>
+    <div class="s-title" id="q9t">훈련·규칙을 잘 따르나요?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q9','천재예요')">금방 배워요</div>
+      <div class="opt" onclick="selOpt(this,'q9','노력하면 돼요')">노력하면</div>
+      <div class="opt" onclick="selOpt(this,'q9','기분에 따라')">기분 따라요</div>
+      <div class="opt" onclick="selOpt(this,'q9','내 마음대로')">내 맘대로</div>
+   </div>
+    <input type="hidden" id="q9">
+ </div>
+
+  <!-- ══ 섹션 4: 건강·특성 ══ -->
+  <div class="screen" id="s10">
+    <div class="sec-tag">건강·특성</div>
+    <div class="s-title" id="q10t">소리·환경 변화에 예민한가요?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q10','매우 예민해요')">매우 예민</div>
+      <div class="opt" onclick="selOpt(this,'q10','조금 예민해요')">조금 예민</div>
+      <div class="opt" onclick="selOpt(this,'q10','보통이에요')">보통이에요</div>
+      <div class="opt" onclick="selOpt(this,'q10','둔감해요')">둔감해요</div>
+   </div>
+    <input type="hidden" id="q10">
+ </div>
+
+  <div class="screen" id="s11">
+    <div class="sec-tag">건강·특성</div>
+    <div class="s-title" id="q11t">장난감·놀이를 좋아하나요?</div>
+    <div class="opts">
+      <div class="opt" onclick="selOpt(this,'q11','장난감 없으면 못 살아요')">장난감 덕후</div>
+      <div class="opt" onclick="selOpt(this,'q11','좋아하는 편')">좋아해요</div>
+      <div class="opt" onclick="selOpt(this,'q11','가끔 관심')">가끔 해요</div>
+      <div class="opt" onclick="selOpt(this,'q11','별로 안 좋아해요')">관심 없어요</div>
+   </div>
+    <input type="hidden" id="q11">
+ </div>
+
+  <div class="screen" id="s12">
+    <div class="sec-tag">건강·특성</div>
+    <div class="s-title" id="q12t">문제 행동이 있나요?</div>
+    <div class="opts col1">
+      <div class="opt" onclick="selOpt(this,'q12','없어요 — 모범생')">없어요 — 모범생이에요</div>
+      <div class="opt" onclick="selOpt(this,'q12','짖음이 심해요')">짖음이 심해요</div>
+      <div class="opt" onclick="selOpt(this,'q12','물건을 부숴요')">물건을 부숴요</div>
+      <div class="opt" onclick="selOpt(this,'q12','분리불안이 있어요')">분리불안이 있어요</div>
+   </div>
+    <input type="hidden" id="q12">
+ </div>
+
+  <!-- ══ 추가 정보 (선택): 추천 용품 정확도 ══ -->
+  <div class="screen" id="s13">
+    <div class="sec-tag">마지막 · 선택</div>
+    <div class="s-title">추천 용품을 더 정확하게</div>
+    <p class="s-desc">입력하면 크기·나이·취향에 맞는 용품을 골라 드려요. 건너뛰어도 성격 결과는 똑같아요.</p>
+
     <!-- 강아지 세분화 -->
     <div id="dogSizeWrap" style="display:none;margin-bottom:14px;">
       <div class="field-label">크기</div>
@@ -497,18 +614,6 @@ body:has(.result-wrap.show){background:#FBF6EC;}
         <div class="chip" onclick="selChip(this,'catType','다묘가정')">다묘 가정</div>
      </div>
       <input type="hidden" id="q_cat_type">
-   </div>
-
-    <!-- 기타 동물 주관식 -->
-    <div id="otherAnimalWrap" style="display:none;margin-bottom:14px;">
-      <div class="field-label">어떤 동물인가요?</div>
-      <input type="text" id="q_other_animal" placeholder="예: 햄스터, 앵무새, 고슴도치, 페럿" maxlength="20">
-   </div>
-
-    <!-- 이름 -->
-    <div style="margin-bottom:14px;">
-      <div class="field-label">이름</div>
-      <input type="text" id="q_pet_name" placeholder="예: 콩이, 모카, 나비" maxlength="10">
    </div>
 
     <!-- 나이 -->
@@ -550,161 +655,13 @@ body:has(.result-wrap.show){background:#FBF6EC;}
       <div class="field-label">피해야 할 재료·알러지</div>
       <input type="text" id="q_allergy" placeholder="예: 닭, 닭가슴살, 곡물 (없으면 비워두기)" maxlength="30">
    </div>
- </div>
-
-  <!-- ══ 섹션 1: 성격·에너지 ══ -->
-  <div class="screen" id="s1">
-    <div class="s-label">성격·에너지 · 1 / 3</div>
-    <div class="s-title" id="q1t">평소 에너지 레벨이 어때요?</div>
-    <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q1','넘쳐흘러요')">넘쳐흘러요</div>
-      <div class="opt" onclick="selOpt(this,'q1','활발한 편')">활발해요</div>
-      <div class="opt" onclick="selOpt(this,'q1','보통이에요')">보통이에요</div>
-      <div class="opt" onclick="selOpt(this,'q1','조용해요')">조용해요</div>
-   </div>
-    <input type="hidden" id="q1">
- </div>
-
-  <div class="screen" id="s2">
-    <div class="s-label">성격·에너지 · 2 / 3</div>
-    <div class="s-title" id="q2t">고집이 있는 편인가요?</div>
-    <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q2','매우 고집 있어요')">내 마음대로</div>
-      <div class="opt" onclick="selOpt(this,'q2','조금 고집 있어요')">가끔 고집</div>
-      <div class="opt" onclick="selOpt(this,'q2','순한 편이에요')">순해요</div>
-      <div class="opt" onclick="selOpt(this,'q2','매우 순해요')">매우 순해요</div>
-   </div>
-    <input type="hidden" id="q2">
- </div>
-
-  <div class="screen" id="s3">
-    <div class="s-label">성격·에너지 · 3 / 3</div>
-    <div class="s-title" id="q3t">호기심이 많은 편인가요?</div>
-    <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q3','탐험가 타입')">탐험가예요</div>
-      <div class="opt" onclick="selOpt(this,'q3','관심 있는 것만')">선택적으로</div>
-      <div class="opt" onclick="selOpt(this,'q3','별로 없어요')">별로 없어요</div>
-      <div class="opt" onclick="selOpt(this,'q3','겁이 많아요')">겁쟁이예요</div>
-   </div>
-    <input type="hidden" id="q3">
- </div>
-
-  <!-- ══ 섹션 2: 사회성·관계 ══ -->
-  <div class="screen" id="s4">
-    <div class="s-label">사회성·관계 · 1 / 3</div>
-    <div class="s-title" id="q4t">낯선 사람을 만나면?</div>
-    <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q4','먼저 다가가요')">먼저 가요</div>
-      <div class="opt" onclick="selOpt(this,'q4','살펴보다 친해져요')">살펴봐요</div>
-      <div class="opt" onclick="selOpt(this,'q4','뒤에 숨어요')">숨어요</div>
-      <div class="opt" onclick="selOpt(this,'q4','짖거나 경계해요')">경계해요</div>
-   </div>
-    <input type="hidden" id="q4">
- </div>
-
-  <div class="screen" id="s5">
-    <div class="s-label">사회성·관계 · 2 / 3</div>
-    <div class="s-title" id="q5t">보호자와 떨어지면?</div>
-    <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q5','심하게 불안해해요')">많이 불안</div>
-      <div class="opt" onclick="selOpt(this,'q5','조금 기다려요')">조금 기다려</div>
-      <div class="opt" onclick="selOpt(this,'q5','혼자 잘 놀아요')">혼자 잘 놀아</div>
-      <div class="opt" onclick="selOpt(this,'q5','더 자유로워해요')">자유로워요</div>
-   </div>
-    <input type="hidden" id="q5">
- </div>
-
-  <div class="screen" id="s6">
-    <div class="s-label">사회성·관계 · 3 / 3</div>
-    <div class="s-title" id="q6t">스킨십을 얼마나 좋아하나요?</div>
-    <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q6','껌딱지예요')">껌딱지</div>
-      <div class="opt" onclick="selOpt(this,'q6','좋아해요')">좋아해요</div>
-      <div class="opt" onclick="selOpt(this,'q6','가끔 허락해요')">가끔만</div>
-      <div class="opt" onclick="selOpt(this,'q6','건드리지 마세요')">싫어요</div>
-   </div>
-    <input type="hidden" id="q6">
- </div>
-
-  <!-- ══ 섹션 3: 생활·습관 ══ -->
-  <div class="screen" id="s7">
-    <div class="s-label">생활·습관 · 1 / 3</div>
-    <div class="s-title" id="q7t">밥은 잘 먹나요?</div>
-    <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q7','뭐든 잘 먹어요')">뭐든 잘 먹어요</div>
-      <div class="opt" onclick="selOpt(this,'q7','편식이 있어요')">편식해요</div>
-      <div class="opt" onclick="selOpt(this,'q7','식욕이 없어요')">별로 안 먹어요</div>
-      <div class="opt" onclick="selOpt(this,'q7','과식하는 편')">너무 많이 먹어요</div>
-   </div>
-    <input type="hidden" id="q7">
- </div>
-
-  <div class="screen" id="s8">
-    <div class="s-label">생활·습관 · 2 / 3</div>
-    <div class="s-title" id="q8t">잠은 어떻게 자나요?</div>
-    <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q8','어디서든 잘 자요')">어디든 잘 자요</div>
-      <div class="opt" onclick="selOpt(this,'q8','보호자 곁에서만')">곁에서만 자요</div>
-      <div class="opt" onclick="selOpt(this,'q8','잘 못 자요')">잘 못 자요</div>
-      <div class="opt" onclick="selOpt(this,'q8','하루종일 자요')">너무 많이 자요</div>
-   </div>
-    <input type="hidden" id="q8">
- </div>
-
-  <div class="screen" id="s9">
-    <div class="s-label">생활·습관 · 3 / 3</div>
-    <div class="s-title" id="q9t">훈련·규칙을 잘 따르나요?</div>
-    <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q9','천재예요')">금방 배워요</div>
-      <div class="opt" onclick="selOpt(this,'q9','노력하면 돼요')">노력하면</div>
-      <div class="opt" onclick="selOpt(this,'q9','기분에 따라')">기분 따라요</div>
-      <div class="opt" onclick="selOpt(this,'q9','내 마음대로')">내 맘대로</div>
-   </div>
-    <input type="hidden" id="q9">
- </div>
-
-  <!-- ══ 섹션 4: 건강·특성 ══ -->
-  <div class="screen" id="s10">
-    <div class="s-label">건강·특성 · 1 / 3</div>
-    <div class="s-title" id="q10t">소리·환경 변화에 예민한가요?</div>
-    <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q10','매우 예민해요')">매우 예민</div>
-      <div class="opt" onclick="selOpt(this,'q10','조금 예민해요')">조금 예민</div>
-      <div class="opt" onclick="selOpt(this,'q10','보통이에요')">보통이에요</div>
-      <div class="opt" onclick="selOpt(this,'q10','둔감해요')">둔감해요</div>
-   </div>
-    <input type="hidden" id="q10">
- </div>
-
-  <div class="screen" id="s11">
-    <div class="s-label">건강·특성 · 2 / 3</div>
-    <div class="s-title" id="q11t">장난감·놀이를 좋아하나요?</div>
-    <div class="opts">
-      <div class="opt" onclick="selOpt(this,'q11','장난감 없으면 못 살아요')">장난감 덕후</div>
-      <div class="opt" onclick="selOpt(this,'q11','좋아하는 편')">좋아해요</div>
-      <div class="opt" onclick="selOpt(this,'q11','가끔 관심')">가끔 해요</div>
-      <div class="opt" onclick="selOpt(this,'q11','별로 안 좋아해요')">관심 없어요</div>
-   </div>
-    <input type="hidden" id="q11">
- </div>
-
-  <div class="screen" id="s12">
-    <div class="s-label">건강·특성 · 3 / 3</div>
-    <div class="s-title" id="q12t">문제 행동이 있나요?</div>
-    <div class="opts col1">
-      <div class="opt" onclick="selOpt(this,'q12','없어요 — 모범생')">없어요 — 모범생이에요</div>
-      <div class="opt" onclick="selOpt(this,'q12','짖음이 심해요')">짖음이 심해요</div>
-      <div class="opt" onclick="selOpt(this,'q12','물건을 부숴요')">물건을 부숴요</div>
-      <div class="opt" onclick="selOpt(this,'q12','분리불안이 있어요')">분리불안이 있어요</div>
-   </div>
-    <input type="hidden" id="q12">
- </div>
+  </div>
 
 </div><!-- /wrap formWrap -->
 
 <!-- 통합 nav (모든 스크린이 공유) -->
 <div class="nav" id="mainNav">
-  <div class="err" id="err0">필수 정보와 간식 취향을 입력해 주세요</div>
+  <div class="err" id="err0">동물과 이름을 입력해 주세요</div>
   <div class="nav-btns" id="navBtns">
     <button class="btn-next" onclick="startSection(1)" style="flex:1">다음</button>
  </div>
@@ -716,9 +673,6 @@ body:has(.result-wrap.show){background:#FBF6EC;}
   <div class="right-panel-title">알아두면 좋아요</div>
   <div class="right-tip" id="rightTip">
         <div class="right-tip-text">반려동물의 성격은 <strong>유전·환경·경험</strong>이 함께 만들어가요. 타고난 기질을 이해하면 더 행복한 관계가 시작돼요.</div>
- </div>
-  <div class="right-tip">
-        <div class="right-tip-text"><strong>에너지가 높은 아이</strong>일수록 충분한 운동과 두뇌 자극이 필요해요. 하루 2회 이상 산책을 권장해요.</div>
  </div>
   <div class="right-tip">
         <div class="right-tip-text"><strong>불안이 많은 아이</strong>는 일관된 루틴이 가장 중요해요. 같은 시간에 밥·산책·취침을 반복해주세요.</div>
@@ -803,25 +757,12 @@ body:has(.result-wrap.show){background:#FBF6EC;}
 </div>
 <div class="toast" id="shareToast"></div>
 
-<!-- 첫 화면 개인정보 안내 팝업 -->
-<div class="intro-modal" id="introModal" onclick="if(event.target===this)closeIntroModal()">
-  <div class="intro-box" role="dialog" aria-modal="true" aria-labelledby="introTitle">
-    <div class="intro-emoji" data-face="cat:lazy"></div>
-    <div class="intro-title" id="introTitle">결과는 절대 저장되지 않아요</div>
-    <div class="intro-desc">입력하신 정보와 테스트 결과는 서버에 저장되지 않고, 모든 분석은 내 기기 안에서만 이뤄져요</div>
-    <a class="intro-dev" href="https://x.com/Jamespaakstore" target="_blank" rel="noopener noreferrer">만든 사람 · <b>@Jamespaakstore</b></a>
-    <button class="intro-btn" type="button" onclick="closeIntroModal()">테스트 시작하기</button>
-    <a class="privacy-link" href="https://superstarkzal.com/privacy.html" target="_blank" rel="noopener">개인정보처리방침</a>
- </div>
-</div>
-
 <script>
 const petIcons={dog:'🐶',cat:'🐱',rabbit:'🐰',other:'🐹'};
 let step=0,petType='',petName='',petAge='',petGender='';
 let dogSize='',catType='',otherAnimal='';
 let favoriteTreat='',allergyInfo='';
 let answers={};
-let bannerCallback=null;
 let isSubmitting=false;
 let navSwitchTimer=null;
 
@@ -959,7 +900,7 @@ function treatKeywordForPet(){
     ? alternatives.find(v=>v!==preferred&&!hasAllergyTo(v))||'저알러지'
     : preferred;
   const prefix=petType==='cat'?'고양이':petType==='dog'?'강아지':petType==='rabbit'?'토끼':'반려동물';
-  const suffix=chosen==='고기 말린거'?'말린 고기 간식':`${chosen} 간식`;
+  const suffix=chosen==='고기 말린거'?'말린 고기 간식':chosen==='간식'?'간식':`${chosen} 간식`;
   return `${prefix} ${suffix}`;
 }
 
@@ -1000,7 +941,7 @@ function updateSidebar(n){
     document.getElementById('sidebarPetInfo').style.display='block';
     document.getElementById('sidebarIcon').innerHTML=petFaceHTML();
     document.getElementById('sidebarName').textContent=nm(petName);
-    document.getElementById('sidebarMeta').textContent=`${petAge||'?'} · ${petGender||'?'}`;
+    document.getElementById('sidebarMeta').textContent=[petAge,petGender].filter(Boolean).join(' · ')||({dog:'강아지',cat:'고양이',rabbit:'토끼'}[petType]||otherAnimal||'반려동물');
   }
   const tips=[
     {icon:'🐾',text:'반려동물의 성격은 <strong>유전·환경·경험</strong>이 함께 만들어가요.'},
@@ -1014,29 +955,12 @@ function updateSidebar(n){
   if(el) el.innerHTML=`<div class="right-tip-text">${t.text}</div>`;
 }
 
-// 섹션 정의
-const SECTIONS={
-  1:{icon:'⚡',tag:'섹션 1 / 4',title:'성격 · 에너지',desc:'평소 기질과 에너지 패턴을 살펴볼게요',count:'3개 질문',color:'var(--ink)',tc:'var(--ink)'},
-  2:{icon:'🤝',tag:'섹션 2 / 4',title:'사회성 · 관계',desc:'사람과 환경에 어떻게 반응하는지 알아볼게요',count:'3개 질문',color:'var(--ink)',tc:'var(--ink)'},
-  3:{icon:'🏠',tag:'섹션 3 / 4',title:'생활 · 습관',desc:'식습관, 수면, 훈련 패턴을 확인할게요',count:'3개 질문',color:'var(--ink)',tc:'var(--ink)'},
-  4:{icon:'🔬',tag:'섹션 4 / 4',title:'건강 · 특성',desc:'예민도, 놀이, 문제 행동을 분석할게요',count:'3개 질문 · 마지막이에요!',color:'var(--ink)',tc:'var(--ink)'},
-};
-
+// 섹션 시작: 안내 화면 없이 바로 첫 질문으로
 function startSection(n){
   if(n===1){
     petName=document.getElementById('q_pet_name').value.trim();
     otherAnimal=document.getElementById('q_other_animal')?.value.trim()||'';
-    allergyInfo=document.getElementById('q_allergy')?.value.trim()||'';
-    if(!petType||!petName||!petAge||!petGender||!favoriteTreat){
-      document.getElementById('err0').classList.add('show');return;
-    }
-    if(petType==='dog'&&!dogSize){
-      document.getElementById('err0').classList.add('show');return;
-    }
-    if(petType==='cat'&&!catType){
-      document.getElementById('err0').classList.add('show');return;
-    }
-    if(petType==='other'&&!otherAnimal){
+    if(!petType||!petName||(petType==='other'&&!otherAnimal)){
       document.getElementById('err0').classList.add('show');return;
     }
     document.getElementById('err0').classList.remove('show');
@@ -1046,25 +970,18 @@ function startSection(n){
     const lastQ={2:'q3',3:'q6',4:'q9'}[n];
     if(lastQ&&!answers[lastQ]) return;
   }
-  // 배너 표시
-  const s=SECTIONS[n];
-  document.getElementById('bannerIcon').innerHTML=petFaceHTML();
-  document.getElementById('bannerTag').textContent=s.tag;
-  document.getElementById('bannerTag').style.borderColor=s.color;
-  document.getElementById('bannerTag').style.color=s.tc;
-  document.getElementById('bannerTitle').textContent=s.title;
-  document.getElementById('bannerDesc').textContent=s.desc;
-  document.getElementById('bannerCount').textContent=s.count;
-  document.getElementById('secBanner').classList.add('show');
-  bannerCallback=()=>{
-    const firstStep={1:1,2:4,3:7,4:10}[n];
-    goStep(firstStep);
-  };
+  goStep({1:1,2:4,3:7,4:10}[n]);
 }
 
-function closeBanner(){
-  document.getElementById('secBanner').classList.remove('show');
-  if(bannerCallback){bannerCallback();bannerCallback=null;}
+// 추천 용품 정보 화면 → 결과 (건너뛰기면 알러지 입력은 읽지 않음, 이미 고른 칩은 반영)
+function finishExtra(skip){
+  if(!skip) allergyInfo=document.getElementById('q_allergy')?.value.trim()||'';
+  trackEvent('extra_info',{skipped:!!skip,age:!!petAge,gender:!!petGender,treat:!!favoriteTreat});
+  submitTest();
+}
+
+function goBack(){
+  if(step>0) goStep(step-1);
 }
 
 function updateQTitles(){
@@ -1126,7 +1043,7 @@ function selOpt(el,qid,val){
     if(qNum===3) startSection(2);
     else if(qNum===6) startSection(3);
     else if(qNum===9) startSection(4);
-    else if(qNum===12) submitTest();
+    else if(qNum===12) goStep(13);
     else goStep(qNum+1);
   },250);
 }
@@ -1137,11 +1054,10 @@ function goStep(n){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(`s${n}`)?.classList.add('active');
   step=n;
-  const pct=n===0?5:Math.round((n/12)*95);
+  const pct=n===0?4:n>=13?100:Math.round((n/12)*96);
   document.getElementById('progFill').style.width=pct+'%';
-  const secName=n<=3?'성격·에너지':n<=6?'사회성·관계':n<=9?'생활·습관':'건강·특성';
-  const qInSec=n<=3?n:n<=6?n-3:n<=9?n-6:n-9;
-  document.getElementById('progLabel').textContent=n===0?'기본 정보':`${secName} ${qInSec}/3`;
+  document.getElementById('progLabel').textContent=n===0?'시작':n>=13?'추가 정보':`${n} / 12`;
+  document.getElementById('progBack').hidden=n===0;
   window.scrollTo(0,0);
   updateSidebar(n);
   updateNav(n);
@@ -1150,14 +1066,17 @@ function goStep(n){
 
 function updateNav(n){
   const btns=document.getElementById('navBtns');
+  const nav=document.getElementById('mainNav');
   if(!btns) return;
+  // 질문 화면은 보기를 누르면 바로 넘어가므로 아래 버튼 없음 (이전은 왼쪽 위 화살표)
+  if(nav) nav.style.display=(n>=1&&n<=12)?'none':'';
   if(n===0){
     btns.innerHTML='<button class="btn-next" onclick="startSection(1)" style="flex:1">다음</button>';
-  } else if(n===12){
-    btns.innerHTML='<button class="btn-back" onclick="goStep(11)">이전</button>'
-      +'<button class="btn-next final" onclick="submitTest()">결과 보기</button>';
+  } else if(n===13){
+    btns.innerHTML='<button class="btn-back" onclick="finishExtra(true)">건너뛰기</button>'
+      +'<button class="btn-next final" onclick="finishExtra(false)">결과 보기</button>';
   } else {
-    btns.innerHTML=`<button class="btn-back" onclick="goStep(${n-1})">이전</button>`;
+    btns.innerHTML='';
   }
   if(n!==0) document.getElementById('err0')?.classList.remove('show');
 }
@@ -2107,18 +2026,8 @@ async function saveResultImage(){
 function restart(){location.href=location.origin+location.pathname;}
 
 // ── 첫 화면 개인정보 안내 팝업 ──
-function showIntroModal(){
-  const m=document.getElementById('introModal');
-  if(m) m.classList.add('show');
-}
-function closeIntroModal(){
-  const m=document.getElementById('introModal');
-  if(m) m.classList.remove('show');
-}
-
-// 공유 결과 페이지가 아니면 첫 화면 안내 팝업 표시
 fillStaticFaces();
-if(!loadSharedResultIfPresent()) showIntroModal();
+loadSharedResultIfPresent();
 </script>
 </body>
 </html>
