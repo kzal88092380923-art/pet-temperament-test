@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>통일 규칙 · 글꼴과 아이콘</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  body { margin: 0; background: #FBF6EC; font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; }
+  * { box-sizing: border-box; }
+</style>
+</helmet>
+
+<div style="width: 880px; height: 1000px; background: #FBF6EC; color: #1C1B18; padding: 44px 48px; display: flex; flex-direction: column; gap: 28px; font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;">
+
+  <div>
+    <div style="font-size: 14px; font-weight: 700; color: #55524A;">반려동물 성격 테스트</div>
+    <div style="font-size: 30px; font-weight: 800; letter-spacing: -0.02em; margin-top: 4px;">통일 규칙 · 글꼴 1개, 그림 스타일 1개</div>
+  </div>
+
+  <!-- 글꼴 -->
+  <div style="background: #FFFFFF; border: 2.5px solid #1C1B18; border-radius: 22px; padding: 22px 24px; display: flex; flex-direction: column; gap: 14px;">
+    <div style="font-size: 13px; font-weight: 700; color: #55524A;">글꼴 — Pretendard 하나만, 굵기 3단계</div>
+    <div style="display: flex; align-items: baseline; gap: 16px; border-bottom: 1.5px solid #E6DECF; padding-bottom: 12px;">
+      <div style="width: 120px; font-size: 12px; font-weight: 500; color: #55524A;">제목 · 800 · 28px</div>
+      <div style="font-size: 28px; font-weight: 800; letter-spacing: -0.03em;">장난꾸러기 탐험가</div>
+    </div>
+    <div style="display: flex; align-items: baseline; gap: 16px; border-bottom: 1.5px solid #E6DECF; padding-bottom: 12px;">
+      <div style="width: 120px; font-size: 12px; font-weight: 500; color: #55524A;">소제목 · 700 · 17px</div>
+      <div style="font-size: 17px; font-weight: 700;">성격 특성 분석</div>
+    </div>
+    <div style="display: flex; align-items: baseline; gap: 16px;">
+      <div style="width: 120px; font-size: 12px; font-weight: 500; color: #55524A;">본문 · 500 · 15px</div>
+      <div style="font-size: 15px; font-weight: 500; line-height: 1.6;">호기심이 많고 놀기를 정말 좋아하는 타입이에요.</div>
+    </div>
+  </div>
+
+  <!-- 아이콘 -->
+  <div style="background: #FFFFFF; border: 2.5px solid #1C1B18; border-radius: 22px; padding: 22px 24px; display: flex; flex-direction: column; gap: 16px;">
+    <div style="font-size: 13px; font-weight: 700; color: #55524A;">아이콘 — 이모지 대신, 얼굴과 같은 선(검정 · 둥근 끝) + 포인트 색 1개</div>
+    <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 14px 10px;">
+      <sc-for list="{{icons}}" as="ic" hint-placeholder-count="13">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+          <div style="width: 64px; height: 64px; border-radius: 18px; background: #FBF6EC; border: 2px solid #1C1B18; display: flex; align-items: center; justify-content: center;">
+            <sc-if value="{{ic.energy}}" hint-placeholder-val="{{false}}"><svg width="34" height="34" viewBox="0 0 32 32" fill="none" stroke="#1C1B18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 3 L7 18 L15 18 L13 29 L25 13 L17 13 Z" fill="#FFD24A"></path></svg></sc-if>
+              <sc-if value="{{ic.social}}" hint-placeholder-val="{{false}}"><svg width="34" height="34" viewBox="0 0 32 32" fill="none" stroke="#1C1B18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><g><circle cx="11" cy="11" r="4.5" fill="#FFB38A"></circle><circle cx="22" cy="12" r="4"></circle><path d="M3 27 C 4 19, 18 19, 19 27"></path><path d="M16 26 C 17 20, 28 20, 29 26"></path></g></svg></sc-if>
+              <sc-if value="{{ic.indep}}" hint-placeholder-val="{{false}}"><svg width="34" height="34" viewBox="0 0 32 32" fill="none" stroke="#1C1B18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><g><path d="M8 29 L8 4"></path><path d="M8 5 C 14 2, 18 8, 26 5 L26 17 C 18 20, 14 14, 8 17" fill="#8FD3FF"></path></g></svg></sc-if>
+              <sc-if value="{{ic.play}}" hint-placeholder-val="{{false}}"><svg width="34" height="34" viewBox="0 0 32 32" fill="none" stroke="#1C1B18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><g><circle cx="16" cy="16" r="12" fill="#FFD24A"></circle><path d="M6 10 C 12 14, 20 14, 26 10"></path><path d="M6 22 C 12 18, 20 18, 26 22"></path></g></svg></sc-if>
+              <sc-if value="{{ic.train}}" hint-placeholder-val="{{false}}"><svg width="34" height="34" viewBox="0 0 32 32" fill="none" stroke="#1C1B18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><g><path d="M11 3 L16 12 L21 3"></path><circle cx="16" cy="20" r="8" fill="#9FE8C9"></circle><path d="M12.5 20 L15 22.5 L19.5 17.5"></path></g></svg></sc-if>
+              <sc-if value="{{ic.love}}" hint-placeholder-val="{{false}}"><svg width="34" height="34" viewBox="0 0 32 32" fill="none" stroke="#1C1B18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 27 C 6 20, 3 14, 6 9 C 9 4, 15 5, 16 10 C 17 5, 23 4, 26 9 C 29 14, 26 20, 16 27 Z" fill="#FF8FC5"></path></svg></sc-if>
+              <sc-if value="{{ic.sense}}" hint-placeholder-val="{{false}}"><svg width="34" height="34" viewBox="0 0 32 32" fill="none" stroke="#1C1B18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><g><circle cx="16" cy="16" r="12" fill="#C9B8FF"></circle><path d="M8 16 C 10 11, 12 21, 14 16 C 16 11, 18 21, 20 16 C 22 11, 24 19, 25 16"></path></g></svg></sc-if>
+              <sc-if value="{{ic.stub}}" hint-placeholder-val="{{false}}"><svg width="34" height="34" viewBox="0 0 32 32" fill="none" stroke="#1C1B18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 24 L5 10 L11 16 L16 7 L21 16 L27 10 L27 24 Z" fill="#FF8A7A"></path></svg></sc-if>
+              <sc-if value="{{ic.talk}}" hint-placeholder-val="{{false}}"><svg width="34" height="34" viewBox="0 0 32 32" fill="none" stroke="#1C1B18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 5 C 24 5, 29 9, 29 15 C 29 21, 24 24, 16 24 C 14 24, 12 24, 10 23 L 5 27 L 6 21 C 4 19, 3 17, 3 15 C 3 9, 8 5, 16 5 Z" fill="#FEE500"></path></svg></sc-if>
+              <sc-if value="{{ic.save}}" hint-placeholder-val="{{false}}"><svg width="34" height="34" viewBox="0 0 32 32" fill="none" stroke="#1C1B18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><g><path d="M16 4 L16 19"></path><path d="M10 13 L16 19 L22 13"></path><path d="M5 22 L5 27 L27 27 L27 22"></path></g></svg></sc-if>
+              <sc-if value="{{ic.link}}" hint-placeholder-val="{{false}}"><svg width="34" height="34" viewBox="0 0 32 32" fill="none" stroke="#1C1B18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><g><path d="M13 19 L19 13"></path><path d="M14 9 L17 6 C 20 3, 26 3, 26 9 C 27 12, 25 14, 23 15 L 21 17"></path><path d="M18 23 L15 26 C 12 29, 6 29, 6 23 C 5 20, 7 18, 9 17 L 11 15"></path></g></svg></sc-if>
+              <sc-if value="{{ic.retry}}" hint-placeholder-val="{{false}}"><svg width="34" height="34" viewBox="0 0 32 32" fill="none" stroke="#1C1B18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><g><path d="M26 16 C 26 22, 21 27, 15 27 C 9 27, 5 22, 5 16 C 5 10, 10 5, 16 5 C 20 5, 23 7, 25 10"></path><path d="M26 4 L25 10 L19 9"></path></g></svg></sc-if>
+              <sc-if value="{{ic.cart}}" hint-placeholder-val="{{false}}"><svg width="34" height="34" viewBox="0 0 32 32" fill="none" stroke="#1C1B18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><g><path d="M3 5 L7 5 L10 20 L25 20 L28 9 L8 9"></path><circle cx="12" cy="26" r="2" fill="#1C1B18"></circle><circle cx="23" cy="26" r="2" fill="#1C1B18"></circle></g></svg></sc-if>
+          </div>
+          <div style="font-size: 12px; font-weight: 700;">{{ic.label}}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- 규칙 -->
+  <div style="background: #FFFFFF; border: 2.5px solid #1C1B18; border-radius: 22px; padding: 22px 24px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 24px;">
+    <div style="font-size: 14px; font-weight: 500; line-height: 1.6;"><b style="font-weight: 700;">이모지 0개.</b> 질문 보기·버튼·칩의 이모지는 빼고 글자만, 꼭 필요한 곳만 위 아이콘</div>
+    <div style="font-size: 14px; font-weight: 500; line-height: 1.6;"><b style="font-weight: 700;">기울기는 한 곳만.</b> 결과 화면 얼굴 액자만 살짝, 나머지는 반듯하게</div>
+    <div style="font-size: 14px; font-weight: 500; line-height: 1.6;"><b style="font-weight: 700;">색은 4가지.</b> 크림 바탕, 검정 선, 성격 색 1개, 핑크 밑줄</div>
+    <div style="font-size: 14px; font-weight: 500; line-height: 1.6;"><b style="font-weight: 700;">상품 사진은 같은 틀.</b> 크기와 둥근 모서리를 통일한 흰 칸 안에</div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 880, "height": 1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const keys = ['energy','social','indep','play','train','love','sense','stub','talk','save','link','retry','cart'];
+    const labels = ['에너지','사교성','독립성','장난기','훈련성','애정도','예민도','고집','카톡 공유','이미지 저장','링크 복사','다시 하기','쿠팡 보기'];
+    return {
+      icons: keys.map((k, i) => {
+        const o = { label: labels[i] };
+        keys.forEach((kk) => { o[kk] = kk === k; });
+        return o;
+      }),
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>모든 동물 × 모든 성격 표정</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  body { margin: 0; background: #FBF6EC; font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; }
+  * { box-sizing: border-box; }
+</style>
+</helmet>
+
+<div style="width: 1440px; height: 1060px; background: #FBF6EC; color: #1C1B18; padding: 40px 44px; display: flex; flex-direction: column; gap: 18px; font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;">
+  <div style="display: flex; align-items: flex-end; justify-content: space-between;">
+    <div>
+      <div style="font-size: 14px; font-weight: 700; color: #55524A;">반려동물 성격 테스트</div>
+      <div style="font-size: 30px; font-weight: 800; letter-spacing: -0.02em; margin-top: 4px;">모든 동물 × 모든 성격 · 32가지 표정</div>
+    </div>
+    <div style="font-size: 13px; font-weight: 500; color: #55524A; text-align: right; line-height: 1.6;">같은 성격 = 같은 표정과 색<br>같은 동물 = 같은 머리 모양</div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 96px repeat(8, minmax(0, 1fr)); gap: 12px; align-items: center;">
+    <div></div>
+    <sc-for list="{{types}}" as="t" hint-placeholder-count="8">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+        <div style="width: 14px; height: 14px; border-radius: 50%; background: {{t.accent}}; border: 2px solid #1C1B18;"></div>
+        <div style="font-size: 13px; font-weight: 700; text-align: center; line-height: 1.3; letter-spacing: -0.01em;">{{t.name}}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <sc-for list="{{rows}}" as="row" hint-placeholder-count="4">
+    <div style="display: grid; grid-template-columns: 96px repeat(8, minmax(0, 1fr)); gap: 12px; align-items: center;">
+      <div style="font-size: 17px; font-weight: 800;">{{row.label}}</div>
+      <sc-for list="{{row.cells}}" as="c" hint-placeholder-count="8">
+        <div style="background: {{c.accent}}; border: 2.5px solid #1C1B18; border-radius: 22px; height: 190px; display: flex; align-items: center; justify-content: center;">
+          <div style="width: 128px; height: 128px; border-radius: 50%; background: #FBF6EC; border: 2.5px solid #1C1B18; display: flex; align-items: center; justify-content: center;">
+            <dc-import name="Face" species="{{c.species}}" mood="{{c.mood}}" size="{{faceSize}}" hint-size="104px,95px"></dc-import>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </sc-for>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 1440, "height": 1060}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const types = [
+      { name: '활발한 사랑꾼', mood: 'sweet', accent: '#FFB38A' },
+      { name: '집사 바라기', mood: 'adore', accent: '#C8F169' },
+      { name: '자유로운 영혼', mood: 'free', accent: '#8FD3FF' },
+      { name: '섬세한 감성파', mood: 'shy', accent: '#FF8FC5' },
+      { name: '장난꾸러기 탐험가', mood: 'rascal', accent: '#FFD24A' },
+      { name: '모범생 우등생', mood: 'smart', accent: '#9FE8C9' },
+      { name: '나만의 법칙 보스', mood: 'grumpy', accent: '#C9B8FF' },
+      { name: '유니크한 개성파', mood: 'unique', accent: '#FF8A7A' },
+    ];
+    const species = [
+      { key: 'cat', label: '고양이' },
+      { key: 'dog', label: '강아지' },
+      { key: 'rabbit', label: '토끼' },
+      { key: 'hamster', label: '기타' },
+    ];
+    return {
+      faceSize: 104,
+      types,
+      rows: species.map((s) => ({
+        label: s.label,
+        cells: types.map((t) => ({ species: s.key, mood: t.mood, accent: t.accent })),
+      })),
+    };
+  }
+}
+</script>
+</body>
+</html>

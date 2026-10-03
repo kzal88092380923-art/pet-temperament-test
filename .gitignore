@@ -13,3 +13,15 @@ nutrifit/
 # 로컬 전용
 .DS_Store
 .claude/settings.local.json
+
+# Playwright MCP 스크린샷·로그
+.playwright-mcp/
+
+# Claude 마지막 답변 로그 (Stop 훅)
+claude-log.md
+claude-log.txt
+claude-progress.md
+claude-usage.md
+
+# 삭제 예정 파일 보관 폴더 (커밋 금지)
+_to_delete/

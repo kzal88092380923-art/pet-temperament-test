@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>반려동물 표정</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  body { margin: 0; }
+</style>
+</helmet>
+
+<div style="position: relative; width: {{w}}px; height: {{h}}px;">
+
+  <!-- 머리 (동물별) -->
+  <div style="position: absolute; left: 0; top: 0; width: 100%; height: 100%;">
+    <sc-if value="{{isCat}}" hint-placeholder-val="{{true}}">
+      <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 44 L18 12 L44 30" fill="#FBF6EC"></path>
+        <path d="M98 44 L103 11 L76 30" fill="#FBF6EC"></path>
+        <path d="M22 44 C 14 70, 30 98, 60 99 C 92 100, 108 72, 98 44 C 90 28, 32 26, 22 44 Z" fill="#FBF6EC"></path>
+        <path d="M57 70 L60 74 L63 70"></path>
+        <path d="M60 74 L60 76"></path>
+        <path d="M32 73 L12 69"></path><path d="M32 78 L13 81"></path>
+        <path d="M88 73 L108 69"></path><path d="M88 78 L107 81"></path>
+      </svg>
+    </sc-if>
+    <sc-if value="{{isDog}}" hint-placeholder-val="{{false}}">
+      <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M30 40 C 30 18, 90 18, 90 40 C 97 62, 90 97, 60 98 C 30 97, 23 62, 30 40 Z" fill="#FBF6EC"></path>
+        <path d="M70 45 C 84 42, 89 59, 81 66 C 73 69, 65 56, 70 45 Z" fill="#E8D5B0" stroke="none"></path>
+        <path d="M34 28 C 18 24, 7 44, 11 67 C 13 78, 25 76, 28 62 C 30 50, 31 38, 34 28 Z" fill="#FBF6EC"></path>
+        <path d="M86 28 C 102 24, 113 44, 109 67 C 107 78, 95 76, 92 62 C 90 50, 89 38, 86 28 Z" fill="#E8D5B0"></path>
+        <path d="M53 70 C 53 66, 67 66, 67 70 C 67 74, 53 74, 53 70 Z" fill="#1C1B18"></path>
+        <path d="M60 74 L60 76"></path>
+      </svg>
+    </sc-if>
+    <sc-if value="{{isRabbit}}" hint-placeholder-val="{{false}}">
+      <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M45 40 C 37 24, 35 5, 45 4 C 55 3, 56 22, 53 38" fill="#FBF6EC"></path>
+        <path d="M45 30 C 42 20, 42 11, 45 10 C 49 10, 50 20, 49 30 Z" fill="#FFC9DE" stroke="none"></path>
+        <path d="M75 40 C 85 26, 98 14, 104 21 C 110 28, 96 38, 83 44" fill="#FBF6EC"></path>
+        <path d="M82 37 C 89 29, 97 22, 100 25 C 103 28, 95 35, 86 40 Z" fill="#FFC9DE" stroke="none"></path>
+        <path d="M60 33 C 86 33, 100 51, 98 71 C 96 92, 80 100, 60 100 C 40 100, 24 92, 22 71 C 20 51, 34 33, 60 33 Z" fill="#FBF6EC"></path>
+        <path d="M56 70 L64 70 L60 74 Z" fill="#FF8FC5"></path>
+        <path d="M60 74 L60 76"></path>
+      </svg>
+    </sc-if>
+    <sc-if value="{{isHamster}}" hint-placeholder-val="{{false}}">
+      <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M30 40 C 20 32, 22 17, 33 18 C 42 19, 44 28, 42 34" fill="#F4C9A0"></path>
+        <path d="M90 40 C 100 32, 98 17, 87 18 C 78 19, 76 28, 78 34" fill="#F4C9A0"></path>
+        <path d="M60 29 C 89 29, 107 47, 107 70 C 107 91, 87 102, 60 102 C 33 102, 13 91, 13 70 C 13 47, 31 29, 60 29 Z" fill="#FBF6EC"></path>
+        <path d="M22 50 C 30 37, 45 31, 60 31 C 75 31, 90 37, 98 50 C 86 45, 74 48, 60 43 C 46 48, 34 45, 22 50 Z" fill="#F4C9A0" stroke="none"></path>
+        <path d="M57 70 C 57 67, 63 67, 63 70 C 63 72, 57 72, 57 70 Z" fill="#FF8FC5"></path>
+        <path d="M60 72 L60 76"></path>
+      </svg>
+    </sc-if>
+  </div>
+
+  <!-- 표정 (성격별) -->
+  <div style="position: absolute; left: 0; top: 0; width: 100%; height: 100%;">
+    <sc-if value="{{mLazy}}" hint-placeholder-val="{{true}}">
+      <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M40 58 L54 58"></path><path d="M42 58 C 43 63, 51 63, 52 58"></path>
+        <path d="M66 58 L80 58"></path><path d="M68 58 C 69 63, 77 63, 78 58"></path>
+        <path d="M60 76 C 58 81, 52 81, 50 78"></path><path d="M60 76 C 62 81, 68 81, 70 78"></path>
+      </svg>
+    </sc-if>
+    <sc-if value="{{mExplorer}}" hint-placeholder-val="{{false}}">
+      <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="46" cy="58" r="7" fill="#1C1B18"></circle><circle cx="74" cy="58" r="7" fill="#1C1B18"></circle>
+        <circle cx="48.5" cy="55.5" r="2.4" fill="#FFFFFF" stroke="none"></circle><circle cx="76.5" cy="55.5" r="2.4" fill="#FFFFFF" stroke="none"></circle>
+        <path d="M51 78 C 51 91, 69 91, 69 78 Z" fill="#1C1B18"></path>
+        <path d="M55 85 C 57 82, 63 82, 65 85" stroke="#FF8FC5"></path>
+      </svg>
+    </sc-if>
+    <sc-if value="{{mShy}}" hint-placeholder-val="{{false}}">
+      <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="43" cy="60" r="3.8" fill="#1C1B18"></circle><circle cx="69" cy="60" r="3.8" fill="#1C1B18"></circle>
+        <ellipse cx="36" cy="70" rx="7" ry="4" fill="#FF8FC5" stroke="none"></ellipse><ellipse cx="84" cy="70" rx="7" ry="4" fill="#FF8FC5" stroke="none"></ellipse>
+        <path d="M53 81 C 55 78, 57 83, 60 80 C 63 78, 65 83, 67 81"></path>
+      </svg>
+    </sc-if>
+    <sc-if value="{{mBoss}}" hint-placeholder-val="{{false}}">
+      <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M40 58 L54 58"></path><path d="M41 58 C 42 65, 53 65, 54 58 Z" fill="#1C1B18"></path>
+        <path d="M66 58 L80 58"></path><path d="M66 58 C 67 65, 78 65, 79 58 Z" fill="#1C1B18"></path>
+        <path d="M57 81 C 61 83, 66 82, 70 77"></path>
+      </svg>
+    </sc-if>
+    <sc-if value="{{mSweet}}" hint-placeholder-val="{{false}}">
+      <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M41 53 L50 58 L41 63"></path><path d="M79 53 L70 58 L79 63"></path>
+        <ellipse cx="36" cy="70" rx="7" ry="4" fill="#FF8FC5" stroke="none"></ellipse><ellipse cx="84" cy="70" rx="7" ry="4" fill="#FF8FC5" stroke="none"></ellipse>
+        <path d="M60 76 C 58 81, 52 81, 50 78"></path><path d="M60 76 C 62 81, 68 81, 70 78"></path>
+        <path d="M62 79 C 62 87, 70 87, 70 79" fill="#FF8FC5"></path>
+      </svg>
+    </sc-if>
+    <sc-if value="{{mGrumpy}}" hint-placeholder-val="{{false}}">
+      <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M39 48 L54 54" stroke-width="3.6"></path><path d="M81 48 L66 54" stroke-width="3.6"></path>
+        <ellipse cx="47" cy="60" rx="5.5" ry="2.8" fill="#1C1B18"></ellipse><ellipse cx="73" cy="60" rx="5.5" ry="2.8" fill="#1C1B18"></ellipse>
+        <path d="M51 87 C 55 81, 65 81, 69 87"></path>
+      </svg>
+    </sc-if>
+    <sc-if value="{{mSmart}}" hint-placeholder-val="{{false}}">
+      <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="46" cy="58" r="10" fill="#FFFFFF"></circle><circle cx="74" cy="58" r="10" fill="#FFFFFF"></circle>
+        <path d="M56 57 C 58 54, 62 54, 64 57"></path>
+        <circle cx="46" cy="59" r="3.4" fill="#1C1B18" stroke="none"></circle><circle cx="74" cy="59" r="3.4" fill="#1C1B18" stroke="none"></circle>
+        <path d="M53 80 C 56 84, 64 84, 67 80"></path>
+      </svg>
+    </sc-if>
+    <sc-if value="{{mUnique}}" hint-placeholder-val="{{false}}">
+      <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M39 60 C 42 53, 50 53, 53 60"></path>
+        <circle cx="74" cy="58" r="7" fill="#1C1B18"></circle><circle cx="76.5" cy="55.5" r="2.4" fill="#FFFFFF" stroke="none"></circle>
+        <path d="M49 79 C 55 85, 65 85, 72 77"></path>
+        <path d="M62 83 C 62 92, 71 92, 70 82" fill="#FF8FC5"></path>
+      </svg>
+    </sc-if>
+    <sc-if value="{{mFree}}" hint-placeholder-val="{{false}}">
+      <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M39 47 C 43 44, 49 44, 53 46"></path><path d="M67 46 C 71 44, 77 44, 81 47"></path>
+        <circle cx="46" cy="58" r="7" fill="#FFFFFF"></circle><circle cx="74" cy="58" r="7" fill="#FFFFFF"></circle>
+        <circle cx="49" cy="55.5" r="3.4" fill="#1C1B18" stroke="none"></circle><circle cx="77" cy="55.5" r="3.4" fill="#1C1B18" stroke="none"></circle>
+        <circle cx="62" cy="82" r="3.6"></circle>
+        <ellipse cx="74" cy="84" rx="2.8" ry="2.2" fill="#1C1B18" stroke="none"></ellipse>
+        <path d="M76.4 83.5 L76.4 74 C 79 74.5, 81 76, 80.5 79" stroke-width="2.2"></path>
+      </svg>
+    </sc-if>
+    <sc-if value="{{mAdore}}" hint-placeholder-val="{{false}}">
+      <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="46" cy="58" r="8" fill="#1C1B18"></circle><circle cx="74" cy="58" r="8" fill="#1C1B18"></circle>
+        <circle cx="48.5" cy="54" r="3" fill="#FFFFFF" stroke="none"></circle><circle cx="76.5" cy="54" r="3" fill="#FFFFFF" stroke="none"></circle>
+        <circle cx="43.5" cy="60.5" r="1.5" fill="#FFFFFF" stroke="none"></circle><circle cx="71.5" cy="60.5" r="1.5" fill="#FFFFFF" stroke="none"></circle>
+        <ellipse cx="34" cy="71" rx="6.5" ry="3.8" fill="#FF8FC5" stroke="none"></ellipse><ellipse cx="86" cy="71" rx="6.5" ry="3.8" fill="#FF8FC5" stroke="none"></ellipse>
+        <path d="M60 76 C 58 80, 53 80, 52 77"></path><path d="M60 76 C 62 80, 67 80, 68 77"></path>
+        <path d="M80 86 C 77 83, 77 80, 79.5 79.5 C 81 79.2, 82 80.5, 82 81.5 C 82 80.5, 83 79.2, 84.5 79.5 C 87 80, 87 83, 82 87 Z" fill="#FF4FA3" stroke="#1C1B18" stroke-width="1.8"></path>
+      </svg>
+    </sc-if>
+    <sc-if value="{{mRascal}}" hint-placeholder-val="{{false}}">
+      <svg width="100%" height="100%" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M37 47 C 41 42, 48 42, 52 45" stroke-width="3.4"></path><path d="M67 50 L81 47" stroke-width="3.4"></path>
+        <circle cx="45" cy="58" r="6.5" fill="#1C1B18"></circle><circle cx="73" cy="58" r="6.5" fill="#1C1B18"></circle>
+        <circle cx="42.5" cy="55.5" r="2.2" fill="#FFFFFF" stroke="none"></circle><circle cx="70.5" cy="55.5" r="2.2" fill="#FFFFFF" stroke="none"></circle>
+        <path d="M47 77 C 50 89, 70 89, 73 76 C 64 80, 56 80, 47 77 Z" fill="#1C1B18"></path>
+        <path d="M53 79.2 L55 83 L57 79.6" fill="#FFFFFF" stroke="none"></path>
+        <g transform="rotate(-24 85 69)">
+          <rect x="77" y="65.5" width="16" height="7" rx="3.5" fill="#FFE3C2" stroke-width="2"></rect>
+          <circle cx="83" cy="69" r="0.9" fill="#1C1B18" stroke="none"></circle><circle cx="87" cy="69" r="0.9" fill="#1C1B18" stroke="none"></circle>
+        </g>
+      </svg>
+    </sc-if>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{
+  "species": {"editor": "enum", "options": ["cat", "dog", "rabbit", "hamster"], "default": "cat"},
+  "mood": {"editor": "enum", "options": ["lazy", "explorer", "shy", "boss", "sweet", "grumpy", "smart", "unique", "free", "adore", "rascal"], "default": "lazy"},
+  "size": {"editor": "int", "default": 240, "min": 60, "max": 400},
+  "$preview": {"width": 240, "height": 220}
+}'>
+class Component extends DCLogic {
+  renderVals() {
+    const sp = this.props.species ?? 'cat';
+    const mood = this.props.mood ?? 'lazy';
+    const w = this.props.size ?? 240;
+    return {
+      w,
+      h: Math.round(w * 110 / 120),
+      isCat: sp === 'cat',
+      isDog: sp === 'dog',
+      isRabbit: sp === 'rabbit',
+      isHamster: sp === 'hamster',
+      mLazy: mood === 'lazy',
+      mExplorer: mood === 'explorer',
+      mShy: mood === 'shy',
+      mBoss: mood === 'boss',
+      mSweet: mood === 'sweet',
+      mGrumpy: mood === 'grumpy',
+      mSmart: mood === 'smart',
+      mUnique: mood === 'unique',
+      mFree: mood === 'free',
+      mAdore: mood === 'adore',
+      mRascal: mood === 'rascal',
+    };
+  }
+}
+</script>
+</body>
+</html>
