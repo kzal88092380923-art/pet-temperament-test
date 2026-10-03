@@ -1652,7 +1652,7 @@ const ICONS={
   retry:'<path d="M26 16 C 26 22, 21 27, 15 27 C 9 27, 5 22, 5 16 C 5 10, 10 5, 16 5 C 20 5, 23 7, 25 10"/><path d="M26 4 L25 10 L19 9"/>',
   talkInk:'<path d="M16 5 C 24 5, 29 9, 29 15 C 29 21, 24 24, 16 24 C 14 24, 12 24, 10 23 L 5 27 L 6 21 C 4 19, 3 17, 3 15 C 3 9, 8 5, 16 5 Z" fill="currentColor"/>',
   share:'<path d="M16 4 L16 20"/><path d="M10 10 L16 4 L22 10"/><path d="M8 15 L6 15 L6 28 L26 28 L26 15 L24 15"/>',
-  story:'<rect x="5" y="5" width="22" height="22" rx="7"/><circle cx="16" cy="16" r="5"/><circle cx="22.5" cy="9.5" r="1.2" fill="currentColor" stroke="none"/>',
+  story:'<circle cx="16" cy="16" r="12" stroke-dasharray="4.2 3.4"/><circle cx="16" cy="16" r="3.6" fill="currentColor" stroke="none"/>',
   cart:'<path d="M3 5 L7 5 L10 20 L25 20 L28 9 L8 9"/><circle cx="12" cy="26" r="2" fill="currentColor"/><circle cx="23" cy="26" r="2" fill="currentColor"/>',
 };
 function iconSVG(name){
@@ -2047,6 +2047,23 @@ async function captureResultCanvas(square){
 
 // ── 인스타 스토리 · 다른 앱 공유 ──
 // 9:16 세로 카드 (1080x1920): 결과 화면과 같은 스타일
+// 인스타 스토리는 위 약 250px · 아래 약 340px를 메뉴가 가리므로 모든 내용을 그 사이(안전 구역)에 둔다
+const STORY_SAFE_TOP=250,STORY_SAFE_BOTTOM=340;
+// 한 줄에 들어가도록 글자 폭을 재서 말줄임 (html2canvas가 text-overflow를 그리지 않아 직접 자름)
+function fitOneLine(text,font,maxWidth){
+  const ctx=(fitOneLine.c||(fitOneLine.c=document.createElement('canvas'))).getContext('2d');
+  ctx.font=font;
+  if(ctx.measureText(text).width<=maxWidth) return text;
+  const chars=Array.from(text);
+  let lo=0,hi=chars.length;
+  while(lo<hi){ const mid=(lo+hi+1)>>1; if(ctx.measureText(chars.slice(0,mid).join('')+'…').width<=maxWidth) lo=mid; else hi=mid-1; }
+  return chars.slice(0,lo).join('').trimEnd()+'…';
+}
+function firstSentence(text){
+  const t=String(text||'').replace(/\s+/g,' ').trim();
+  const m=t.match(/^.+?[.!?](?=\s|$)/);
+  return m?m[0]:t;
+}
 function buildStoryCardEl(){
   const r=window.__currentResult;
   const name=window.__currentPetName||'우리 아이';
@@ -2055,36 +2072,37 @@ function buildStoryCardEl(){
   const card=document.createElement('div');
   card.style.cssText='position:fixed;left:-99999px;top:0;width:1080px;height:1920px;'
     +`background:${cream};color:${ink};font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;font-weight:500;`
-    +'padding:96px 76px 84px;box-sizing:border-box;display:flex;flex-direction:column;gap:44px;';
+    +`padding:${STORY_SAFE_TOP+20}px 84px ${STORY_SAFE_BOTTOM+20}px;box-sizing:border-box;display:flex;flex-direction:column;gap:26px;`;
   const tags=r&&r.traits?r.traits.slice().sort((a,b)=>b.val-a.val).slice(0,3)
-    .map(t=>`<div style="font-size:34px;font-weight:700;background:#fff;border:4px solid ${ink};border-radius:999px;padding:12px 28px;">#${escapeHTML(cleanType(t.label))} ${t.val}</div>`).join(''):'';
-  const traits=r&&r.traits?r.traits.slice(0,4).map(t=>`<div style="display:flex;align-items:center;gap:24px;">
-      <div style="width:132px;font-size:34px;font-weight:700;">${escapeHTML(cleanType(t.label))}</div>
-      <div style="flex:1;height:30px;background:${cream};border:4px solid ${ink};border-radius:999px;overflow:hidden;"><div style="height:100%;width:${t.val}%;background:${look.accent};border-right:4px solid ${ink};box-sizing:border-box;"></div></div>
-      <div style="width:64px;font-size:34px;font-weight:800;text-align:right;">${t.val}</div>
+    .map(t=>`<div style="font-size:30px;font-weight:700;background:#fff;border:4px solid ${ink};border-radius:999px;padding:9px 24px;">#${escapeHTML(cleanType(t.label))} ${t.val}</div>`).join(''):'';
+  const traits=r&&r.traits?r.traits.slice(0,4).map(t=>`<div style="display:flex;align-items:center;gap:22px;">
+      <div style="width:120px;font-size:30px;font-weight:700;">${escapeHTML(cleanType(t.label))}</div>
+      <div style="flex:1;height:26px;background:${cream};border:4px solid ${ink};border-radius:999px;overflow:hidden;"><div style="height:100%;width:${t.val}%;background:${look.accent};border-right:4px solid ${ink};box-sizing:border-box;"></div></div>
+      <div style="width:56px;font-size:30px;font-weight:800;text-align:right;">${t.val}</div>
     </div>`).join(''):'';
+  const summaryLine=fitOneLine(firstSentence(stripEmoji(plainTextFromHTML(r&&r.summary)||(r&&r.desc)||'')),
+    "500 30px Pretendard, -apple-system, sans-serif",1080-84*2-8);
   card.innerHTML=`
     <div style="display:flex;align-items:center;justify-content:space-between;">
-      <div style="font-size:34px;font-weight:700;">반려동물 성격 테스트</div>
-      <div style="font-size:30px;font-weight:700;background:${look.accent};border:4px solid ${ink};border-radius:999px;padding:8px 26px;">결과 나왔다!</div>
+      <div style="font-size:30px;font-weight:700;">반려동물 성격 테스트</div>
+      <div style="font-size:26px;font-weight:700;background:${look.accent};border:4px solid ${ink};border-radius:999px;padding:6px 22px;">결과 나왔다!</div>
     </div>
-    <div style="margin:auto 0;display:flex;flex-direction:column;gap:44px;">
-    <div style="background:${look.accent};border:6px solid ${ink};border-radius:64px;padding:52px 56px 60px;display:flex;flex-direction:column;align-items:center;gap:14px;">
-      <div style="align-self:flex-start;font-size:40px;font-weight:700;">우리 ${escapeHTML(nm(name))}는…</div>
-      <div style="width:430px;height:384px;margin:14px 0 20px;border-radius:50%;background:${cream};border:6px solid ${ink};display:flex;align-items:center;justify-content:center;transform:rotate(-2deg);">
-        <div style="width:318px;height:292px;">${faceSVG(petType,look.mood,dogSize)}</div>
+    <div style="background:${look.accent};border:5px solid ${ink};border-radius:56px;padding:34px 48px 40px;display:flex;flex-direction:column;align-items:center;gap:8px;">
+      <div style="align-self:flex-start;font-size:34px;font-weight:700;">우리 ${escapeHTML(nm(name))}는…</div>
+      <div style="width:300px;height:268px;margin:4px 0 14px;border-radius:50%;background:${cream};border:5px solid ${ink};display:flex;align-items:center;justify-content:center;transform:rotate(-2deg);">
+        <div style="width:224px;height:206px;">${faceSVG(petType,look.mood,dogSize)}</div>
       </div>
-      <div style="font-size:92px;font-weight:800;letter-spacing:-0.03em;line-height:1.15;text-align:center;word-break:keep-all;">${escapeHTML(cleanType(r&&r.type)||'성격 분석')}</div>
-      <svg width="480" height="30" viewBox="0 0 190 12" fill="none" style="display:block;"><path d="M4 8 C 40 3, 80 11, 120 6 C 145 3, 170 9, 186 5" stroke="#FF4FA3" stroke-width="4.5" stroke-linecap="round"/></svg>
-      <div style="margin-top:8px;font-size:38px;font-weight:500;line-height:1.5;text-align:center;word-break:keep-all;">${escapeHTML(r&&r.desc||'')}</div>
+      <div style="font-size:76px;font-weight:800;letter-spacing:-0.03em;line-height:1.15;text-align:center;word-break:keep-all;">${escapeHTML(cleanType(r&&r.type)||'성격 분석')}</div>
+      <svg width="400" height="26" viewBox="0 0 190 12" fill="none" style="display:block;"><path d="M4 8 C 40 3, 80 11, 120 6 C 145 3, 170 9, 186 5" stroke="#FF4FA3" stroke-width="4.5" stroke-linecap="round"/></svg>
+      <div style="margin-top:4px;font-size:32px;font-weight:500;line-height:1.45;text-align:center;word-break:keep-all;">${escapeHTML(r&&r.desc||'')}</div>
     </div>
-    <div style="display:flex;justify-content:center;gap:16px;">${tags}</div>
-    <div style="background:#fff;border:5px solid ${ink};border-radius:48px;padding:44px 48px;display:flex;flex-direction:column;gap:26px;">
-      <div style="font-size:38px;font-weight:700;">기질 점수</div>
+    <div style="display:flex;justify-content:center;gap:14px;">${tags}</div>
+    <div style="background:#fff;border:5px solid ${ink};border-radius:44px;padding:30px 40px;display:flex;flex-direction:column;gap:18px;">
+      <div style="font-size:32px;font-weight:700;">기질 점수</div>
       ${traits}
     </div>
-    </div>
-    <div style="text-align:center;font-size:36px;font-weight:700;">나도 해보기 → ${escapeHTML(SITE_URL.replace(/^https?:\/\//,''))}</div>
+    <div data-story-summary style="padding:0 4px;font-size:30px;font-weight:500;line-height:1.4;white-space:nowrap;color:#3A3832;">${escapeHTML(summaryLine)}</div>
+    <div data-story-cta style="margin-top:auto;text-align:center;font-size:46px;font-weight:800;letter-spacing:-0.02em;">나도 해보기 → ${escapeHTML(SITE_URL.replace(/^https?:\/\//,''))}</div>
   `;
   document.body.appendChild(card);
   return card;
