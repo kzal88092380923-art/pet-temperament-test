@@ -103,15 +103,15 @@ body{background:var(--bg);color:var(--text);font-family:'Pretendard',-apple-syst
 /* ── 선택지 ── */
 .opts{display:grid;grid-template-columns:1fr;gap:10px;}
 .opts.col1{grid-template-columns:1fr;}
-.opt{padding:12px 14px;min-height:56px;border:2px solid var(--ink);border-radius:18px;cursor:pointer;font-family:inherit;font-size:var(--fs-body);font-weight:500;color:var(--ink);background:#fff;transition:background 0.15s ease,scale 0.08s ease;text-align:center;display:flex;align-items:center;justify-content:center;line-height:1.3;-webkit-user-select:none;user-select:none;}
-.opt:active{scale:0.97;}
+.opt{padding:12px 14px;min-height:56px;border:2px solid var(--ink);border-radius:18px;cursor:pointer;font-family:inherit;font-size:var(--fs-body);font-weight:500;color:var(--ink);background:#fff;transition:background 0.15s ease;touch-action:manipulation;text-align:center;display:flex;align-items:center;justify-content:center;line-height:1.3;-webkit-user-select:none;user-select:none;}
+.opt:active{box-shadow:inset 0 0 0 999px rgba(28,27,24,0.07);}
 .opt.sel{background:var(--lime);font-weight:700;}
 .opt.full{grid-column:1/-1;}
 
 /* ── 펫 선택 ── */
 .pet-types{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px;}
-.pet-btn{padding:16px 10px 14px;border:2.5px solid var(--ink);border-radius:24px;cursor:pointer;font-family:inherit;text-align:center;background:#fff;transition:background 0.15s ease,scale 0.08s ease;-webkit-user-select:none;user-select:none;}
-.pet-btn:active{scale:0.96;}
+.pet-btn{padding:16px 10px 14px;border:2.5px solid var(--ink);border-radius:24px;cursor:pointer;font-family:inherit;text-align:center;background:#fff;transition:background 0.15s ease;touch-action:manipulation;-webkit-user-select:none;user-select:none;}
+.pet-btn:active{box-shadow:inset 0 0 0 999px rgba(28,27,24,0.07);}
 .pet-btn.sel{background:var(--lime);}
 .pet-icon{width:84px;height:74px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;background:var(--cream);border:2px solid var(--ink);border-radius:48% 52% 46% 54%;}
 .pet-icon .face{width:66px;height:60px;}
@@ -121,8 +121,8 @@ body{background:var(--bg);color:var(--text);font-family:'Pretendard',-apple-syst
 
 /* ── 나이·성별 칩 ── */
 .chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
-.chip{padding:9px 16px;min-height:44px;display:inline-flex;align-items:center;border:2px solid var(--ink);border-radius:999px;cursor:pointer;font-family:inherit;font-size:var(--fs-body);font-weight:500;color:var(--ink);background:#fff;transition:background 0.15s ease,scale 0.08s ease;-webkit-user-select:none;user-select:none;}
-.chip:active{scale:0.95;}
+.chip{padding:9px 16px;min-height:44px;display:inline-flex;align-items:center;border:2px solid var(--ink);border-radius:999px;cursor:pointer;font-family:inherit;font-size:var(--fs-body);font-weight:500;color:var(--ink);background:#fff;transition:background 0.15s ease;touch-action:manipulation;-webkit-user-select:none;user-select:none;}
+.chip:active{box-shadow:inset 0 0 0 999px rgba(28,27,24,0.07);}
 .chip.sel{background:var(--lime);font-weight:700;}
 
 /* 이름 입력 */
@@ -219,7 +219,7 @@ body:has(.result-wrap.show){background:#FBF6EC;}
 .prod-section-title{font-size:var(--fs-aux);font-weight:500;color:var(--text3);margin-bottom:10px;line-height:1.6;}
 .prod-list{display:flex;flex-direction:column;gap:10px;}
 .prod-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--cream);border:2px solid var(--ink);border-radius:16px;cursor:pointer;text-decoration:none;color:var(--ink);}
-.prod-item:active{scale:0.99;}
+.prod-item:active{box-shadow:inset 0 0 0 999px rgba(28,27,24,0.07);}
 .prod-item.highlight{background:var(--accent);}
 .prod-img{position:relative;width:56px;height:56px;border-radius:12px;background:#fff;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:4px;}
 .prod-img .ic{width:26px;height:26px;color:var(--text3);}
@@ -1579,13 +1579,14 @@ function stripEmoji(str){return String(str||'').replace(EMOJI_RE,'').replace(/[ 
 function fillStaticFaces(){
   document.querySelectorAll('[data-face]').forEach(el=>{
     const [pet,mood]=el.dataset.face.split(':');
-    el.innerHTML=faceSVG(pet,mood||'lazy');
+    el.innerHTML=faceSVG(pet,mood||'explorer');
   });
   document.querySelectorAll('[data-icon]').forEach(el=>{
     el.insertAdjacentHTML('afterbegin',iconSVG(el.dataset.icon));
   });
 }
-function petFaceHTML(){return petType?faceSVG(petType,'lazy',dogSize):faceSVG('cat','lazy');}
+// 결과 전(사이드바·로딩 등)에는 밝은 explorer 표정만
+function petFaceHTML(){return petType?faceSVG(petType,'explorer',dogSize):faceSVG('cat','explorer');}
 
 function showResult(){
   const r=calcPersonality();
