@@ -20,3 +20,4 @@ nutrifit/
 # Claude 마지막 답변 로그 (Stop 훅)
 claude-log.md
 claude-log.txt
+claude-progress.md
