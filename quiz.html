@@ -138,7 +138,6 @@ body.nav-switching .nav{opacity:0;pointer-events:none;transform:translateY(8px);
 .nav-btns{display:flex;gap:10px;}
 .btn-back{flex:1;min-height:52px;padding:13px;border:2px solid var(--ink);border-radius:16px;background:#fff;font-family:inherit;font-size:var(--fs-body);font-weight:700;color:var(--ink);cursor:pointer;}
 .btn-next{flex:2;min-height:52px;padding:13px;border:2px solid var(--ink);border-radius:16px;background:var(--ink);color:var(--cream);font-family:inherit;font-size:var(--fs-body);font-weight:700;cursor:pointer;}
-.btn-next.final{background:var(--lime);color:var(--ink);}
 .btn-back:active,.btn-next:active{transform:translateY(1px);}
 
 /* ── 로딩 ── */
@@ -207,6 +206,9 @@ body:has(.result-wrap.show){background:#FBF6EC;}
 /* 종합 분석 */
 .r-summary{font-size:var(--fs-body);font-weight:500;line-height:1.8;color:var(--text2);}
 .r-summary strong{font-weight:700;color:var(--ink);background:linear-gradient(transparent 62%,var(--accent) 62%);}
+.r-summary.collapsed > p:nth-of-type(n+3){display:none;}
+.r-more{display:block;width:100%;margin-top:12px;min-height:44px;padding:10px;background:#fff;border:2px solid var(--ink);border-radius:14px;font-family:inherit;font-size:var(--fs-body);font-weight:700;color:var(--ink);cursor:pointer;}
+.r-more[hidden]{display:none;}
 .r-summary a{color:var(--ink)!important;font-weight:700!important;text-decoration:underline!important;text-underline-offset:3px;}
 
 /* 케어 팁 */
@@ -218,9 +220,8 @@ body:has(.result-wrap.show){background:#FBF6EC;}
 /* 추천 용품 - 쿠팡 파트너스 */
 .prod-section-title{font-size:var(--fs-aux);font-weight:500;color:var(--text3);margin-bottom:10px;line-height:1.6;}
 .prod-list{display:flex;flex-direction:column;gap:10px;}
-.prod-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--cream);border:2px solid var(--ink);border-radius:16px;cursor:pointer;text-decoration:none;color:var(--ink);}
+.prod-item{display:flex;align-items:flex-start;gap:12px;padding:12px;background:#fff;border:2px solid var(--ink);border-radius:16px;cursor:pointer;text-decoration:none;color:var(--ink);}
 .prod-item:active{box-shadow:inset 0 0 0 999px rgba(28,27,24,0.07);}
-.prod-item.highlight{background:var(--accent);}
 .prod-img{position:relative;width:56px;height:56px;border-radius:12px;background:#fff;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:4px;}
 .prod-img .ic{width:26px;height:26px;color:var(--text3);}
 .prod-img img{position:absolute;inset:4px;width:calc(100% - 8px);height:calc(100% - 8px);object-fit:contain;background:#fff;display:block;}
@@ -228,7 +229,7 @@ body:has(.result-wrap.show){background:#FBF6EC;}
 .prod-name{font-size:var(--fs-body);font-weight:700;color:var(--ink);margin-bottom:3px;line-height:1.3;}
 .prod-why{font-size:var(--fs-aux);font-weight:500;color:var(--text2);margin-bottom:2px;}
 .prod-tag{font-size:var(--fs-aux);font-weight:500;color:var(--text3);}
-.prod-cta{display:flex;align-items:center;gap:4px;background:var(--ink);color:var(--cream);border-radius:10px;padding:7px 10px;font-size:var(--fs-aux);font-weight:700;flex-shrink:0;white-space:nowrap;}
+.prod-cta{display:inline-flex;align-items:center;gap:4px;margin-top:8px;background:var(--ink);color:var(--cream);border-radius:10px;padding:6px 10px;font-size:var(--fs-aux);font-weight:700;white-space:nowrap;}
 .prod-cta .ic{width:16px;height:16px;}
 .coupang-notice{font-size:var(--fs-aux);font-weight:500;color:var(--text3);text-align:center;margin-top:10px;line-height:1.6;}
 .coupang-notice a{color:var(--ink);}
@@ -243,6 +244,7 @@ body:has(.result-wrap.show){background:#FBF6EC;}
 .share-btn.kakao-result{background:#FEE500;}
 .share-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .share-grid .share-btn{padding:10px 8px;gap:6px;min-height:48px;}
+@media(max-width:359px){.share-grid{grid-template-columns:1fr;}}
 .restart-btn{width:100%;min-height:44px;background:none;border:none;color:var(--text3);font-family:inherit;font-size:var(--fs-aux);font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;}
 .restart-btn span{text-decoration:underline;text-underline-offset:3px;}
 .restart-btn .ic{width:18px;height:18px;}
@@ -262,7 +264,7 @@ body:has(.result-wrap.show){background:#FBF6EC;}
   /* 전체 레이아웃 — 2열 */
   .tablet-layout{
     display:grid;
-    grid-template-columns:280px 1fr;
+    grid-template-columns:220px 1fr;
     min-height:100vh;
     max-width:900px;
     margin:0 auto;
@@ -295,7 +297,7 @@ body:has(.result-wrap.show){background:#FBF6EC;}
   .sidebar-step.done .sidebar-step-dot{background:var(--ink);}
   .sidebar-step-label{font-size:var(--fs-aux);font-weight:500;color:var(--text2);}
   .sidebar-step.active .sidebar-step-label{color:var(--ink);font-weight:700;}
-  .sidebar-pet-info{background:#fff;border:2px solid var(--ink);border-radius:20px;padding:16px 14px;margin-top:auto;}
+  .sidebar-pet-info{background:#fff;border:2px solid var(--ink);border-radius:20px;padding:16px 14px;}
   .sidebar-pet-icon{width:72px;height:64px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;background:var(--lime);border:2px solid var(--ink);border-radius:48% 52% 46% 54%;}
   .sidebar-pet-icon .face{width:56px;height:52px;}
   .sidebar-pet-name{font-size:var(--fs-body);font-weight:700;color:var(--ink);text-align:center;}
@@ -316,7 +318,7 @@ body:has(.result-wrap.show){background:#FBF6EC;}
 
   /* nav — 사이드바 옆에 있으므로 위치 조정 */
   .nav{
-    left:280px;
+    left:220px;
     padding:12px 32px;
     padding-bottom:calc(12px + env(safe-area-inset-bottom));
   }
@@ -330,12 +332,12 @@ body:has(.result-wrap.show){background:#FBF6EC;}
 
   /* 3단 레이아웃 */
   .tablet-layout{
-    grid-template-columns:300px 1fr 280px;
+    grid-template-columns:220px 1fr 280px;
     max-width:1280px;
   }
 
   /* 왼쪽 사이드바 넓어짐 */
-  .sidebar{padding:32px 24px;}
+  .sidebar{padding:28px 20px;}
 
   /* 오른쪽 패널 */
   .right-panel{
@@ -360,7 +362,7 @@ body:has(.result-wrap.show){background:#FBF6EC;}
   .main-content{padding:36px 44px 120px;max-width:600px;}
 
   /* nav */
-  .nav{left:300px;right:280px;padding:14px 40px;}
+  .nav{left:220px;right:280px;padding:14px 40px;}
 
 }
 </style>
@@ -653,7 +655,7 @@ body:has(.result-wrap.show){background:#FBF6EC;}
     <!-- 알러지 -->
     <div>
       <div class="field-label">피해야 할 재료·알러지</div>
-      <input type="text" id="q_allergy" placeholder="예: 닭, 닭가슴살, 곡물 (없으면 비워두기)" maxlength="30">
+      <input type="text" id="q_allergy" placeholder="예: 닭, 곡물" maxlength="30">
    </div>
   </div>
 
@@ -726,6 +728,7 @@ body:has(.result-wrap.show){background:#FBF6EC;}
     <div class="r-card">
       <div class="r-card-title">종합 분석</div>
       <div class="r-summary" id="summaryText"></div>
+      <button class="r-more" id="summaryMore" type="button" onclick="toggleSummary()" hidden>더 보기</button>
    </div>
     <div class="r-card pink">
       <div class="r-card-title">맞춤 케어 팁</div>
@@ -1510,8 +1513,8 @@ function renderCoupangProducts(products){
         <div class="prod-name" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${name}</div>
         <div class="prod-why">${why}</div>
         <div class="prod-tag">${cat}</div>
+        <div class="prod-cta">${iconSVG('cart')}쿠팡 보기</div>
       </div>
-      <div class="prod-cta">${iconSVG('cart')}쿠팡 보기</div>
     </a>`;
   }).join('');
 }
@@ -1599,6 +1602,19 @@ function fillStaticFaces(){
 // 결과 전(사이드바·로딩 등)에는 밝은 explorer 표정만
 function petFaceHTML(){return petType?faceSVG(petType,'explorer',dogSize):faceSVG('cat','explorer');}
 
+// 종합 분석: 처음 2문단만 보이고 '더 보기'로 펼치기
+function setupSummaryMore(){
+  const box=document.getElementById('summaryText'),btn=document.getElementById('summaryMore');
+  const many=box.querySelectorAll(':scope > p').length>2;
+  box.classList.toggle('collapsed',many);
+  btn.hidden=!many;btn.textContent='더 보기';btn.setAttribute('aria-expanded','false');
+}
+function toggleSummary(){
+  const box=document.getElementById('summaryText'),btn=document.getElementById('summaryMore');
+  const open=box.classList.toggle('collapsed')===false;
+  btn.textContent=open?'접기':'더 보기';btn.setAttribute('aria-expanded',String(open));
+}
+
 function showResult(){
   const r=calcPersonality();
   window.__currentResult=r;
@@ -1614,6 +1630,7 @@ function showResult(){
   document.getElementById('rTags').innerHTML=r.traits.slice().sort((a,b)=>b.val-a.val).slice(0,3)
     .map(t=>`<span class="r-tag">#${escapeHTML(cleanType(t.label))} ${t.val}</span>`).join('');
   document.getElementById('summaryText').innerHTML=stripEmoji(r.summary);
+  setupSummaryMore();
   document.getElementById('traitList').innerHTML=r.traits.map(t=>`
     <div class="trait-item">
       <span class="trait-label">${iconSVG(TRAIT_ICONS[cleanType(t.label)])}${escapeHTML(cleanType(t.label))}</span>
@@ -1632,8 +1649,8 @@ function showResult(){
         <div class="prod-name">${p.name}</div>
         <div class="prod-why">${p.why}</div>
         <div class="prod-tag">${p.tag}</div>
+        <div class="prod-cta">${iconSVG('cart')}쿠팡 보기</div>
       </div>
-      <div class="prod-cta">${iconSVG('cart')}쿠팡 보기</div>
     </a>`).join('');
 
   // 결과가 보이는 즉시 summary와 fallback 링크를 파트너스 링크로 변환한다.
