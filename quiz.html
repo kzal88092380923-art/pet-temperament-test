@@ -1593,10 +1593,10 @@ function renderCoupangProducts(products){
 // 얼굴 = 머리(동물별) + 표정(성격별) 두 겹. viewBox 0 0 120 110
 const RESULT_LOOKS={
   '활발한 사랑꾼':{mood:'sweet',accent:'#FFB38A'},
-  '집사 바라기':{mood:'lazy',accent:'#C8F169'},
-  '자유로운 영혼':{mood:'boss',accent:'#8FD3FF'},
+  '집사 바라기':{mood:'adore',accent:'#C8F169'},
+  '자유로운 영혼':{mood:'free',accent:'#8FD3FF'},
   '섬세한 감수성파':{mood:'shy',accent:'#FF8FC5'},
-  '장난꾸러기 탐험가':{mood:'explorer',accent:'#FFD24A'},
+  '장난꾸러기 탐험가':{mood:'rascal',accent:'#FFD24A'},
   '모범생 우등생':{mood:'smart',accent:'#9FE8C9'},
   '나만의 법칙 보스':{mood:'grumpy',accent:'#C9B8FF'},
   '유니크한 개성파':{mood:'unique',accent:'#FF8A7A'},
@@ -1624,6 +1624,12 @@ const FACE_MOOD={
   smart:'<circle cx="46" cy="58" r="10" fill="#FFFFFF"/><circle cx="74" cy="58" r="10" fill="#FFFFFF"/><path d="M56 57 C 58 54, 62 54, 64 57"/><circle cx="46" cy="59" r="3.4" fill="#1C1B18" stroke="none"/><circle cx="74" cy="59" r="3.4" fill="#1C1B18" stroke="none"/><path d="M53 80 C 56 84, 64 84, 67 80"/>',
   unique:'<path d="M39 60 C 42 53, 50 53, 53 60"/><circle cx="74" cy="58" r="7" fill="#1C1B18"/><circle cx="76.5" cy="55.5" r="2.4" fill="#FFFFFF" stroke="none"/><path d="M49 79 C 55 85, 65 85, 72 77"/><path d="M62 83 C 62 92, 71 92, 70 82" fill="#FF8FC5"/>',
 };
+// 휘파람 (Face.dc.html free): 눈썹, 위쪽 옆을 보는 눈동자, 작은 o 입, 음표
+FACE_MOOD.free='<path d="M39 47 C 43 44, 49 44, 53 46"/><path d="M67 46 C 71 44, 77 44, 81 47"/><circle cx="46" cy="58" r="7" fill="#FFFFFF"/><circle cx="74" cy="58" r="7" fill="#FFFFFF"/><circle cx="49" cy="55.5" r="3.4" fill="#1C1B18" stroke="none"/><circle cx="77" cy="55.5" r="3.4" fill="#1C1B18" stroke="none"/><circle cx="62" cy="82" r="3.6"/><ellipse cx="74" cy="84" rx="2.8" ry="2.2" fill="#1C1B18" stroke="none"/><path d="M76.4 83.5 L76.4 74 C 79 74.5, 81 76, 80.5 79" stroke-width="2.2"/>';
+// 반짝 눈 (Face.dc.html adore): 큰 눈 + 반짝이 2개, 홍조, ω 입, 작은 하트
+FACE_MOOD.adore='<circle cx="46" cy="58" r="8" fill="#1C1B18"/><circle cx="74" cy="58" r="8" fill="#1C1B18"/><circle cx="48.5" cy="54" r="3" fill="#FFFFFF" stroke="none"/><circle cx="76.5" cy="54" r="3" fill="#FFFFFF" stroke="none"/><circle cx="43.5" cy="60.5" r="1.5" fill="#FFFFFF" stroke="none"/><circle cx="71.5" cy="60.5" r="1.5" fill="#FFFFFF" stroke="none"/><ellipse cx="34" cy="71" rx="6.5" ry="3.8" fill="#FF8FC5" stroke="none"/><ellipse cx="86" cy="71" rx="6.5" ry="3.8" fill="#FF8FC5" stroke="none"/><path d="M60 76 C 58 80, 53 80, 52 77"/><path d="M60 76 C 62 80, 67 80, 68 77"/><path d="M80 86 C 77 83, 77 80, 79.5 79.5 C 81 79.2, 82 80.5, 82 81.5 C 82 80.5, 83 79.2, 84.5 79.5 C 87 80, 87 83, 82 87 Z" fill="#FF4FA3" stroke="#1C1B18" stroke-width="1.8"/>';
+// 악동 (rascal · 임시 그림 — Face.dc.html에 원본이 없어 설명대로 그림): 한쪽 눈썹 올림, 송곳니 웃음, 볼 반창고
+FACE_MOOD.rascal='<path d="M38 46 C 42 40, 49 40, 54 43"/><path d="M67 51 L81 49"/><circle cx="46" cy="58" r="5" fill="#1C1B18"/><circle cx="47.6" cy="56.4" r="1.7" fill="#FFFFFF" stroke="none"/><path d="M67 59 C 70 55.5, 77 55.5, 80 59"/><path d="M48 77 C 54 86, 67 86, 73 75"/><path d="M54.5 81.5 L57 87.5 L59.5 83" fill="#FFFFFF" stroke-width="2.2"/><g transform="rotate(-18 85 71)"><rect x="77" y="67" width="17" height="8.5" rx="3.5" fill="#FFE1B3" stroke-width="2"/><rect x="82.5" y="67.6" width="6" height="7.3" fill="#F4C9A0" stroke="none"/><circle cx="84" cy="70" r="0.8" fill="#1C1B18" stroke="none"/><circle cx="87" cy="72.5" r="0.8" fill="#1C1B18" stroke="none"/></g>';
 const FACE_SPECIES={dog:'dog',cat:'cat',rabbit:'rabbit',other:'hamster'};
 function faceSVG(pet,mood,size){
   const sp=FACE_SPECIES[pet]||'cat';
