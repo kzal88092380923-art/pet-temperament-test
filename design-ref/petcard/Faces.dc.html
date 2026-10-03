@@ -2,73 +2,79 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>성향별 고양이·강아지 표정 모음</title>
+<title>모든 동물 × 모든 성격 표정</title>
 <script src="./support.js"></script>
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 </head>
 <body>
 <x-dc>
 <helmet>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
 <style>
   body { margin: 0; background: #FBF6EC; font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; }
   * { box-sizing: border-box; }
 </style>
 </helmet>
 
-<div style="width: 1320px; height: 860px; background: #FBF6EC; color: #1C1B18; padding: 40px 44px; display: flex; flex-direction: column; gap: 22px;">
+<div style="width: 1440px; height: 1060px; background: #FBF6EC; color: #1C1B18; padding: 40px 44px; display: flex; flex-direction: column; gap: 18px; font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;">
   <div style="display: flex; align-items: flex-end; justify-content: space-between;">
     <div>
-      <div style="font-family: 'Gaegu', cursive; font-size: 22px; font-weight: 700;">반려동물 성격 테스트</div>
-      <div style="font-size: 30px; font-weight: 800; letter-spacing: -0.02em;">성향별 표정 · 고양이 & 강아지</div>
+      <div style="font-size: 14px; font-weight: 700; color: #55524A;">반려동물 성격 테스트</div>
+      <div style="font-size: 30px; font-weight: 800; letter-spacing: -0.02em; margin-top: 4px;">모든 동물 × 모든 성격 · 32가지 표정</div>
     </div>
-    <div style="font-size: 13px; color: #55524A; text-align: right; line-height: 1.6;">같은 성향은 같은 칸, 같은 색<br/>눈·입·볼로 성격을 표현</div>
+    <div style="font-size: 13px; font-weight: 500; color: #55524A; text-align: right; line-height: 1.6;">같은 성격 = 같은 표정과 색<br>같은 동물 = 같은 머리 모양</div>
   </div>
 
-  <div style="display: flex; align-items: center; gap: 10px;">
-    <div style="font-family: 'Gaegu', cursive; font-size: 24px; font-weight: 700; background: #1C1B18; color: #FBF6EC; border-radius: 999px; padding: 0 14px;">고양이</div>
-  </div>
-  <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px;">
-    <sc-for list="{{types}}" as="it" hint-placeholder-count="6">
-      <div style="background: {{it.accent}}; border: 2.5px solid #1C1B18; border-radius: 24px 30px 22px 28px; padding: 14px 10px 12px; display: flex; flex-direction: column; align-items: center; gap: 8px;">
-        <div style="width: 140px; height: 124px; border-radius: 48% 52% 46% 54%; background: #FBF6EC; border: 2.5px solid #1C1B18; display: flex; align-items: center; justify-content: center; transform: rotate({{it.tilt}});">
-          <dc-import name="Face" species="cat" mood="{{it.mood}}" size="{{faceSize}}" hint-size="104px,95px"></dc-import>
-        </div>
-        <div style="font-size: 14.5px; font-weight: 800; letter-spacing: -0.02em; text-align: center;">{{it.name}}</div>
+  <div style="display: grid; grid-template-columns: 96px repeat(8, minmax(0, 1fr)); gap: 12px; align-items: center;">
+    <div></div>
+    <sc-for list="{{types}}" as="t" hint-placeholder-count="8">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+        <div style="width: 14px; height: 14px; border-radius: 50%; background: {{t.accent}}; border: 2px solid #1C1B18;"></div>
+        <div style="font-size: 13px; font-weight: 700; text-align: center; line-height: 1.3; letter-spacing: -0.01em;">{{t.name}}</div>
       </div>
     </sc-for>
   </div>
 
-  <div style="display: flex; align-items: center; gap: 10px; margin-top: 6px;">
-    <div style="font-family: 'Gaegu', cursive; font-size: 24px; font-weight: 700; background: #1C1B18; color: #FBF6EC; border-radius: 999px; padding: 0 14px;">강아지</div>
-  </div>
-  <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px;">
-    <sc-for list="{{types}}" as="it" hint-placeholder-count="6">
-      <div style="background: {{it.accent}}; border: 2.5px solid #1C1B18; border-radius: 28px 22px 30px 24px; padding: 14px 10px 12px; display: flex; flex-direction: column; align-items: center; gap: 8px;">
-        <div style="width: 140px; height: 124px; border-radius: 52% 48% 54% 46%; background: #FBF6EC; border: 2.5px solid #1C1B18; display: flex; align-items: center; justify-content: center; transform: rotate({{it.tiltDog}});">
-          <dc-import name="Face" species="dog" mood="{{it.mood}}" size="{{faceSize}}" hint-size="104px,95px"></dc-import>
+  <sc-for list="{{rows}}" as="row" hint-placeholder-count="4">
+    <div style="display: grid; grid-template-columns: 96px repeat(8, minmax(0, 1fr)); gap: 12px; align-items: center;">
+      <div style="font-size: 17px; font-weight: 800;">{{row.label}}</div>
+      <sc-for list="{{row.cells}}" as="c" hint-placeholder-count="8">
+        <div style="background: {{c.accent}}; border: 2.5px solid #1C1B18; border-radius: 22px; height: 190px; display: flex; align-items: center; justify-content: center;">
+          <div style="width: 128px; height: 128px; border-radius: 50%; background: #FBF6EC; border: 2.5px solid #1C1B18; display: flex; align-items: center; justify-content: center;">
+            <dc-import name="Face" species="{{c.species}}" mood="{{c.mood}}" size="{{faceSize}}" hint-size="104px,95px"></dc-import>
+          </div>
         </div>
-        <div style="font-size: 14.5px; font-weight: 800; letter-spacing: -0.02em; text-align: center;">{{it.dogName}}</div>
-      </div>
-    </sc-for>
-  </div>
+      </sc-for>
+    </div>
+  </sc-for>
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 1320, "height": 860}}'>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 1440, "height": 1060}}'>
 class Component extends DCLogic {
   renderVals() {
+    const types = [
+      { name: '활발한 사랑꾼', mood: 'sweet', accent: '#FFB38A' },
+      { name: '집사 바라기', mood: 'lazy', accent: '#C8F169' },
+      { name: '자유로운 영혼', mood: 'boss', accent: '#8FD3FF' },
+      { name: '섬세한 감성파', mood: 'shy', accent: '#FF8FC5' },
+      { name: '장난꾸러기 탐험가', mood: 'explorer', accent: '#FFD24A' },
+      { name: '모범생 우등생', mood: 'smart', accent: '#9FE8C9' },
+      { name: '나만의 법칙 보스', mood: 'grumpy', accent: '#C9B8FF' },
+      { name: '유니크한 개성파', mood: 'unique', accent: '#FF8A7A' },
+    ];
+    const species = [
+      { key: 'cat', label: '고양이' },
+      { key: 'dog', label: '강아지' },
+      { key: 'rabbit', label: '토끼' },
+      { key: 'hamster', label: '기타' },
+    ];
     return {
       faceSize: 104,
-      types: [
-        { name: '소파 위의 철학자', dogName: '느긋한 낮잠 대장', mood: 'lazy', accent: '#C8F169', tilt: '-2deg', tiltDog: '2deg' },
-        { name: '에너지 폭발 탐험가', dogName: '산책 없인 못 살아', mood: 'explorer', accent: '#FFD24A', tilt: '2deg', tiltDog: '-2deg' },
-        { name: '수줍은 구석 수호자', dogName: '낯가리는 순둥이', mood: 'shy', accent: '#FF8FC5', tilt: '-1deg', tiltDog: '1deg' },
-        { name: '도도한 집사 관리자', dogName: '우리 집 반장님', mood: 'boss', accent: '#8FD3FF', tilt: '1.5deg', tiltDog: '-1.5deg' },
-        { name: '껌딱지 애교쟁이', dogName: '꼬리 프로펠러', mood: 'sweet', accent: '#FFB38A', tilt: '-2deg', tiltDog: '2deg' },
-        { name: '예민한 경비대장', dogName: '초인종 감시관', mood: 'grumpy', accent: '#C9B8FF', tilt: '2deg', tiltDog: '-2deg' },
-      ],
+      types,
+      rows: species.map((s) => ({
+        label: s.label,
+        cells: types.map((t) => ({ species: s.key, mood: t.mood, accent: t.accent })),
+      })),
     };
   }
 }
