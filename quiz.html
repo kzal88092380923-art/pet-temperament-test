@@ -1628,8 +1628,11 @@ const FACE_MOOD={
 FACE_MOOD.free='<path d="M39 47 C 43 44, 49 44, 53 46"/><path d="M67 46 C 71 44, 77 44, 81 47"/><circle cx="46" cy="58" r="7" fill="#FFFFFF"/><circle cx="74" cy="58" r="7" fill="#FFFFFF"/><circle cx="49" cy="55.5" r="3.4" fill="#1C1B18" stroke="none"/><circle cx="77" cy="55.5" r="3.4" fill="#1C1B18" stroke="none"/><circle cx="62" cy="82" r="3.6"/><ellipse cx="74" cy="84" rx="2.8" ry="2.2" fill="#1C1B18" stroke="none"/><path d="M76.4 83.5 L76.4 74 C 79 74.5, 81 76, 80.5 79" stroke-width="2.2"/>';
 // 반짝 눈 (Face.dc.html adore): 큰 눈 + 반짝이 2개, 홍조, ω 입, 작은 하트
 FACE_MOOD.adore='<circle cx="46" cy="58" r="8" fill="#1C1B18"/><circle cx="74" cy="58" r="8" fill="#1C1B18"/><circle cx="48.5" cy="54" r="3" fill="#FFFFFF" stroke="none"/><circle cx="76.5" cy="54" r="3" fill="#FFFFFF" stroke="none"/><circle cx="43.5" cy="60.5" r="1.5" fill="#FFFFFF" stroke="none"/><circle cx="71.5" cy="60.5" r="1.5" fill="#FFFFFF" stroke="none"/><ellipse cx="34" cy="71" rx="6.5" ry="3.8" fill="#FF8FC5" stroke="none"/><ellipse cx="86" cy="71" rx="6.5" ry="3.8" fill="#FF8FC5" stroke="none"/><path d="M60 76 C 58 80, 53 80, 52 77"/><path d="M60 76 C 62 80, 67 80, 68 77"/><path d="M80 86 C 77 83, 77 80, 79.5 79.5 C 81 79.2, 82 80.5, 82 81.5 C 82 80.5, 83 79.2, 84.5 79.5 C 87 80, 87 83, 82 87 Z" fill="#FF4FA3" stroke="#1C1B18" stroke-width="1.8"/>';
-// 악동 (rascal · 임시 그림 — Face.dc.html에 원본이 없어 설명대로 그림): 한쪽 눈썹 올림, 송곳니 웃음, 볼 반창고
-FACE_MOOD.rascal='<path d="M38 46 C 42 40, 49 40, 54 43"/><path d="M67 51 L81 49"/><circle cx="46" cy="58" r="5" fill="#1C1B18"/><circle cx="47.6" cy="56.4" r="1.7" fill="#FFFFFF" stroke="none"/><path d="M67 59 C 70 55.5, 77 55.5, 80 59"/><path d="M48 77 C 54 86, 67 86, 73 75"/><path d="M54.5 81.5 L57 87.5 L59.5 83" fill="#FFFFFF" stroke-width="2.2"/><g transform="rotate(-18 85 71)"><rect x="77" y="67" width="17" height="8.5" rx="3.5" fill="#FFE1B3" stroke-width="2"/><rect x="82.5" y="67.6" width="6" height="7.3" fill="#F4C9A0" stroke="none"/><circle cx="84" cy="70" r="0.8" fill="#1C1B18" stroke="none"/><circle cx="87" cy="72.5" r="0.8" fill="#1C1B18" stroke="none"/></g>';
+// 악동 (Face.dc.html rascal): 두 눈 뜨고 한쪽 눈썹만 올림, 송곳니 보이는 채운 웃음, 볼 반창고
+const RASCAL_FACE='<path d="M37 47 C 41 42, 48 42, 52 45" stroke-width="3.4"/><path d="M67 50 L81 47" stroke-width="3.4"/><circle cx="45" cy="58" r="6.5" fill="#1C1B18"/><circle cx="73" cy="58" r="6.5" fill="#1C1B18"/><circle cx="42.5" cy="55.5" r="2.2" fill="#FFFFFF" stroke="none"/><circle cx="70.5" cy="55.5" r="2.2" fill="#FFFFFF" stroke="none"/><path d="M47 77 C 50 89, 70 89, 73 76 C 64 80, 56 80, 47 77 Z" fill="#1C1B18"/><path d="M53 79.2 L55 83 L57 79.6" fill="#FFFFFF" stroke="none"/>';
+FACE_MOOD.rascal=RASCAL_FACE+'<g transform="rotate(-24 85 69)"><rect x="77" y="65.5" width="16" height="7" rx="3.5" fill="#FFE3C2" stroke-width="2"/><circle cx="83" cy="69" r="0.9" fill="#1C1B18" stroke="none"/><circle cx="87" cy="69" r="0.9" fill="#1C1B18" stroke="none"/></g>';
+// 고양이는 반창고가 오른쪽 수염과 겹쳐 반창고만 오른쪽 위로 살짝 옮김 (눈·입·윤곽과도 안 겹치는 위치)
+const FACE_MOOD_BY_SPECIES={cat:{rascal:RASCAL_FACE+'<g transform="translate(3 -4)"><g transform="rotate(-24 85 69)"><rect x="77" y="65.5" width="16" height="7" rx="3.5" fill="#FFE3C2" stroke-width="2"/><circle cx="83" cy="69" r="0.9" fill="#1C1B18" stroke="none"/><circle cx="87" cy="69" r="0.9" fill="#1C1B18" stroke="none"/></g></g>'}};
 const FACE_SPECIES={dog:'dog',cat:'cat',rabbit:'rabbit',other:'hamster'};
 function faceSVG(pet,mood,size){
   const sp=FACE_SPECIES[pet]||'cat';
@@ -1638,7 +1641,7 @@ function faceSVG(pet,mood,size){
   if(sp==='dog'){
     const h=FACE_DOG_HEAD[size]||FACE_DOG_HEAD['중형견'];
     inner=h.head+`<g${h.g?` transform="${h.g}"`:''}>${FACE_DOG_NOSE}${m}</g>`;
-  } else inner=FACE_HEAD[sp]+m;
+  } else inner=FACE_HEAD[sp]+((FACE_MOOD_BY_SPECIES[sp]||{})[mood]||m);
   return `<svg class="face" viewBox="0 0 120 110" fill="none" stroke="#1C1B18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${inner}</svg>`;
 }
 function resultFaceHTML(mood){return faceSVG(petType,mood,dogSize);}
