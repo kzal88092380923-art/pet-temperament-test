@@ -15,8 +15,8 @@
 ## 3. 얼굴 — 모든 동물 × 모든 성격 (Face.dc.html)
 - 머리(동물별 4종: cat, dog, rabbit, hamster=기타) + 표정(성격별 8종) 두 겹을 겹쳐 그림
 - 성격 → 표정·색:
-  활발한 사랑꾼 sweet #FFB38A / 집사 바라기 lazy #C8F169 / 자유로운 영혼 boss #8FD3FF / 섬세한 감성파 shy #FF8FC5
-  장난꾸러기 탐험가 explorer #FFD24A / 모범생 우등생 smart #9FE8C9 / 나만의 법칙 보스 grumpy #C9B8FF / 유니크한 개성파 unique #FF8A7A
+  활발한 사랑꾼 sweet #FFB38A / 집사 바라기 adore #C8F169 / 자유로운 영혼 free #8FD3FF / 섬세한 감성파 shy #FF8FC5
+  장난꾸러기 탐험가 rascal #FFD24A / 모범생 우등생 smart #9FE8C9 / 나만의 법칙 보스 grumpy #C9B8FF / 유니크한 개성파 unique #FF8A7A
 - 강아지는 기존 크기별 머리(dogSize 소·중·대)를 유지하고 표정 층만 공용으로
 - 동물 선택 카드(강아지·고양이·토끼·기타)도 이모지 대신 이 얼굴(기본 표정 lazy)로
 
