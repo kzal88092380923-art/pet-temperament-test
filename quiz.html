@@ -185,6 +185,7 @@ body:has(.result-wrap.show){background:#FBF6EC;}
 .r-tag{font-size:13px;font-weight:700;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:6px 12px;transform:rotate(-2deg);}
 .r-tag:nth-child(2){background:var(--pink-lt);transform:rotate(1.5deg);}
 .r-tag:nth-child(3){transform:rotate(-1deg);}
+.r-quick-share{padding:16px 20px 0;}
 
 .r-body{padding:18px 20px 0;display:flex;flex-direction:column;gap:12px;}
 .r-card{background:#fff;border:2px solid var(--ink);border-radius:20px 24px 18px 22px;padding:16px;}
@@ -768,6 +769,9 @@ body:has(.result-wrap.show){background:#FBF6EC;}
     <div class="r-desc" id="rDesc"></div>
   </div>
   <div class="r-tags" id="rTags"></div>
+  <div class="r-quick-share">
+    <button class="share-btn kakao-result icon" type="button" onclick="shareResultKakao()">💬 카톡으로 결과 공유</button>
+  </div>
   <div class="r-body">
     <div class="r-card">
       <div class="r-card-title">성격 특성 분석</div>
