@@ -974,9 +974,19 @@ function startSection(n){
 }
 
 // 추천 용품 정보 화면 → 결과 (건너뛰기면 알러지 입력은 읽지 않음, 이미 고른 칩은 반영)
-function finishExtra(skip){
-  if(!skip) allergyInfo=document.getElementById('q_allergy')?.value.trim()||'';
-  trackEvent('extra_info',{skipped:!!skip,age:!!petAge,gender:!!petGender,treat:!!favoriteTreat});
+// 추가 정보를 하나라도 입력했는지 (크기·생활환경·나이·성별·간식·알러지)
+function hasExtraInput(){
+  return !!(dogSize||catType||petAge||petGender||favoriteTreat||document.getElementById('q_allergy')?.value.trim());
+}
+// 버튼은 하나, 같은 자리. 입력 여부에 따라 글자만 바뀜
+function updateExtraButton(){
+  const btn=document.getElementById('extraBtn');
+  if(btn) btn.textContent=hasExtraInput()?'결과 보기':'건너뛰고 결과 보기';
+}
+function finishExtra(){
+  const skip=!hasExtraInput();
+  allergyInfo=skip?'':(document.getElementById('q_allergy')?.value.trim()||'');
+  trackEvent('extra_info',{skipped:skip,age:!!petAge,gender:!!petGender,treat:!!favoriteTreat});
   submitTest();
 }
 
@@ -1028,6 +1038,7 @@ function selChip(el,group,val){
   else if(group==='dogSize'){dogSize=val;document.getElementById('q_dog_size').value=val;}
   else if(group==='catType'){catType=val;document.getElementById('q_cat_type').value=val;}
   else if(group==='treatPref'){favoriteTreat=val;document.getElementById('q_treat_pref').value=val;}
+  updateExtraButton();
 }
 
 function selOpt(el,qid,val){
@@ -1073,8 +1084,8 @@ function updateNav(n){
   if(n===0){
     btns.innerHTML='<button class="btn-next" onclick="startSection(1)" style="flex:1">다음</button>';
   } else if(n===13){
-    btns.innerHTML='<button class="btn-back" onclick="finishExtra(true)">건너뛰기</button>'
-      +'<button class="btn-next final" onclick="finishExtra(false)">결과 보기</button>';
+    btns.innerHTML='<button class="btn-next final" id="extraBtn" onclick="finishExtra()" style="flex:1"></button>';
+    updateExtraButton();
   } else {
     btns.innerHTML='';
   }
@@ -1921,7 +1932,7 @@ function buildResultCardEl(square){
       <div style="font-size:28px;font-weight:700;margin-bottom:12px;">결과 분석</div>
       <div style="font-size:24px;font-weight:500;line-height:1.65;color:#2D2B25;word-break:keep-all;">${escapeHTML(analysisText)}${analysisEllipsis}</div>
     </div>
-    <div data-card-cta style="flex-shrink:0;text-align:center;font-size:22px;font-weight:700;color:${ink};">나도 해보기 → ${escapeHTML(TEST_URL.replace(/^https?:\/\//,''))}</div>
+    <div data-card-cta style="flex-shrink:0;text-align:center;font-size:22px;font-weight:700;color:${ink};">나도 해보기 → ${escapeHTML(SITE_URL.replace(/^https?:\/\//,''))}</div>
   `;
   document.body.appendChild(card);
   return card;
@@ -2029,6 +2040,7 @@ function restart(){location.href=location.origin+location.pathname;}
 
 // ── 첫 화면 개인정보 안내 팝업 ──
 fillStaticFaces();
+document.getElementById('q_allergy')?.addEventListener('input',updateExtraButton);
 loadSharedResultIfPresent();
 </script>
 </body>
