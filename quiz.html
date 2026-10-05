@@ -251,9 +251,8 @@ body:has(.result-wrap.show){background:#FBF6EC;}
 .story-thumb-type{font-size:8px;font-weight:800;line-height:1.15;text-align:center;word-break:keep-all;}
 .r-share-title{font-size:18px;font-weight:800;letter-spacing:-0.02em;}
 .r-share-sub{margin-top:4px;font-size:var(--fs-aux);font-weight:500;line-height:1.5;color:var(--text2);}
-.r-share-links{display:flex;align-items:center;justify-content:center;gap:4px;font-size:14px;font-weight:700;}
-.r-share-links button{white-space:nowrap;background:none;border:none;padding:10px 6px;min-height:44px;font-family:inherit;font-size:14px;font-weight:700;color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer;}
-.r-share-links span{color:var(--text3);}
+.r-share-links{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;column-gap:12px;row-gap:0;font-size:14px;font-weight:700;}
+.r-share-links button{white-space:nowrap;background:none;border:none;padding:10px 8px;min-height:44px;font-family:inherit;font-size:14px;font-weight:700;color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer;}
 .r-share-line{height:2px;background:var(--ink);opacity:0.12;}
 .r-invite{display:flex;align-items:center;justify-content:space-between;min-height:44px;background:none;border:none;padding:0;font-family:inherit;color:var(--ink);text-align:left;cursor:pointer;}
 .r-invite b{display:block;font-size:14px;font-weight:700;}
@@ -263,7 +262,7 @@ body:has(.result-wrap.show){background:#FBF6EC;}
 /* 하단 */
 .restart-btn{align-self:center;min-height:44px;background:none;border:none;font-family:inherit;font-size:14px;font-weight:700;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
 .restart-btn .ic{width:18px;height:18px;}
-.r-hub-link{align-self:center;display:inline-flex;align-items:center;min-height:44px;padding:0 12px;font-size:13px;font-weight:600;color:var(--text3);text-decoration:underline;text-underline-offset:3px;}
+.r-hub-link{align-self:center;display:inline-flex;align-items:center;min-height:44px;padding:0 12px;font-size:var(--fs-aux);font-weight:500;color:var(--text3);text-decoration:underline;text-underline-offset:3px;}
 .r-foot{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--text3);text-align:center;}
 .r-foot a{color:var(--text3);}
 
@@ -277,7 +276,6 @@ body:has(.result-wrap.show){background:#FBF6EC;}
 .sheet-body .sheet-btn{min-height:48px;display:flex;align-items:center;justify-content:center;background:#fff;border:2px solid var(--ink);border-radius:14px;font-family:inherit;font-size:var(--fs-body);font-weight:700;color:var(--ink);text-decoration:none;cursor:pointer;}
 .sheet-body .sheet-btn.dark{background:var(--ink);color:var(--cream);}
 .sheet-close{min-height:44px;background:none;border:none;font-family:inherit;font-size:14px;font-weight:700;color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer;}
-@media(max-width:359px){.r-share-links{flex-wrap:wrap;}}
 .toast{position:fixed;left:50%;bottom:90px;-webkit-transform:translateX(-50%);transform:translateX(-50%);background:var(--ink);color:var(--cream);padding:11px 18px;border-radius:30px;font-size:var(--fs-aux);font-weight:700;z-index:200;border:2px solid var(--ink);opacity:0;transition:opacity 0.2s;pointer-events:none;}
 .toast.show{opacity:1;}
 
@@ -799,9 +797,7 @@ body:has(.result-wrap.show){background:#FBF6EC;}
     <button class="btn-kakao" type="button" onclick="shareResultKakao()"><span data-icon="talkInk"></span>카카오톡으로 보내기</button>
     <div class="r-share-links">
       <button type="button" onclick="saveResultImage()">이미지 저장</button>
-      <span aria-hidden="true">·</span>
       <button type="button" onclick="copyShareLink()">링크 복사</button>
-      <span aria-hidden="true">·</span>
       <button type="button" onclick="shareOtherApp()">다른 앱으로 공유</button>
     </div>
     <div class="r-share-line"></div>
@@ -812,7 +808,7 @@ body:has(.result-wrap.show){background:#FBF6EC;}
   </section>
 
   <button class="restart-btn" type="button" onclick="restart()"><span data-icon="retry"></span>다른 아이로 다시 하기</button>
-  <a class="r-hub-link" href="https://superstarkzal.com" onclick="trackEvent('hub_click',{transport_type:'beacon'})">다른 테스트도 해보기 →</a>
+  <a class="r-hub-link" href="https://superstarkzal.com/?utm_source=pet&utm_medium=result" onclick="trackEvent('hub_click')">다른 테스트도 해보기 <span aria-hidden="true">→</span></a>
   <div class="r-foot">
     <div>이 결과는 재미로 보는 성격 참고 분석이에요</div>
     <div><a href="https://x.com/Jamespaakstore" target="_blank" rel="noopener noreferrer">개발자 X · @Jamespaakstore</a> · <a href="https://superstarkzal.com/privacy.html" target="_blank" rel="noopener">개인정보처리방침</a></div>
