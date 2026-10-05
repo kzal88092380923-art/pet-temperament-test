@@ -1622,7 +1622,7 @@ function handleProductImgError(img){
     img.dataset.proxied='1';
     img.dataset.origHost=imgHostOf(src);
     sendImgError(img.dataset.origHost,'direct');
-    img.src='/api/img?u='+encodeURIComponent(src);
+    img.src='/api/img?u='+encodeURIComponent(img.dataset.full||src);
     return;
   }
   sendImgError(img.dataset.origHost,'proxy');
@@ -1643,6 +1643,7 @@ function renderCoupangProducts(products){
     const name=escapeHTML(p.name||'상품');
     const url=escapeHTML(p.url||'#');
     const img=escapeHTML(p.image||'');
+    const imgFull=escapeHTML(p.imageFull||p.image||'');
     const cat=escapeHTML(p.category||'');
     const price=p.price?Number(p.price).toLocaleString()+'원':'';
     const badges=[];
@@ -1651,7 +1652,7 @@ function renderCoupangProducts(products){
     const why=[price,...badges].filter(Boolean).join(' · ');
     const cls=i===0?' highlight':'';
     return `<a class="prod-item${cls}" href="${url}" target="_blank" rel="noopener" onclick="trackClick(${jsStringAttr(p.name)})">
-      <div class="prod-img">${iconSVG('cart')}${img?`<img src="${img}" alt="" loading="lazy" referrerpolicy="no-referrer" data-pimg="1">`:''}</div>
+      <div class="prod-img">${iconSVG('cart')}${img?`<img src="${img}" alt="" loading="lazy" referrerpolicy="no-referrer" data-pimg="1" data-full="${imgFull}">`:''}</div>
       <div class="prod-info">
         <div class="prod-name" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${name}</div>
         <div class="prod-why">${why}</div>

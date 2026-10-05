@@ -46,6 +46,16 @@ async function resolveImage(src) {
   return src;
 }
 
+// coupangcdn 원본(/image/...)을 192px 무료 썸네일 주소로 변환. 형식이 다르면 null
+function toThumb(src) {
+  try {
+    const u = new URL(src);
+    if (u.protocol !== 'https:' || !/(^|\.)coupangcdn\.com$/.test(u.hostname)) return null;
+    if (!u.pathname.startsWith('/image/') || /^thumbnail/.test(u.hostname)) return null;
+    return 'https://thumbnail6.coupangcdn.com/thumbnails/remote/192x192ex' + u.pathname;
+  } catch (e) { return null; }
+}
+
 exports.handler = async (event) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -111,7 +121,8 @@ exports.handler = async (event) => {
       id: p.productId,
       name: p.productName,
       price: p.productPrice,
-      image: images[i],
+      image: toThumb(images[i]) || images[i],
+      imageFull: images[i],
       url: p.productUrl,
       category: p.categoryName,
       isRocket: p.isRocket,
