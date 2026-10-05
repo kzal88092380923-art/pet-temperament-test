@@ -28,6 +28,24 @@ function sign(method, path, query, datetime, secretKey) {
   return crypto.createHmac('sha256', secretKey).update(message).digest('hex');
 }
 
+// ads-partners.coupang.com 이미지는 302로 *.coupangcdn.com 에 넘어간다.
+// 폰 광고/추적 차단 회피를 위해 서버에서 Location만 읽어 최종 주소로 치환 (실패 시 원본 유지)
+async function resolveImage(src) {
+  if (!src) return src;
+  try {
+    const u = new URL(src);
+    if (u.protocol !== 'https:' || u.hostname !== 'ads-partners.coupang.com') return src;
+    const r = await fetch(u.href, { method: 'GET', redirect: 'manual', signal: AbortSignal.timeout(1500) });
+    const loc = r.headers.get('location');
+    try { if (r.body) await r.body.cancel(); } catch (e) { /* ignore */ }
+    if (r.status >= 300 && r.status < 400 && loc) {
+      const n = new URL(loc, u);
+      if (n.protocol === 'https:' && /(^|\.)coupangcdn\.com$/.test(n.hostname)) return n.href;
+    }
+  } catch (e) { /* 원본 유지 */ }
+  return src;
+}
+
 exports.handler = async (event) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -88,11 +106,12 @@ exports.handler = async (event) => {
     }
 
     const items = (payload.data && payload.data.productData) || [];
-    const products = items.map(p => ({
+    const images = await Promise.all(items.map(p => resolveImage(p.productImage)));
+    const products = items.map((p, i) => ({
       id: p.productId,
       name: p.productName,
       price: p.productPrice,
-      image: p.productImage,
+      image: images[i],
       url: p.productUrl,
       category: p.categoryName,
       isRocket: p.isRocket,
@@ -101,7 +120,7 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
-      headers: { ...headers, 'Cache-Control': 'public, max-age=600' },
+      headers: { ...headers, 'Cache-Control': 'public, max-age=600', 'Netlify-CDN-Cache-Control': 'public, max-age=3600', 'Netlify-Vary': 'query=keyword|limit' },
       body: JSON.stringify({ keyword, products }),
     };
   } catch (err) {

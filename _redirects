@@ -1,3 +1,4 @@
 # 루트는 설문 페이지로 영구 이동 (쿼리스트링은 Netlify가 자동 전달, 브라우저는 원래 리퍼러 유지)
 /            /quiz.html  301!
 /index.html  /quiz.html  301!
+/api/img    /.netlify/functions/img  200

@@ -1208,7 +1208,7 @@ function calcPersonality(){
   const tScore=train.includes('천재')?95:train.includes('노력')?70:train.includes('기분')?45:20;
   const seScore=sense.includes('매우')?90:sense.includes('조금')?65:sense.includes('보통')?45:20;
   const aScore=touch.includes('껌딱지')?95:touch.includes('좋아')?75:touch.includes('가끔')?45:15;
-  const pScore=play.includes('못 살아')?95:play.includes('좋아')?70:play.includes('가끔')?45:20;
+  const pScore=play.includes('못 살아')?95:play.includes('별로')?20:play.includes('좋아')?70:play.includes('가끔')?45:20;
   const goScore=s.includes('매우 고집')?90:s.includes('조금')?65:s.includes('순한')?35:20;
 
   // ── 성격 유형 ──
@@ -1216,9 +1216,9 @@ function calcPersonality(){
   if(eScore>=75&&sScore>=65&&aScore>=65){type='🌟 활발한 사랑꾼';desc='에너지가 넘치고 모든 사람을 좋아하는 타입이에요!';}
   else if(eScore<=40&&aScore>=70){type='🛋️ 집사 바라기';desc='느긋하지만 사람을 정말 좋아하는 타입이에요.';}
   else if(iScore>=75&&sScore<=40){type='🦅 자유로운 영혼';desc='독립적이고 자기 페이스가 뚜렷한 타입이에요.';}
-  else if(seScore>=75&&eScore<=50){type='🌸 섬세한 감수성파';desc='예민하고 감수성이 풍부한 타입이에요.';}
+  else if(seScore>=85||(seScore>=75&&eScore<=50)){type='🌸 섬세한 감수성파';desc='예민하고 감수성이 풍부한 타입이에요.';}
   else if(pScore>=80&&eScore>=65){type='🎮 장난꾸러기 탐험가';desc='호기심이 많고 놀기를 정말 좋아하는 타입이에요!';}
-  else if(tScore>=80){type='🏆 모범생 우등생';desc='훈련을 잘 따르고 규칙을 잘 지키는 타입이에요.';}
+  else if(tScore>=80&&seScore<=65&&prob.includes('없어요')){type='🏆 모범생 우등생';desc='훈련을 잘 따르고 규칙을 잘 지키는 타입이에요.';}
   else if(goScore>=75){type='👑 나만의 법칙 보스';desc='자기 규칙이 있고 고집이 있는 타입이에요.';}
   else{type='😎 유니크한 개성파';desc='예측 불가능하지만 그래서 더 매력적인 타입이에요!';}
 
@@ -1414,7 +1414,7 @@ function calcPersonality(){
   });
   const prods=allProds.filter(p=>p.show).slice(0,4);
 
-  // 쿠팡 검색용 키워드 (성격·동물별 상위 3개)
+  // 쿠팡 검색용 키워드 (간식 + 성격·동물별 키워드, 최대 4개)
   const coupangKeywords=buildCoupangKeywords({
     pt,dogSize,catType,otherAnimal,
     iScore,eScore,pScore,seScore,prob,
@@ -1441,7 +1441,10 @@ function calcPersonality(){
 function buildCoupangKeywords(o){
   const {pt,dogSize,catType,otherAnimal,iScore,eScore,pScore,seScore,prob,treatKeyword}=o;
   const kw=[];
-  if(treatKeyword) kw.push(treatKeyword);
+  // 간식: 강아지는 크기 반영 (예: '소형견 닭가슴살 간식'), 크기 미입력이면 기존 키워드
+  if(treatKeyword){
+    kw.push(pt==='dog'&&dogSize?treatKeyword.replace(/^강아지(?=\s)/,dogSize):treatKeyword);
+  }
   if(pt==='dog'){
     const size=dogSize==='소형견'?'소형견':dogSize==='대형견'?'대형견':'강아지';
     if(iScore<=35||(prob||'').includes('분리')) kw.push('강아지 콩 장난감');
@@ -1481,27 +1484,70 @@ function buildCoupangKeywords(o){
       kw.push(`${otherAnimal} 케이지`);kw.push(`${otherAnimal} 사료`);
     }
   }
-  return kw.slice(0,3);
+  // 영양제가 잘리지 않도록 최대 4개 (쿠팡 API 호출 4회 이하)
+  return kw.slice(0,4);
+}
+
+// ── 사용자가 고른 동물·크기와 반대되는 상품 걸러내기 ──
+// 크기는 '소형견'/'대형견'처럼 '견'이 붙은 표기만 크기로 본다 ('대형 매트', '대형 방석' 등 사이즈 표기는 무시).
+function isMismatchedProduct(name,ctx){
+  const n=String(name||'');
+  const pt=ctx&&ctx.pt, size=ctx&&ctx.dogSize;
+  const dogWord=/강아지|애견|반려견|도그|퍼피|\bdog\b|견용/i;
+  const catWord=/고양이|냥|캣|반려묘|묘용|\bcat\b/i;
+  const both=/겸용|공용|전\s?견종|모든\s?견종|멍냥|댕냥|반려동물|반려견\s*반려묘|강아지\s*고양이/;
+  const smallMid=/소\s?중형|소\s?[·,\/]\s?중형/;
+  if(both.test(n)) return false;
+  if(pt==='dog'){
+    if(catWord.test(n)&&!dogWord.test(n)) return true;
+    if(size==='소형견'&&/대형견/.test(n)&&!/소형견|소\s?중형/.test(n)&&!smallMid.test(n)) return true;
+    if(size==='대형견'&&/소형견|소\s?중형/.test(n)&&!/대형견/.test(n)) return true;
+    if(size==='중형견'&&/소형견|대형견/.test(n)&&!/중형견|중대형|소\s?중형/.test(n)) return true;
+  } else if(pt==='cat'){
+    if(dogWord.test(n)&&!catWord.test(n)) return true;
+  } else if(pt==='rabbit'){
+    if((dogWord.test(n)||catWord.test(n))&&!/토끼/.test(n)) return true;
+  }
+  return false;
+}
+
+// 키워드 N개로 총 6개 (4개면 간식1·장난감2·하네스1·영양제2)
+function productQuotas(n){
+  if(n>=4) return [1,2,1,2];
+  if(n===3) return [2,2,2];
+  if(n===2) return [3,3];
+  return [6];
 }
 
 // ── 쿠팡 상품 비동기 로드 (Netlify Function 경유) ──
-async function loadCoupangProducts(keywords){
+async function loadCoupangProducts(keywords,ctx){
   if(!keywords||!keywords.length) return [];
+  // 필터로 걸러질 것을 감안해 키워드당 4개씩 받아 클라이언트에서 선택
   const calls=keywords.map(k=>
-    fetch(`/.netlify/functions/coupang-search?keyword=${encodeURIComponent(k)}&limit=2`)
+    fetch(`/.netlify/functions/coupang-search?keyword=${encodeURIComponent(k)}&limit=4`)
       .then(r=>r.ok?r.json():null)
       .catch(()=>null)
   );
   const results=await Promise.all(calls);
+  const quotas=productQuotas(keywords.length);
   const seen=new Set();
   const out=[];
-  for(const r of results){
-    if(!r||!r.products) continue;
+  const rest=[];
+  results.forEach((r,idx)=>{
+    if(!r||!r.products) return;
+    let taken=0;
     for(const p of r.products){
       if(!p||!p.id||seen.has(p.id)) continue;
-      seen.add(p.id);
-      out.push(p);
+      if(isMismatchedProduct(p.name,ctx)) continue;
+      if(taken<(quotas[idx]||0)){seen.add(p.id);out.push(p);taken++;}
+      else rest.push(p);
     }
+  });
+  // 키워드별 몫을 못 채웠으면 남은 후보로 채움
+  for(const p of rest){
+    if(out.length>=6) break;
+    if(seen.has(p.id)) continue;
+    seen.add(p.id);out.push(p);
   }
   return out.slice(0,6);
 }
@@ -1558,6 +1604,35 @@ function bindCoupangInlineTracking(){
   });
 }
 
+// ── 상품 이미지 로드 실패 처리 (이벤트 위임) ──
+// 1차: 서버가 준 coupangcdn 주소 → 실패 시 GA img_error(direct) 후 /api/img 프록시로 1회 재시도 → 또 실패하면 img_error(proxy) 후 이미지를 제거해 카트 아이콘 폴백 노출 (이벤트는 페이지당 stage별 1회)
+function imgHostOf(u){
+  try{return new URL(u,location.href).hostname;}catch(e){return 'unknown';}
+}
+const IMG_ERR_SENT={};
+function sendImgError(host,stage){ // 페이지당 stage별 1회만 전송
+  if(IMG_ERR_SENT[stage]) return;
+  IMG_ERR_SENT[stage]=1;
+  trackEvent('img_error',{img_host:host||'unknown',stage});
+}
+function handleProductImgError(img){
+  if(!img||img.dataset.pimg!=='1') return;
+  const src=img.getAttribute('src')||'';
+  if(!img.dataset.proxied){
+    img.dataset.proxied='1';
+    img.dataset.origHost=imgHostOf(src);
+    sendImgError(img.dataset.origHost,'direct');
+    img.src='/api/img?u='+encodeURIComponent(src);
+    return;
+  }
+  sendImgError(img.dataset.origHost,'proxy');
+  img.remove(); // 뒤쪽 카트 아이콘이 폴백으로 남음
+}
+document.addEventListener('error',e=>{
+  const t=e.target;
+  if(t&&t.tagName==='IMG'&&t.dataset&&t.dataset.pimg==='1') handleProductImgError(t);
+},true);
+
 function renderCoupangProducts(products){
   if(!products||products.length===0) return;
   const list=document.getElementById('prodList');
@@ -1576,7 +1651,7 @@ function renderCoupangProducts(products){
     const why=[price,...badges].filter(Boolean).join(' · ');
     const cls=i===0?' highlight':'';
     return `<a class="prod-item${cls}" href="${url}" target="_blank" rel="noopener" onclick="trackClick(${jsStringAttr(p.name)})">
-      <div class="prod-img">${iconSVG('cart')}${img?`<img src="${img}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:''}</div>
+      <div class="prod-img">${iconSVG('cart')}${img?`<img src="${img}" alt="" loading="lazy" referrerpolicy="no-referrer" data-pimg="1">`:''}</div>
       <div class="prod-info">
         <div class="prod-name" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${name}</div>
         <div class="prod-why">${why}</div>
@@ -1745,7 +1820,7 @@ function showResult(){
 
   // 쿠팡 실제 상품 비동기 로드 → 성공 시 위 fallback 교체
   // 실제 상품으로 교체된 뒤 새 링크도 한 번 더 파트너스 affiliate 링크로 변환한다.
-  loadCoupangProducts(r.coupangKeywords)
+  loadCoupangProducts(r.coupangKeywords,{pt:petType,dogSize})
     .then(products=>{if(products.length>0) renderCoupangProducts(products);})
     .catch(()=>{})
     .finally(()=>{
@@ -1890,7 +1965,7 @@ function loadSharedResultIfPresent(){
   petGender=SHARE_STATE_MAP.gender[genderIndex]||SHARE_STATE_MAP.gender[0];
   favoriteTreat=SHARE_STATE_MAP.treat[treatIndex]||SHARE_STATE_MAP.treat[0];
   allergyInfo=(params.get('al')||'').trim();
-  dogSize=petType==='dog'?(SHARE_STATE_MAP.dogSize[detailIndex]||'소형견'):'';
+  dogSize=petType==='dog'?(SHARE_STATE_MAP.dogSize[detailIndex]||''):'';
   catType=petType==='cat'?(SHARE_STATE_MAP.catType[detailIndex]||'완전실내'):'';
   otherAnimal=petType==='other'?(params.get('oa')||'반려동물').trim():'';
   answers={};

@@ -71,6 +71,9 @@ check() {
 }
 for p in "${MUST_BE_404[@]}"; do check "$p" 404; done
 for p in "${MUST_BE_200[@]}"; do check "$p" 200; done
+# 이미지 프록시 거부 경로 (외부 호출 없이 함수가 즉시 400 반환)
+check "/api/img" 400
+check "/api/img?u=https://evil.com/x" 400
 for pair in "${MUST_BE_301[@]}"; do
   read -r p want <<< "$pair"
   out=$(curl -s -o /dev/null -w "%{http_code} %{redirect_url}" "$DRAFT_URL$p")
