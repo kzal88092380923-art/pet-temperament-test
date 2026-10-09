@@ -24,6 +24,8 @@ MUST_BE_404=(/hub/ /nutrifit/ /child-mbti/ /CLAUDE.md /deploy.sh /netlify.toml /
 MUST_BE_200=(/quiz.html "/quiz.html?st=check&v=3" /sitemap.xml /robots.txt /og-image.png)
 # 루트는 서버에서 quiz.html로 301 (쿼리스트링·리퍼러 유지) — "요청경로 기대Location" 쌍
 MUST_BE_301=("/?utm_source=deploycheck /quiz.html?utm_source=deploycheck" "/index.html /quiz.html")
+# 인스타 전용 짧은 주소는 302 — "요청경로 기대Location" 쌍
+MUST_BE_302=("/ig /quiz.html?utm_source=instagram&utm_medium=caption" "/bio /quiz.html?utm_source=instagram&utm_medium=bio")
 
 cd "$SCRIPT_DIR"
 
@@ -81,6 +83,16 @@ for pair in "${MUST_BE_301[@]}"; do
     echo "  ✓ $p → 301 $want"
   else
     echo "  ✗ $p → $out (기대값 301 …$want)"
+    FAILED=1
+  fi
+done
+for pair in "${MUST_BE_302[@]}"; do
+  read -r p want <<< "$pair"
+  out=$(curl -s -o /dev/null -w "%{http_code} %{redirect_url}" "$DRAFT_URL$p")
+  if [ "${out%% *}" = "302" ] && [[ "${out#* }" == *"$want" ]]; then
+    echo "  ✓ $p → 302 $want"
+  else
+    echo "  ✗ $p → $out (기대값 302 …$want)"
     FAILED=1
   fi
 done
